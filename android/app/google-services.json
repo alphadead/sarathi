@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "378786253571",
+    "project_id": "counseling-app-67bc5",
+    "storage_bucket": "counseling-app-67bc5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378786253571:android:a3522231fab63585bdf736",
+        "android_client_info": {
+          "package_name": "com.example.sarathi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378786253571-jl8s7b7htlf0ljf69qn8du91phcjo937.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sarathi",
+            "certificate_hash": "faddfc2b6be9b6965fe9bcf8a6cbb3fa87e0e561"
+          }
+        },
+        {
+          "client_id": "378786253571-0oje9gf0bffgoui0f5gi65mrfb01ksdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV0XmhKhlOBpDbwkhXhPAAX2SBpuO6wZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378786253571-0oje9gf0bffgoui0f5gi65mrfb01ksdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
