@@ -46,6 +46,7 @@ dependencies:
   country_state_picker: ^0.0.4
   intl: ^0.17.0
   http:
+  email_validator: ^2.1.17
 
 
 dev_dependencies:

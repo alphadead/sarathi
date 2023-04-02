@@ -1,3 +1,4 @@
+import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/views/splash.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,16 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      builder: (context, child) => const GetMaterialApp(
+      builder: (context, child) => GetMaterialApp(
+        theme: ThemeData(
+            inputDecorationTheme: const InputDecorationTheme(
+              fillColor: Colors.black12,
+              labelStyle: TextStyle(color: Colors.black87),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide(color: Colors.black45, width: 2.0),
+          ),
+        )),
         debugShowCheckedModeBanner: false,
         home: SplashScreen(),
       ),

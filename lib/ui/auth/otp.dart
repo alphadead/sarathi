@@ -1,11 +1,10 @@
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:sarathi/ui/views/user_profile.dart';
+import 'package:sarathi/ui/views/home.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -107,7 +106,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 15.w),
                     child: GestureDetector(
                         onTap: () {
-                          Get.to(const ProfilePage());
+                          Get.to(const HomePage());
                         },
                         child: Image.asset('assets/images/verify.png')),
                   ),

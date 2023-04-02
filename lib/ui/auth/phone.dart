@@ -77,7 +77,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                     ),
                   ),
                   const Spacer(),
-                  InkWell(
+                  GestureDetector(
                       onTap: () {
                         Get.to(const OtpScreen());
                       },

@@ -1,14 +1,17 @@
 import 'dart:io';
 import 'dart:convert' as convert;
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
+import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -19,13 +22,18 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  bool isFormComplete = false;
   File? _image;
   TextEditingController nameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController educationController = TextEditingController();
+  bool isImageSelected = false;
+  bool isNameCorrect = false;
+  bool isDOBCorrect = false;
+  bool isEmailCorrect = false;
+  bool isAddressCorrect = false;
+  bool isEducationCorrect = false;
   String url =
       "https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bstates.json";
 
@@ -46,8 +54,6 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         _countries = jsonResponse;
       });
-
-      print(_countries);
     }
   }
 
@@ -58,6 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
       File? img = File(image.path);
       setState(() {
         _image = img;
+        isImageSelected = true;
         Navigator.of(context).pop();
       });
     } on PlatformException catch (e) {
@@ -111,6 +118,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 const Color(0XFFC72FF8).withOpacity(0.70),
                 const Color(0XFF52F9D1).withOpacity(0.60)
               ], begin: Alignment.topLeft, end: Alignment.bottomCenter))),
+          Align(
+              alignment: Alignment.topRight,
+              child: SvgPicture.asset(
+                  'assets/images/profilepageillustration.svg')),
           SizedBox(
             width: double.infinity,
             height: double.infinity,
@@ -118,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 24),
+                    padding: EdgeInsets.only(top: 60.h),
                     child: Stack(
                       children: [
                         GestureDetector(
@@ -137,7 +148,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           width: double.infinity,
                           child: Row(
                             children: [
-                              Spacer(),
+                              const Spacer(),
                               GestureDetector(
                                 behavior: HitTestBehavior.translucent,
                                 onTap: () {
@@ -215,7 +226,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                       ),
                               ),
-                              Spacer()
+                              const Spacer()
                             ],
                           ),
                         ),
@@ -224,320 +235,417 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 29.w),
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 20.h),
-                          Text(
-                            'Name',
-                            style: TextStyle(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 20.h),
+                        // -------------- Name TextField ----------------
+                        Text(
+                          'Name',
+                          style: TextStyle(
+                              fontSize: heading4.fontSize,
+                              fontWeight: heading4.fontWeight,
+                              fontFamily: heading4.fontFamily,
+                              color: whiteColor),
+                        ),
+                        const SizedBox(height: 7),
+                        TextFormField(
+                          controller: nameController,
+                          onChanged: (value) {
+                            setState(() {
+                              isNameCorrect = nameController.text.isNotEmpty;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            focusedBorder: const UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2.0),
+                            ),
+                            isDense: true,
+                            hintText: "Your Name",
+                            hintStyle: TextStyle(
                                 fontSize: heading4.fontSize,
                                 fontWeight: heading4.fontWeight,
                                 fontFamily: heading4.fontFamily,
-                                color: whiteColor),
+                                color: heading3.color),
+                            suffixIcon: isNameCorrect
+                                ? Icon(
+                                    Icons.check,
+                                    color: purpleColor,
+                                    size: 24,
+                                  )
+                                : SizedBox(height: 18.h, width: 13.w),
+                            suffixIconConstraints:
+                                const BoxConstraints(maxHeight: 24),
                           ),
-                          const SizedBox(height: 7),
-                          TextFormField(
-                            controller: nameController,
-                            decoration: InputDecoration(
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 2.0),
-                              ),
-                              isDense: true,
-                              hintText: "Your Name",
-                              hintStyle: TextStyle(
-                                  fontSize: heading4.fontSize,
-                                  fontWeight: heading4.fontWeight,
-                                  fontFamily: heading4.fontFamily,
-                                  color: heading3.color),
+                        ),
+                        SizedBox(height: 20.h),
+                        // -------------- DOB TextField ----------------
+                        Text(
+                          'Date of Birth',
+                          style: TextStyle(
+                              fontSize: heading4.fontSize,
+                              fontWeight: heading4.fontWeight,
+                              fontFamily: heading4.fontFamily,
+                              color: whiteColor),
+                        ),
+                        const SizedBox(height: 7),
+                        TextFormField(
+                          readOnly: true,
+                          controller: dobController,
+                          keyboardType: TextInputType.none,
+                          onTap: () async {
+                            DateTime? pickDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1990),
+                                lastDate: DateTime.now());
+                            if (pickDate != null) {
+                              setState(() {
+                                dobController.text =
+                                    DateFormat('dd-MM-yyy').format(pickDate);
+                                isDOBCorrect = true;
+                              });
+                            }
+                          },
+                          decoration: InputDecoration(
+                            focusedBorder: const UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2.0),
                             ),
-                          ),
-                          SizedBox(height: 20.h),
-                          Text(
-                            'Date of Birth',
-                            style: TextStyle(
+                            isDense: true,
+                            hintText: "Your Birthday (dd-mm-yyyy)",
+                            hintStyle: TextStyle(
                                 fontSize: heading4.fontSize,
                                 fontWeight: heading4.fontWeight,
                                 fontFamily: heading4.fontFamily,
-                                color: whiteColor),
+                                color: heading3.color),
+                            suffixIcon: isDOBCorrect
+                                ? Icon(
+                                    Icons.check,
+                                    color: purpleColor,
+                                    size: 24,
+                                  )
+                                : SizedBox(height: 18.h, width: 13.w),
+                            suffixIconConstraints:
+                                const BoxConstraints(maxHeight: 24),
                           ),
-                          const SizedBox(height: 7),
-                          TextFormField(
-                            controller: dobController,
-                            keyboardType: TextInputType.none,
-                            onTap: () async {
-                              DateTime? pickDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(1990),
-                                  lastDate: DateTime.now());
-                              if (pickDate != null) {
-                                setState(() {
-                                  dobController.text =
-                                      DateFormat('dd-MM-yyy').format(pickDate);
-                                });
-                              }
-                            },
-                            decoration: InputDecoration(
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 2.0),
-                              ),
-                              isDense: true,
-                              hintText: "Your Birthday (dd-mm-yyyy)",
-                              hintStyle: TextStyle(
-                                  fontSize: heading4.fontSize,
-                                  fontWeight: heading4.fontWeight,
-                                  fontFamily: heading4.fontFamily,
-                                  color: heading3.color),
+                        ),
+                        SizedBox(height: 20.h),
+                        // -------------- Address TextField ----------------
+                        Text(
+                          'Address Line 1',
+                          style: TextStyle(
+                              fontSize: heading4.fontSize,
+                              fontWeight: heading4.fontWeight,
+                              fontFamily: heading4.fontFamily,
+                              color: whiteColor),
+                        ),
+                        const SizedBox(height: 7),
+                        TextFormField(
+                          controller: addressController,
+                          onChanged: (value) {
+                            setState(() {
+                              isAddressCorrect =
+                                  addressController.text.isNotEmpty;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            focusedBorder: const UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2.0),
                             ),
-                          ),
-                          SizedBox(height: 20.h),
-                          Text(
-                            'Address Line 1',
-                            style: TextStyle(
+                            isDense: true,
+                            hintText: "Address",
+                            hintStyle: TextStyle(
                                 fontSize: heading4.fontSize,
                                 fontWeight: heading4.fontWeight,
                                 fontFamily: heading4.fontFamily,
-                                color: whiteColor),
+                                color: heading3.color),
+                            suffixIcon: isAddressCorrect
+                                ? Icon(
+                                    Icons.check,
+                                    color: purpleColor,
+                                    size: 24,
+                                  )
+                                : SizedBox(height: 18.h, width: 13.w),
+                            suffixIconConstraints:
+                                const BoxConstraints(maxHeight: 24),
                           ),
-                          const SizedBox(height: 7),
-                          TextFormField(
-                            controller: nameController,
-                            decoration: InputDecoration(
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 2.0),
-                              ),
-                              isDense: true,
-                              hintText: "Address",
-                              hintStyle: TextStyle(
-                                  fontSize: heading4.fontSize,
-                                  fontWeight: heading4.fontWeight,
-                                  fontFamily: heading4.fontFamily,
-                                  color: heading3.color),
-                            ),
-                          ),
-                          SizedBox(height: 20.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Country',
-                                    style: TextStyle(
-                                        fontSize: heading4.fontSize,
-                                        fontWeight: heading4.fontWeight,
-                                        fontFamily: heading4.fontFamily,
-                                        color: whiteColor),
-                                  ),
-                                  const SizedBox(height: 8),
+                        ),
+                        SizedBox(height: 20.h),
+                        // -------------- STATE AND COUNTRY DROPDOWN ----------------
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Country',
+                                  style: TextStyle(
+                                      fontSize: heading4.fontSize,
+                                      fontWeight: heading4.fontWeight,
+                                      fontFamily: heading4.fontFamily,
+                                      color: whiteColor),
+                                ),
+                                const SizedBox(height: 8),
 // -------------------------Country Drop Down Menu ---------------------------------
-                                  if (_countries.isEmpty)
-                                    const Center(
-                                        child: CircularProgressIndicator())
-                                  else
-                                    Container(
-                                        height: 24,
-                                        width: 130,
-                                        decoration: BoxDecoration(
-                                          color: whiteColor,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: DropdownButton<String>(
-                                          onTap: () {
-                                            state = null;
+                                if (_countries.isEmpty)
+                                  const Center(
+                                      child: CircularProgressIndicator())
+                                else
+                                  Container(
+                                      height: 24,
+                                      width: 130,
+                                      decoration: BoxDecoration(
+                                        color: whiteColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: DropdownButton<String>(
+                                        onTap: () {
+                                          state = null;
+                                          _states = [];
+                                        },
+                                        items: _countries.map((cn) {
+                                          return DropdownMenuItem<String>(
+                                            value: cn["name"],
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 3),
+                                              child: Text(
+                                                cn["name"],
+                                                style: TextStyle(
+                                                    fontSize: heading4.fontSize,
+                                                    fontWeight:
+                                                        heading4.fontWeight,
+                                                    fontFamily:
+                                                        heading4.fontFamily,
+                                                    color: heading3.color),
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        value: country,
+                                        onChanged: (value) {
+                                          setState(() {
                                             _states = [];
-                                          },
-                                          items: _countries.map((cn) {
-                                            return DropdownMenuItem<String>(
-                                              value: cn["name"],
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 3),
-                                                child: Text(
-                                                  cn["name"],
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          heading4.fontSize,
-                                                      fontWeight:
-                                                          heading4.fontWeight,
-                                                      fontFamily:
-                                                          heading4.fontFamily,
-                                                      color: heading3.color),
-                                                ),
-                                              ),
-                                            );
-                                          }).toList(),
-                                          value: country,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              _states = [];
-                                              country = value!;
-                                              for (int i = 0;
-                                                  i < _countries.length;
-                                                  i++) {
-                                                if (_countries[i]["name"] ==
-                                                    value) {
-                                                  _states =
-                                                      _countries[i]["states"];
-                                                }
+                                            country = value!;
+                                            for (int i = 0;
+                                                i < _countries.length;
+                                                i++) {
+                                              if (_countries[i]["name"] ==
+                                                  value) {
+                                                _states =
+                                                    _countries[i]["states"];
                                               }
-                                              isCountrySelected = true;
-                                            });
-                                          },
-                                        ))
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'State',
-                                    style: TextStyle(
-                                        fontSize: heading4.fontSize,
-                                        fontWeight: heading4.fontWeight,
-                                        fontFamily: heading4.fontFamily,
-                                        color: whiteColor),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  // -------------------------State Drop Down Menu ---------------------------------
-                                  if (isCountrySelected)
-                                    Container(
-                                        height: 24,
-                                        width: 130,
-                                        decoration: BoxDecoration(
-                                          color: whiteColor,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: DropdownButton<String>(
-                                          items: _states.map((st) {
-                                            return DropdownMenuItem<String>(
-                                              
-                                              value: st["name"],
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 3),
-                                                child: Text(
-                                                  st["name"],
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          heading4.fontSize,
-                                                      fontWeight:
-                                                          heading4.fontWeight,
-                                                      fontFamily:
-                                                          heading4.fontFamily,
-                                                      color: heading3.color),
-                                                ),
+                                            }
+                                            isCountrySelected = true;
+                                          });
+                                        },
+                                      ))
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'State',
+                                  style: TextStyle(
+                                      fontSize: heading4.fontSize,
+                                      fontWeight: heading4.fontWeight,
+                                      fontFamily: heading4.fontFamily,
+                                      color: whiteColor),
+                                ),
+                                const SizedBox(height: 8),
+                                // -------------------------State Drop Down Menu ---------------------------------
+                                if (isCountrySelected)
+                                  Container(
+                                      height: 24,
+                                      width: 130,
+                                      decoration: BoxDecoration(
+                                        color: whiteColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: DropdownButton<String>(
+                                        items: _states.map((st) {
+                                          return DropdownMenuItem<String>(
+                                            value: st["name"],
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 3),
+                                              child: Text(
+                                                st["name"],
+                                                style: TextStyle(
+                                                    fontSize: heading4.fontSize,
+                                                    fontWeight:
+                                                        heading4.fontWeight,
+                                                    fontFamily:
+                                                        heading4.fontFamily,
+                                                    color: heading3.color),
                                               ),
-                                            );
-                                          }).toList(),
-                                          value: state,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              state = value!;
-
-                                              isStateSelected = true;
-                                            });
-                                          },
-                                        ))
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 20.h),
-                          Text(
-                            'Email ID',
-                            style: TextStyle(
+                                            ),
+                                          );
+                                        }).toList(),
+                                        value: state,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            state = value!;
+                                            isStateSelected = true;
+                                          });
+                                        },
+                                      ))
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20.h),
+                        // -------------- Email TextField ----------------
+                        Text(
+                          'Email ID',
+                          style: TextStyle(
+                              fontSize: heading4.fontSize,
+                              fontWeight: heading4.fontWeight,
+                              fontFamily: heading4.fontFamily,
+                              color: whiteColor),
+                        ),
+                        const SizedBox(height: 7),
+                        TextFormField(
+                          controller: emailController,
+                          onChanged: (value) {
+                            setState(() {
+                              EmailValidator.validate(value)
+                                ? isEmailCorrect = true
+                                : isEmailCorrect = false;
+                            });
+                          },
+                          // validator: (value) {
+                          //   setState(() {
+                          //     EmailValidator.validate(value!)
+                          //       ? isEmailCorrect = true
+                          //       : isEmailCorrect = false;
+                          //   });
+                          // },
+                          decoration: InputDecoration(
+                            focusedBorder: const UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2.0),
+                            ),
+                            isDense: true,
+                            hintText: "Your Email",
+                            hintStyle: TextStyle(
                                 fontSize: heading4.fontSize,
                                 fontWeight: heading4.fontWeight,
                                 fontFamily: heading4.fontFamily,
-                                color: whiteColor),
+                                color: heading3.color),
+                            suffixIcon: isEmailCorrect
+                                ? Icon(
+                                    Icons.check,
+                                    color: purpleColor,
+                                    size: 24,
+                                  )
+                                : SizedBox(height: 18.h, width: 13.w),
+                            suffixIconConstraints:
+                                const BoxConstraints(maxHeight: 24),
                           ),
-                          const SizedBox(height: 7),
-                          TextFormField(
-                            controller: emailController,
-                            decoration: InputDecoration(
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 2.0),
-                              ),
-                              isDense: true,
-                              hintText: "Your Email",
-                              hintStyle: TextStyle(
-                                  fontSize: heading4.fontSize,
-                                  fontWeight: heading4.fontWeight,
-                                  fontFamily: heading4.fontFamily,
-                                  color: heading3.color),
+                        ),
+                        SizedBox(height: 20.h),
+                        const SizedBox(height: 7),
+                        // -------------- Education TextField ----------------
+                        Text(
+                          'Education',
+                          style: TextStyle(
+                              fontSize: heading4.fontSize,
+                              fontWeight: heading4.fontWeight,
+                              fontFamily: heading4.fontFamily,
+                              color: whiteColor),
+                        ),
+                        TextFormField(
+                          onChanged: (value) {
+                            setState(() {
+                              isEducationCorrect =
+                                  educationController.text.isNotEmpty;
+                            });
+                          },
+                          controller: educationController,
+                          decoration: InputDecoration(
+                            focusedBorder: const UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2.0),
                             ),
-                          ),
-                          SizedBox(height: 20.h),
-                          const SizedBox(height: 7),
-                          Text(
-                            'Education',
-                            style: TextStyle(
+                            isDense: true,
+                            hintText: "Your Education",
+                            hintStyle: TextStyle(
                                 fontSize: heading4.fontSize,
                                 fontWeight: heading4.fontWeight,
                                 fontFamily: heading4.fontFamily,
-                                color: whiteColor),
+                                color: heading3.color),
+                            suffixIcon: isEducationCorrect
+                                ? Icon(
+                                    Icons.check,
+                                    color: purpleColor,
+                                    size: 24,
+                                  )
+                                : SizedBox(height: 18.h, width: 13.w),
+                            suffixIconConstraints:
+                                const BoxConstraints(maxHeight: 24),
                           ),
-                          TextFormField(
-                            controller: educationController,
-                            decoration: InputDecoration(
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 2.0),
-                              ),
-                              isDense: true,
-                              hintText: "Your Education",
-                              hintStyle: TextStyle(
-                                  fontSize: heading4.fontSize,
-                                  fontWeight: heading4.fontWeight,
-                                  fontFamily: heading4.fontFamily,
-                                  color: heading3.color),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(
                     height: 30,
                   ),
-                  Container(
-                    height: 72.h,
-                    width: 315.w,
-                    decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black12,
-                              offset: Offset(0, 5),
-                              blurRadius: 6,
-                              spreadRadius: 3)
-                        ],
-                        borderRadius: BorderRadius.circular(28),
-                        color: whiteColor),
-                    child: Center(
-                        child: Text('Complete',
-                            style: isFormComplete == true
-                                ? TextStyle(
-                                    fontSize: heading2.fontSize,
-                                    fontFamily: heading2.fontFamily,
-                                    color: const Color(0XFF2B47FC))
-                                : TextStyle(
-                                    fontSize: heading2.fontSize,
-                                    fontFamily: heading2.fontFamily,
-                                    color: const Color(0XFFC8C8C8)))),
+                  GestureDetector(
+                    onTap: () {
+                      if (isImageSelected &&
+                          isNameCorrect &&
+                          isDOBCorrect &&
+                          isAddressCorrect &&
+                          isCountrySelected &&
+                          isStateSelected &&
+                          isEmailCorrect &&
+                          isEducationCorrect) {
+                        Get.to(const HomePage());
+                      }
+                    },
+                    child: Container(
+                      height: 72.h,
+                      width: 315.w,
+                      decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black12,
+                                offset: Offset(0, 5),
+                                blurRadius: 6,
+                                spreadRadius: 3)
+                          ],
+                          borderRadius: BorderRadius.circular(28),
+                          color: whiteColor),
+                      child: Center(
+                          child: Text('Complete',
+                              style: (isImageSelected &&
+                                      isNameCorrect &&
+                                      isDOBCorrect &&
+                                      isAddressCorrect &&
+                                      isCountrySelected &&
+                                      isStateSelected &&
+                                      isEmailCorrect &&
+                                      isEducationCorrect)
+                                  ? TextStyle(
+                                      fontSize: heading2.fontSize,
+                                      fontFamily: heading2.fontFamily,
+                                      color: const Color(0XFF2B47FC))
+                                  : TextStyle(
+                                      fontSize: heading2.fontSize,
+                                      fontFamily: heading2.fontFamily,
+                                      color: const Color(0XFFC8C8C8)))),
+                    ),
                   ),
                 ],
               ),
