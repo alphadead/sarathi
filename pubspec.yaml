@@ -44,8 +44,10 @@ dependencies:
   sms_autofill: ^2.3.0
   image_picker: ^0.8.7
   country_state_picker: ^0.0.4
-  intl: ^0.17.0
+  intl:
   http:
+  dio: ^5.1.1
+  flutter_secure_storage: ^8.0.0
   email_validator: ^2.1.17
 
 

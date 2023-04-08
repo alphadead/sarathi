@@ -14,6 +14,8 @@ import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
 
+import '../../controllers/auth_controller.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -22,6 +24,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final AuthController _authController = Get.find<AuthController>();
   File? _image;
   TextEditingController nameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
@@ -519,8 +522,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           onChanged: (value) {
                             setState(() {
                               EmailValidator.validate(value)
-                                ? isEmailCorrect = true
-                                : isEmailCorrect = false;
+                                  ? isEmailCorrect = true
+                                  : isEmailCorrect = false;
                             });
                           },
                           // validator: (value) {
@@ -611,7 +614,22 @@ class _ProfilePageState extends State<ProfilePage> {
                           isStateSelected &&
                           isEmailCorrect &&
                           isEducationCorrect) {
-                        Get.to(const HomePage());
+                        print(_authController.emailAuth.value);
+                        Map<String,dynamic> data = {
+                          "name": nameController.text,
+                          "dob": dobController.text,
+                          "address": {
+                            "line1": addressController.text,
+                            "state": state,
+                            "country": country,
+                          },
+                          "email": _authController.emailAuth.value,
+                          "education": educationController.text,
+                        };
+                        print(data);
+                        _authController.updateProfile(data);
+
+                        // Get.to(const HomePage());
                       }
                     },
                     child: Container(
