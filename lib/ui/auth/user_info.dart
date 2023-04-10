@@ -4,6 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -13,29 +14,20 @@ import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class UserInfoPage extends StatefulWidget {
+  const UserInfoPage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<UserInfoPage> createState() => _UserInfoPageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
-  String name = 'Ashu Garg';
-  String dob = '14-02-2002';
-  String address = 'University gate 2, Chandigarh University, Gharuan';
-  String country = 'India';
-  String state = 'Punjab';
-  String email = 'ashu@gmail.com';
-  String education = 'BE CSE';
+class _UserInfoPageState extends State<UserInfoPage> {
   File? _image;
   TextEditingController nameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController educationController = TextEditingController();
-  String imgUrl =
-      'https://images.pexels.com/photos/2820884/pexels-photo-2820884.jpeg';
   bool isImageSelected = false;
   bool isNameCorrect = false;
   bool isDOBCorrect = false;
@@ -48,8 +40,8 @@ class _ProfilePageState extends State<ProfilePage> {
   var _countries = [];
   var _states = [];
 
-  String? newState;
-  String? newCountry;
+  String? state;
+  String? country;
 
   bool isCountrySelected = false;
   bool isStateSelected = false;
@@ -72,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
       File? img = File(image.path);
       setState(() {
         _image = img;
-        // isImageSelected = true;
+        isImageSelected = true;
         Navigator.of(context).pop();
       });
     } on PlatformException catch (e) {
@@ -157,23 +149,57 @@ class _ProfilePageState extends State<ProfilePage> {
                                 _showSelectPhotoOptions(context);
                               },
                               child: _image == null
-                                  ? Center(
-                                      child: Container(
-                                        width: 100,
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                  color: Colors.black12,
-                                                  blurRadius: 10,
-                                                  spreadRadius: 5)
-                                            ],
-                                            image: DecorationImage(
-                                                image: NetworkImage(imgUrl),
-                                                fit: BoxFit.cover),
-                                            borderRadius:
-                                                BorderRadius.circular(36)),
-                                      ),
+                                  ? Stack(
+                                      children: [
+                                        Transform.rotate(
+                                          angle: 30,
+                                          child: Center(
+                                            child: Container(
+                                              width: 106,
+                                              height: 106,
+                                              decoration: BoxDecoration(
+                                                  color:
+                                                      const Color(0XFFB52FF8),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          36)),
+                                            ),
+                                          ),
+                                        ),
+                                        Transform.rotate(
+                                          angle: -57,
+                                          child: Center(
+                                            child: Container(
+                                              width: 104,
+                                              height: 104,
+                                              decoration: BoxDecoration(
+                                                  color:
+                                                      const Color(0XFF40CEF2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          36)),
+                                            ),
+                                          ),
+                                        ),
+                                        Transform.rotate(
+                                          angle: 0,
+                                          child: Center(
+                                            child: Container(
+                                              width: 100,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                  color: whiteColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          36)),
+                                              child: Center(
+                                                  child: Image.asset(
+                                                      'assets/icons/camera.png',
+                                                      height: 27)),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     )
                                   : Center(
                                       child: Container(
@@ -355,9 +381,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: whiteColor),
                           ),
                           const SizedBox(height: 8),
-                          // -------------------------Country Drop Down Menu ---------------------------------
+          // -------------------------Country Drop Down Menu ---------------------------------
                           if (_countries.isEmpty)
-                            const Center(child: CircularProgressIndicator())
+                            const Center(
+                                child: CircularProgressIndicator())
                           else
                             Container(
                                 height: 30,
@@ -369,7 +396,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: DropdownButtonHideUnderline(
                                   child: DropdownButton<String>(
                                     onTap: () {
-                                      newState = null;
+                                      state = null;
                                       _states = [];
                                     },
                                     isExpanded: true,
@@ -377,29 +404,35 @@ class _ProfilePageState extends State<ProfilePage> {
                                       return DropdownMenuItem<String>(
                                         value: cn["name"],
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5, vertical: 3),
+                                          padding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 5,
+                                                  vertical: 3),
                                           child: Text(
                                             cn["name"],
                                             style: TextStyle(
                                                 fontSize: heading4.fontSize,
-                                                fontWeight: heading4.fontWeight,
-                                                fontFamily: heading4.fontFamily,
+                                                fontWeight:
+                                                    heading4.fontWeight,
+                                                fontFamily:
+                                                    heading4.fontFamily,
                                                 color: heading3.color),
                                           ),
                                         ),
                                       );
                                     }).toList(),
-                                    value: newCountry,
+                                    value: country,
                                     onChanged: (value) {
                                       setState(() {
                                         _states = [];
-                                        newCountry = value!;
+                                        country = value!;
                                         for (int i = 0;
                                             i < _countries.length;
                                             i++) {
-                                          if (_countries[i]["name"] == value) {
-                                            _states = _countries[i]["states"];
+                                          if (_countries[i]["name"] ==
+                                              value) {
+                                            _states =
+                                                _countries[i]["states"];
                                           }
                                         }
                                         isCountrySelected = true;
@@ -438,23 +471,27 @@ class _ProfilePageState extends State<ProfilePage> {
                                       return DropdownMenuItem<String>(
                                         value: st["name"],
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5, vertical: 3),
+                                          padding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 5,
+                                                  vertical: 3),
                                           child: Text(
                                             st["name"],
                                             style: TextStyle(
                                                 fontSize: heading4.fontSize,
-                                                fontWeight: heading4.fontWeight,
-                                                fontFamily: heading4.fontFamily,
+                                                fontWeight:
+                                                    heading4.fontWeight,
+                                                fontFamily:
+                                                    heading4.fontFamily,
                                                 color: heading3.color),
                                           ),
                                         ),
                                       );
                                     }).toList(),
-                                    value: newState,
+                                    value: state,
                                     onChanged: (value) {
                                       setState(() {
-                                        newState = value!;
+                                        state = value!;
                                         isStateSelected = true;
                                       });
                                     },
@@ -478,8 +515,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         onChanged: (value) {
                           setState(() {
                             EmailValidator.validate(value)
-                                ? isEmailCorrect = true
-                                : isEmailCorrect = false;
+                              ? isEmailCorrect = true
+                              : isEmailCorrect = false;
                           });
                         },
                         // validator: (value) {
@@ -605,9 +642,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     color: const Color(0XFFC8C8C8)))),
                   ),
                 ),
-                SizedBox(
-                  height: 50.h,
-                ),
+                SizedBox(height: 50.h,),
               ],
             ),
           ),
