@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:sarathi/ui/auth/email_verify.dart';
 import 'package:sarathi/ui/auth/sign_up.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/views/home.dart';
+
+import '../../controllers/auth_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -18,6 +21,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final AuthController _authController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,8 +128,9 @@ class _LoginPageState extends State<LoginPage> {
                     child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: GestureDetector(
-                          onTap: () {
-                            Get.to(HomePage());
+                          onTap: () async {
+                            await _authController.login(
+                                emailController.text, passwordController.text);
                           },
                           child: Image.asset(
                             'assets/images/loginbutton.png',

@@ -1,3 +1,5 @@
+import 'package:otp_text_field/otp_text_field.dart';
+import 'package:otp_text_field/style.dart';
 import 'package:sarathi/ui/auth/user_info.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
@@ -17,8 +19,9 @@ class EmailVerify extends StatefulWidget {
 }
 
 class _EmailVerifyState extends State<EmailVerify> {
-  TextEditingController otpController = TextEditingController();
+  OtpFieldController otpController = OtpFieldController();
   final AuthController _authController = Get.find<AuthController>();
+  String otpvalue = '1234';
 
   @override
   Widget build(BuildContext context) {
@@ -88,16 +91,32 @@ class _EmailVerifyState extends State<EmailVerify> {
                     ),
                   ),
                   Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 60.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _otpFieldBox(true, false),
-                          _otpFieldBox(false, false),
-                          _otpFieldBox(false, false),
-                          _otpFieldBox(false, true)
-                        ],
-                      )),
+                    padding: EdgeInsets.symmetric(horizontal: 60.w),
+                    child: OTPTextField(
+                      controller: otpController,
+                      length: 4,
+                      width: MediaQuery.of(context).size.width,
+                      // fieldWidth: 80,
+                      style: TextStyle(fontSize: 17),
+                      textFieldAlignment: MainAxisAlignment.spaceAround,
+                      fieldStyle: FieldStyle.underline,
+                      onCompleted: (pin) {
+                        setState(() {
+                          otpvalue = pin;
+                        });
+                        print("Completed: " + pin);
+                      },
+                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     _otpFieldBox(true, false),
+                    //     _otpFieldBox(false, false),
+                    //     _otpFieldBox(false, false),
+                    //     _otpFieldBox(false, true)
+                    //   ],
+                    // ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 26, left: 31),
                     child: GestureDetector(
@@ -113,10 +132,12 @@ class _EmailVerifyState extends State<EmailVerify> {
                     padding: EdgeInsets.symmetric(horizontal: 15.w),
                     child: GestureDetector(
                         onTap: () {
+                          print(_authController.emailAuth.value);
+                          print(otpvalue);
                           _authController.verifyOTP(
                               _authController.emailAuth.value,
-                              otpController.text);
-                          // Get.to(const UserInfoPage());
+                              otpvalue);
+                          
                         },
                         child: Image.asset('assets/images/verify.png')),
                   ),
@@ -130,31 +151,32 @@ class _EmailVerifyState extends State<EmailVerify> {
     );
   }
 
-  _otpFieldBox(bool first, last) {
-    return SizedBox(
-      width: 50,
-      child: TextFormField(
-        onChanged: (value) {
-          if (value.length == 1 && last == false) {
-            FocusScope.of(context).nextFocus();
-          }
-          if (value.isEmpty && first == false) {
-            FocusScope.of(context).previousFocus();
-          }
-        },
-        decoration: InputDecoration(
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: blueColor),
-          ),
-        ),
-        style: heading2,
-        textAlign: TextAlign.center,
-        keyboardType: TextInputType.number,
-        inputFormatters: [
-          LengthLimitingTextInputFormatter(1),
-          FilteringTextInputFormatter.digitsOnly
-        ],
-      ),
-    );
-  }
+  // _otpFieldBox(bool first, last) {
+  //   return SizedBox(
+  //     width: 50,
+  //     child: TextFormField(
+  //       controller: otpController,
+  //       onChanged: (value) {
+  //         if (value.length == 1 && last == false) {
+  //           FocusScope.of(context).nextFocus();
+  //         }
+  //         if (value.isEmpty && first == false) {
+  //           FocusScope.of(context).previousFocus();
+  //         }
+  //       },
+  //       decoration: InputDecoration(
+  //         focusedBorder: UnderlineInputBorder(
+  //           borderSide: BorderSide(color: blueColor),
+  //         ),
+  //       ),
+  //       style: heading2,
+  //       textAlign: TextAlign.center,
+  //       keyboardType: TextInputType.number,
+  //       inputFormatters: [
+  //         LengthLimitingTextInputFormatter(1),
+  //         FilteringTextInputFormatter.digitsOnly
+  //       ],
+  //     ),
+  //   );
+  // }
 }

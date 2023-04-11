@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:sarathi/ui/auth/otp.dart';
 import 'package:sarathi/ui/auth/otp_email.dart';
+import 'package:sarathi/ui/auth/user_info.dart';
 import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/views/intropages/page1.dart';
 import 'package:sarathi/ui/views/onboarding_screen.dart';
@@ -24,7 +25,7 @@ final getPages = <GetPage>[
   ),
   GetPage(
     name: Routes.PROFILE,
-    page: () => const ProfilePage(),
+    page: () => const UserInfoPage(),
   ),
   GetPage(
     name: Routes.ONBOARDING,

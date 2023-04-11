@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/views/home.dart';
@@ -23,6 +24,7 @@ class UserInfoPage extends StatefulWidget {
 
 class _UserInfoPageState extends State<UserInfoPage> {
   File? _image;
+  final AuthController _authController = Get.find<AuthController>();
   TextEditingController nameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -381,10 +383,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                 color: whiteColor),
                           ),
                           const SizedBox(height: 8),
-          // -------------------------Country Drop Down Menu ---------------------------------
+                          // -------------------------Country Drop Down Menu ---------------------------------
                           if (_countries.isEmpty)
-                            const Center(
-                                child: CircularProgressIndicator())
+                            const Center(child: CircularProgressIndicator())
                           else
                             Container(
                                 height: 30,
@@ -404,18 +405,14 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                       return DropdownMenuItem<String>(
                                         value: cn["name"],
                                         child: Padding(
-                                          padding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 5,
-                                                  vertical: 3),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5, vertical: 3),
                                           child: Text(
                                             cn["name"],
                                             style: TextStyle(
                                                 fontSize: heading4.fontSize,
-                                                fontWeight:
-                                                    heading4.fontWeight,
-                                                fontFamily:
-                                                    heading4.fontFamily,
+                                                fontWeight: heading4.fontWeight,
+                                                fontFamily: heading4.fontFamily,
                                                 color: heading3.color),
                                           ),
                                         ),
@@ -429,10 +426,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                         for (int i = 0;
                                             i < _countries.length;
                                             i++) {
-                                          if (_countries[i]["name"] ==
-                                              value) {
-                                            _states =
-                                                _countries[i]["states"];
+                                          if (_countries[i]["name"] == value) {
+                                            _states = _countries[i]["states"];
                                           }
                                         }
                                         isCountrySelected = true;
@@ -471,18 +466,14 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                       return DropdownMenuItem<String>(
                                         value: st["name"],
                                         child: Padding(
-                                          padding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 5,
-                                                  vertical: 3),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5, vertical: 3),
                                           child: Text(
                                             st["name"],
                                             style: TextStyle(
                                                 fontSize: heading4.fontSize,
-                                                fontWeight:
-                                                    heading4.fontWeight,
-                                                fontFamily:
-                                                    heading4.fontFamily,
+                                                fontWeight: heading4.fontWeight,
+                                                fontFamily: heading4.fontFamily,
                                                 color: heading3.color),
                                           ),
                                         ),
@@ -515,8 +506,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
                         onChanged: (value) {
                           setState(() {
                             EmailValidator.validate(value)
-                              ? isEmailCorrect = true
-                              : isEmailCorrect = false;
+                                ? isEmailCorrect = true
+                                : isEmailCorrect = false;
                           });
                         },
                         // validator: (value) {
@@ -606,7 +597,18 @@ class _UserInfoPageState extends State<UserInfoPage> {
                         isStateSelected &&
                         isEmailCorrect &&
                         isEducationCorrect) {
-                      Get.to(const HomePage());
+                      _authController.updateProfile({
+                        "name": nameController.text,
+                        "dob": dobController.text,
+                        "address": {
+                          "line1": addressController.text,
+                          "state": state,
+                          "country": country
+                        },
+                        "email": emailController.text,
+                        "education": educationController.text,
+                        "phone": "9988776655" //TODO
+                      });
                     }
                   },
                   child: Container(
@@ -642,7 +644,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                     color: const Color(0XFFC8C8C8)))),
                   ),
                 ),
-                SizedBox(height: 50.h,),
+                SizedBox(
+                  height: 50.h,
+                ),
               ],
             ),
           ),
