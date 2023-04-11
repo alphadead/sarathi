@@ -29,19 +29,20 @@ class _SplashScreenState extends State<SplashScreen> {
     //       MaterialPageRoute(builder: (context) => const OnBoardingScreen()));
     // });
 
-    await Future.delayed(const Duration(milliseconds: 1500), () async {
+    // await Future.delayed(const Duration(milliseconds: 1500), () async {
       var data = await _storageController.getDetails();
-      if (data['verified'] != null) {
-        if (data['verified'] == 'true') {
-          Get.find<UserController>().email.value = data['email']!;
-          Get.offAllNamed(Routes.HOME);
-        } else {
-          Get.offAllNamed(Routes.ONBOARDING);
-        }
+      if (data['email'] != null && data['pass']!=null) {
+        await Get.find<AuthController>().login(data['email']!,data['pass']!);
+        // if (data['verified'] == 'true') {
+        //   Get.find<UserController>().email.value = data['email']!;
+        //   Get.offAllNamed(Routes.HOME);
+        // } else {
+        //   Get.offAllNamed(Routes.ONBOARDING);
+        // }
       } else {
         Get.offAllNamed(Routes.ONBOARDING);
       }
-    });
+    // });
   }
 
   @override

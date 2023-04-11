@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:sarathi/controllers/storage_controller.dart';
+import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/auth/otp.dart';
 import 'package:sarathi/ui/auth/otp_email.dart';
 import 'package:sarathi/ui/utils/routes.dart';
@@ -10,6 +11,7 @@ class AuthController extends GetxController {
   RxBool isLoggedin = false.obs;
   RxString emailAuth = ''.obs;
   StorageController storageController = StorageController();
+  final UserController _userController = Get.find<UserController>();
 
   updateProfile(Map<String, dynamic> data) async {
     print(data);
@@ -24,6 +26,8 @@ class AuthController extends GetxController {
           print("Extra details added");
           isLoggedin.value = true;
           storageController.addVerified();
+          _userController.email.value = emailAuth.value;
+          _userController.fetchUserDetails();
           Get.offAllNamed(Routes.HOME);
         }
       } else {
@@ -43,20 +47,23 @@ class AuthController extends GetxController {
         "password": password,
       });
       if (res.statusCode == 200) {
-        if (res.data == 'Login Successful') {
+        if (res.data['message'] == 'Login Successful') {
           await storageController.addEmailPass(email, password);
           isLoggedin.value = true;
-          if (res.data["profile_status"] == "Complete") {
+          if (res.data["profile_status"]) {
             print("Login Successful. Redirecting to home page");
             await storageController.addVerified();
+            _userController.email.value = emailAuth.value;
+            await _userController.fetchUserDetails();
             Get.offAllNamed(Routes.HOME);
           } else {
             emailAuth.value = email;
             print("Login Successful. Add additional page");
             Get.offAllNamed(Routes.PROFILE);
           }
-        } else {
-          print("SOme error occured");
+        } else if ((res.data['error'] == 'Wrong password')) {
+          // print("SOme error occured");
+          Get.snackbar("Wrong Password", "Please try again");
         }
       } else {
         print(res.statusCode);
