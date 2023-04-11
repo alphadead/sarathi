@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
           Get.put(UserController(), permanent: true);
         }),
         // routes: ,
-        getPages: getPages, // ro
+        getPages: getPages, 
         theme: ThemeData(
             inputDecorationTheme: const InputDecorationTheme(
           fillColor: Colors.black12,

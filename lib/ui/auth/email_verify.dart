@@ -7,6 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sarathi/ui/views/home.dart';
 
+import '../../controllers/auth_controller.dart';
+
 class EmailVerify extends StatefulWidget {
   const EmailVerify({super.key});
 
@@ -15,8 +17,8 @@ class EmailVerify extends StatefulWidget {
 }
 
 class _EmailVerifyState extends State<EmailVerify> {
-  var email = "design@gmail.com";
   TextEditingController otpController = TextEditingController();
+  final AuthController _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.35,
                           child: Text(
-                            email,
+                            _authController.emailAuth.value,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: heading3.fontSize,
@@ -111,7 +113,10 @@ class _EmailVerifyState extends State<EmailVerify> {
                     padding: EdgeInsets.symmetric(horizontal: 15.w),
                     child: GestureDetector(
                         onTap: () {
-                          Get.to(const UserInfoPage());
+                          _authController.verifyOTP(
+                              _authController.emailAuth.value,
+                              otpController.text);
+                          // Get.to(const UserInfoPage());
                         },
                         child: Image.asset('assets/images/verify.png')),
                   ),

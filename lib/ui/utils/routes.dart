@@ -5,6 +5,7 @@ import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/views/intropages/page1.dart';
 import 'package:sarathi/ui/views/onboarding_screen.dart';
 
+import '../auth/email_verify.dart';
 import '../views/user_profile.dart';
 
 class Routes {
@@ -31,6 +32,6 @@ final getPages = <GetPage>[
   ),
   GetPage(
     name: Routes.OTPEMAIL,
-    page: () =>  OtpScreenEmail()
+    page: () =>  EmailVerify()
   ),
 ];

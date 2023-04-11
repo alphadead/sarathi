@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:sarathi/ui/auth/email_verify.dart';
 import 'package:sarathi/ui/auth/login.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
+
+import '../../controllers/auth_controller.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -15,6 +18,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final AuthController _authController = Get.find<AuthController>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
@@ -123,8 +127,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: GestureDetector(
-                          onTap: () {
-                            Get.to(EmailVerify());
+                          onTap: () async{
+                            await _authController.register(
+                            emailController.text, passwordController.text);
                           },
                           child: Image.asset(
                             'assets/images/signupbutton.png',
