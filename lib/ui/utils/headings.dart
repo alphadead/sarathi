@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final heading1 = TextStyle(
-    fontSize: 24.sp,
+    fontSize: 28.sp,
     fontFamily: 'Montserrat-Bold',
     // fontWeight: FontWeight.bold,
     color: const Color(0xff3A3A3A));

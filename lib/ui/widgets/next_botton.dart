@@ -1,4 +1,4 @@
-import 'package:sarathi/ui/auth/phone.dart';
+import 'package:sarathi/ui/auth/sign_up.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,9 +9,9 @@ Widget nextButton(String text) {
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(colors: [
-          cyanColor.withOpacity(0.50),
-          blueColor.withOpacity(0.50),
-        ]),
+          const Color(0XFF01AE4F).withOpacity(0.50),
+          const Color(0XFFFFEEBB).withOpacity(0.50),
+        ], begin: Alignment.topLeft, end: Alignment.bottomCenter),
         boxShadow: const [
           BoxShadow(
             color: Colors.black12,
@@ -30,12 +30,12 @@ Widget nextButton(String text) {
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           shadowColor: Colors.transparent),
       onPressed: () {
-        Get.to(const PhoneScreen());
+        Get.to(const SignUpPage());
       },
       child: Text(
         text,
         style: TextStyle(
-            fontSize: 16, color: whiteColor, fontWeight: FontWeight.w400),
+            fontSize: 16, color: blackColor, fontWeight: FontWeight.w400),
       ),
     ),
   );

@@ -41,7 +41,7 @@ class _PageOneState extends State<PageOne> {
             height: 512.h,
             width: 340.w,
             decoration: BoxDecoration(
-                color: lightBlueColor.withOpacity(0.21),
+                color: greenColor.withOpacity(0.21),
                 borderRadius: BorderRadius.circular(30.r)),
             // child:
           ),
