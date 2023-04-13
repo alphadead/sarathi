@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
     //       MaterialPageRoute(builder: (context) => const OnBoardingScreen()));
     // });
 
-    // await Future.delayed(const Duration(milliseconds: 1500), () async {
+    await Future.delayed(const Duration(milliseconds: 1500), () async {
       var data = await _storageController.getDetails();
       if (data['email'] != null && data['pass']!=null) {
         await Get.find<AuthController>().login(data['email']!,data['pass']!);
@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
       } else {
         Get.offAllNamed(Routes.ONBOARDING);
       }
-    // });
+    });
   }
 
   @override

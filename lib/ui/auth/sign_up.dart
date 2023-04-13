@@ -127,9 +127,13 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: GestureDetector(
-                          onTap: () async{
+                          onTap: () async {
                             await _authController.register(
-                            emailController.text, passwordController.text);
+                                emailController.text, passwordController.text);
+                            // if (emailController.text.isNotEmpty &&
+                            //     passwordController.text.isNotEmpty) {
+                            //   Get.to(EmailVerify());
+                            // }
                           },
                           child: Image.asset(
                             'assets/images/signupbutton.png',

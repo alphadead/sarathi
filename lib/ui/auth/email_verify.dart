@@ -21,7 +21,7 @@ class EmailVerify extends StatefulWidget {
 class _EmailVerifyState extends State<EmailVerify> {
   OtpFieldController otpController = OtpFieldController();
   final AuthController _authController = Get.find<AuthController>();
-  String otpvalue = '1234';
+  String otpvalue = '';
 
   @override
   Widget build(BuildContext context) {
@@ -135,9 +135,8 @@ class _EmailVerifyState extends State<EmailVerify> {
                           print(_authController.emailAuth.value);
                           print(otpvalue);
                           _authController.verifyOTP(
-                              _authController.emailAuth.value,
-                              otpvalue);
-                          
+                              _authController.emailAuth.value, otpvalue);
+                          // Get.to(HomePage());
                         },
                         child: Image.asset('assets/images/verify.png')),
                   ),

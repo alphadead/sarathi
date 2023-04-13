@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sarathi/ui/auth/login.dart';
 import 'package:sarathi/ui/auth/otp.dart';
 import 'package:sarathi/ui/auth/otp_email.dart';
 import 'package:sarathi/ui/auth/user_info.dart';
@@ -19,6 +20,10 @@ class Routes {
 }
 
 final getPages = <GetPage>[
+  GetPage(
+    name: Routes.LOGIN,
+    page: () => const LoginPage(),
+  ),
   GetPage(
     name: Routes.HOME,
     page: () => const HomePage(),

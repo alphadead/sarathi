@@ -131,6 +131,10 @@ class _LoginPageState extends State<LoginPage> {
                           onTap: () async {
                             await _authController.login(
                                 emailController.text, passwordController.text);
+                            // if (emailController.text.isNotEmpty &&
+                            //     passwordController.text.isNotEmpty) {
+                            //   Get.to(HomePage());
+                            // }
                           },
                           child: Image.asset(
                             'assets/images/loginbutton.png',
