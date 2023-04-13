@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:sarathi/models/user.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/views/home.dart';
@@ -16,7 +17,8 @@ import 'package:sarathi/ui/widgets/select_image_options.dart';
 import '../../controllers/auth_controller.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({super.key, required this.user});
+  final User user;
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -53,6 +55,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   String? newState;
   String? newCountry;
+
+  @override
+  void initState() {
+    super.initState();
+    getWorldData();
+    print(widget.user.name);
+  }
 
   bool isCountrySelected = false;
   bool isStateSelected = false;
@@ -107,12 +116,6 @@ class _ProfilePageState extends State<ProfilePage> {
             );
           }),
     );
-  }
-
-  @override
-  void initState() {
-    getWorldData();
-    super.initState();
   }
 
   @override

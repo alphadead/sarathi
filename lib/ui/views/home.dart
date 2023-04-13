@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/views/package_screens/career_astrology.dart';
@@ -15,6 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final UserController _userController = Get.find<UserController>();
   final List<String> categories = [
     'CAREER ASTROLOGY',
     'PSYCHOLOGY BASED ANALYSIS',
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: GestureDetector(
               onTap: () {
-                Get.to(const ProfilePage());
+                Get.to(ProfilePage(user: _userController.user.value));
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -109,7 +111,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.symmetric(horizontal: 48.w, vertical: 12.h),
             child: GestureDetector(
               onTap: () {
-                Get.to(ProfilePage());
+                Get.to(ProfilePage(user: _userController.user.value));
               },
               child: Text(
                 'PROFILE',
@@ -123,9 +125,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 48.w, vertical: 12.h),
             child: GestureDetector(
-              onTap: () {
-                
-              },
+              onTap: () {},
               child: Text(
                 'PURCHASE',
                 style: TextStyle(
@@ -138,9 +138,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 48.w, vertical: 12.h),
             child: GestureDetector(
-              onTap: () {
-
-              },
+              onTap: () {},
               child: Text(
                 'SETTINGS',
                 style: TextStyle(
@@ -171,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(const ProfilePage());
+                        Get.to(ProfilePage(user: _userController.user.value));
                       },
                       child: Container(
                         height: 50.h,

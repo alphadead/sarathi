@@ -1,3 +1,4 @@
+import 'package:sarathi/bindings/home_binding.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/routes.dart';
@@ -26,10 +27,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: (context, child) => GetMaterialApp(
-        initialBinding: BindingsBuilder(() {
-          Get.put(AuthController(), permanent: true);
-          Get.put(UserController(), permanent: true);
-        }),
+        initialBinding: HomeBinding(),
         // routes: ,
         getPages: getPages, 
         theme: ThemeData(

@@ -12,7 +12,7 @@ class AuthController extends GetxController {
   RxBool isLoggedin = false.obs;
   RxString emailAuth = ''.obs;
   StorageController storageController = StorageController();
-  // final UserController _userController = Get.find<UserController>();
+  final UserController _userController = Get.find<UserController>();
 
   updateProfile(Map<String, dynamic> data) async {
     print(data);
@@ -27,8 +27,8 @@ class AuthController extends GetxController {
           print("Extra details added");
           isLoggedin.value = true;
           storageController.addVerified();
-          // _userController.email.value = emailAuth.value;
-          // _userController.fetchUserDetails();
+          _userController.email.value = emailAuth.value;
+          _userController.fetchUserDetails();
           Get.offAllNamed(Routes.HOME);
         }
       } else {
@@ -54,8 +54,8 @@ class AuthController extends GetxController {
           if (res.data["profile_status"]) {
             print("Login Successful. Redirecting to home page");
             await storageController.addVerified();
-            // _userController.email.value = emailAuth.value;
-            // await _userController.fetchUserDetails();
+            _userController.email.value = emailAuth.value;
+            await _userController.fetchUserDetails();
             Get.offAllNamed(Routes.HOME);
           } else {
             emailAuth.value = email;
