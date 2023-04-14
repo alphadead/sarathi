@@ -2,7 +2,12 @@ import 'package:country_state_picker/country_state_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
+import 'package:sarathi/ui/utils/colors.dart';
+import 'package:sarathi/ui/utils/headings.dart';
+import 'package:sarathi/ui/views/package_screens/career_astrology/career_astrology_feedback.dart';
 
 class CareerAstrologyPage extends StatefulWidget {
   const CareerAstrologyPage({super.key});
@@ -39,12 +44,23 @@ class _CareerAstrologyPageState extends State<CareerAstrologyPage> {
             showUnselectedLabels: false,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined), label: 'Home'),
+                  icon: ImageIcon(
+                    AssetImage('assets/icons/home.png'),
+                    size: 25,
+                  ),
+                  label: 'Home'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.notification_add_outlined),
+                  icon: ImageIcon(
+                    AssetImage('assets/icons/bell.png'),
+                    size: 25,
+                  ),
                   label: 'Notification'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.person_2_outlined), label: 'Person'),
+                  icon: ImageIcon(
+                    AssetImage('assets/icons/person.png'),
+                    size: 25,
+                  ),
+                  label: 'Person'),
             ],
           ),
         ),
@@ -55,7 +71,7 @@ class _CareerAstrologyPageState extends State<CareerAstrologyPage> {
                   width: double.infinity,
                   height: 350.h,
                   child: SvgPicture.asset(
-                    'assets/images/packagepagesillustration.svg',
+                    'assets/images/careerastrology.svg',
                     fit: BoxFit.cover,
                   )),
               Padding(
@@ -94,7 +110,7 @@ class _CareerAstrologyPageState extends State<CareerAstrologyPage> {
                             keyboardType: TextInputType.emailAddress,
                             autofillHints: const [AutofillHints.email]),
                         SizedBox(
-                          height: 45.h,
+                          height: 33.h,
                         ),
                         TextField(
                             controller: dobController,
@@ -123,7 +139,7 @@ class _CareerAstrologyPageState extends State<CareerAstrologyPage> {
                             keyboardType: TextInputType.emailAddress,
                             autofillHints: const [AutofillHints.email]),
                         SizedBox(
-                          height: 45.h,
+                          height: 33.h,
                         ),
                         TextField(
                             controller: placeController,
@@ -138,22 +154,68 @@ class _CareerAstrologyPageState extends State<CareerAstrologyPage> {
                             keyboardType: TextInputType.emailAddress,
                             autofillHints: const [AutofillHints.email]),
                         SizedBox(
-                          height: 45.h,
+                          height: 33.h,
                         ),
                         TextField(
-                            controller: tobController,
-                            readOnly: true,
-                            onTap: _showTimePicker,
-                            decoration: InputDecoration(
-                                labelText: "Time of Birth",
-                                isDense: true,
-                                filled: true,
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 13.w, vertical: 13.h),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15.r))),
-                            keyboardType: TextInputType.emailAddress,
-                            autofillHints: const [AutofillHints.email]),
+                          controller: tobController,
+                          readOnly: true,
+                          onTap: _showTimePicker,
+                          decoration: InputDecoration(
+                              labelText: "Time of Birth",
+                              isDense: true,
+                              filled: true,
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 13.w, vertical: 13.h),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.r))),
+                          keyboardType: TextInputType.emailAddress,
+                          autofillHints: const [AutofillHints.email],
+                        ),
+                        SizedBox(
+                          height: 25.h,
+                        ),
+                        Row(
+                          children: [
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                if (nameController.text.isNotEmpty &&
+                                    dobController.text.isNotEmpty &&
+                                    placeController.text.isNotEmpty &&
+                                    tobController.text.isNotEmpty) {
+                                  Get.to(const CareerAstrologyFeedback());
+                                }
+                                Get.to(const CareerAstrologyFeedback());
+                              },
+                              child: Container(
+                                height: 45.h,
+                                width: 152.w,
+                                decoration: BoxDecoration(
+                                    boxShadow: const [
+                                      BoxShadow(
+                                          color: Colors.black12,
+                                          spreadRadius: 4,
+                                          blurRadius: 2,
+                                          offset: Offset(-1, 4))
+                                    ],
+                                    borderRadius: BorderRadius.circular(25),
+                                    gradient: LinearGradient(
+                                        colors: [
+                                          greenColor.withOpacity(0.5),
+                                          yellowColor.withOpacity(0.5)
+                                        ],
+                                        begin: Alignment.bottomCenter,
+                                        end: Alignment.topCenter)),
+                                child: Center(
+                                  child: Text(
+                                    'SUBMIT',
+                                    style: heading5
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ],
                     )
                   ],

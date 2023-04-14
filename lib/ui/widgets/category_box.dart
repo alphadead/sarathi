@@ -15,21 +15,33 @@ class CategoryBox extends StatelessWidget {
       child: Container(
         height: 190.h,
         width: 146.w,
-        color: greyColor.withOpacity(0.30),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            yellowColor.withOpacity(0.3),
+            greenColor.withOpacity(0.3)
+          ], begin: Alignment.topRight, end: Alignment.bottomLeft),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.all(5),
               child: SizedBox(
-                height: 90.h,
-                width: 90.w,
-                child: Image.asset(img, fit: BoxFit.contain,)),
+                  height: 90.h,
+                  width: 90.w,
+                  child: Image.asset(
+                    img,
+                    fit: BoxFit.contain,
+                  )),
             ),
             Center(
               child: SizedBox(
-                width: 115.w,
-                child: Text(text, maxLines: 4, style: TextStyle(fontSize: 15.h),)),
+                  width: 115.w,
+                  child: Text(
+                    text,
+                    maxLines: 4,
+                    style: TextStyle(fontSize: 15.h),
+                  )),
             ),
           ],
         ),

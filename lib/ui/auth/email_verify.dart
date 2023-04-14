@@ -61,17 +61,17 @@ class _EmailVerifyState extends State<EmailVerify> {
                   SizedBox(height: 30.h),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 31.w),
-                    child: Row(
+                    child: Column(
                       children: [
                         Text(
                           "Enter the OTP sent to ",
                           style: heading3,
                         ),
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.35,
+                          width: MediaQuery.of(context).size.width * 0.60,
                           child: Text(
                             _authController.emailAuth.value,
-                            overflow: TextOverflow.ellipsis,
+                            // overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: heading3.fontSize,
                                 color: heading3.color,

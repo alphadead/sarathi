@@ -151,58 +151,21 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                 _showSelectPhotoOptions(context);
                               },
                               child: _image == null
-                                  ? Stack(
-                                      children: [
-                                        Transform.rotate(
-                                          angle: 30,
-                                          child: Center(
-                                            child: Container(
-                                              width: 106,
-                                              height: 106,
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0XFFB52FF8),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          36)),
-                                            ),
-                                          ),
-                                        ),
-                                        Transform.rotate(
-                                          angle: -57,
-                                          child: Center(
-                                            child: Container(
-                                              width: 104,
-                                              height: 104,
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0XFF40CEF2),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          36)),
-                                            ),
-                                          ),
-                                        ),
-                                        Transform.rotate(
-                                          angle: 0,
-                                          child: Center(
-                                            child: Container(
-                                              width: 100,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                  color: whiteColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          36)),
-                                              child: Center(
-                                                  child: Image.asset(
-                                                      'assets/icons/camera.png',
-                                                      height: 27)),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    )
+                                  ? Center(
+                                    child: Container(
+                                      width: 100,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                          color: whiteColor,
+                                          borderRadius:
+                                              BorderRadius.circular(
+                                                  36)),
+                                      child: Center(
+                                          child: Image.asset(
+                                              'assets/icons/camera.png',
+                                              height: 27)),
+                                    ),
+                                  )
                                   : Center(
                                       child: Container(
                                         width: 100,

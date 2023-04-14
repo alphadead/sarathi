@@ -8,6 +8,7 @@ class User {
   String? phone;
   String? createdAt;
   String? updatedAt;
+  String? image;
   int? iV;
 
   User(
@@ -20,6 +21,7 @@ class User {
       this.phone,
       this.createdAt,
       this.updatedAt,
+      this.image,
       this.iV});
 
   User.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,9 @@ class User {
     phone = json['phone'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    // image = json['image'];
+    //TODO
+    image = 'https://images.pexels.com/photos/4153800/pexels-photo-4153800.jpeg';
     iV = json['__v'];
   }
 
@@ -49,6 +54,7 @@ class User {
     data['phone'] = phone;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
+    data['image'] = image;
     data['__v'] = iV;
     return data;
   }

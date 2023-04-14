@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/views/package_screens/career_astrology.dart';
+import 'package:sarathi/ui/views/package_screens/career_astrology/career_astrology.dart';
 import 'package:sarathi/ui/views/user_profile.dart';
 import 'package:sarathi/ui/widgets/category_box.dart';
 
@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final UserController _userController = Get.find<UserController>();
+  
   final List<String> categories = [
     'CAREER ASTROLOGY',
     'PSYCHOLOGY BASED ANALYSIS',
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(18),
                               child: Image.network(
-                                'https://images.pexels.com/photos/9950569/pexels-photo-9950569.jpeg',
+                                _userController.user.value.image.toString(),
                                 fit: BoxFit.cover,
                               )),
                         ),
@@ -86,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Ashu Garg',
+                        _userController.user.value.name.toString(),
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -94,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                             color: blackColor),
                       ),
                       Text(
-                        '@therealashugarg',
+                        _userController.user.value.phone.toString(),
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -180,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(18),
                             child: Image.network(
-                              'https://images.pexels.com/photos/4153800/pexels-photo-4153800.jpeg',
+                              _userController.user.value.image.toString(),
                               fit: BoxFit.cover,
                             )),
                       ),

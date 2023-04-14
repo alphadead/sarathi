@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import 'controllers/auth_controller.dart';
 
 void main() {
-  runApp(DevicePreview(enabled: true, builder: (context) => const MyApp()));
+  runApp(DevicePreview(enabled: false, builder: (context) => const MyApp()));
 }
 
 class MyApp extends StatefulWidget {

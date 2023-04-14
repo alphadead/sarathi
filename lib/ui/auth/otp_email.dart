@@ -62,7 +62,8 @@ class _OtpScreenEmailState extends State<OtpScreenEmail> {
                   SizedBox(height: 30.h),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 31.w),
-                    child: Row(
+                    child: Column(
+                      
                       children: [
                         Text(
                           "Enter the OTP sent to ",

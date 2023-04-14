@@ -36,7 +36,7 @@ class UserController extends GetxController {
         "email": email.value,
       });
       if (res.statusCode == 200) {
-        user.value = User.fromJson(res.data);
+        user.value = User.fromJson(res.data as Map<String,dynamic>);
         isLoggedin.value = true;
         isVerified.value = true;
         isAstroComplete.value = true;

@@ -128,6 +128,7 @@ class AuthController extends GetxController {
       } else if (res.data['status'] == 'Failed') {
         {
           print("otp verification Failed");
+          Get.snackbar('Otp Verification Failed', res.data['message']);
           // print("OTP sent");
           // TODO: show snackbar of failed
         }
