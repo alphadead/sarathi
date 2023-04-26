@@ -152,20 +152,19 @@ class _UserInfoPageState extends State<UserInfoPage> {
                               },
                               child: _image == null
                                   ? Center(
-                                    child: Container(
-                                      width: 100,
-                                      height: 100,
-                                      decoration: BoxDecoration(
-                                          color: whiteColor,
-                                          borderRadius:
-                                              BorderRadius.circular(
-                                                  36)),
-                                      child: Center(
-                                          child: Image.asset(
-                                              'assets/icons/camera.png',
-                                              height: 27)),
-                                    ),
-                                  )
+                                      child: Container(
+                                        width: 100,
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                            color: whiteColor,
+                                            borderRadius:
+                                                BorderRadius.circular(36)),
+                                        child: Center(
+                                            child: Image.asset(
+                                                'assets/icons/camera.png',
+                                                height: 27)),
+                                      ),
+                                    )
                                   : Center(
                                       child: Container(
                                         width: 100,

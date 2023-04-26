@@ -67,11 +67,10 @@ class _EmailVerifyState extends State<EmailVerify> {
                           "Enter the OTP sent to ",
                           style: heading3,
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.60,
+                        Center(
                           child: Text(
-                            _authController.emailAuth.value,
-                            // overflow: TextOverflow.ellipsis,
+                            // _authController.emailAuth.value,
+                            "ashugarg0011@gmail.com",
                             style: TextStyle(
                                 fontSize: heading3.fontSize,
                                 color: heading3.color,
@@ -117,28 +116,104 @@ class _EmailVerifyState extends State<EmailVerify> {
                     //   ],
                     // ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 26, left: 31),
-                    child: GestureDetector(
+                  SizedBox(
+                    height: 24.h,
+                  ),
+                  Row(
+                    children: [
+                      const Spacer(),
+                      Text('Didn’t you recieve the OTP? ',
+                          style: TextStyle(
+                              fontSize: heading4.fontSize,
+                              color: greyColor.withOpacity(0.5),
+                              fontWeight: heading4.fontWeight)),
+                      GestureDetector(
                         onTap: () {},
                         child: Text('Resend OTP',
                             style: TextStyle(
                                 fontSize: heading4.fontSize,
                                 color: blue2Color,
-                                fontWeight: heading4.fontWeight))),
+                                fontWeight: heading4.fontWeight)),
+                      ),
+                      const Spacer(),
+                    ],
                   ),
                   const Spacer(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.w),
-                    child: GestureDetector(
-                        onTap: () {
-                          print(_authController.emailAuth.value);
-                          print(otpvalue);
-                          _authController.verifyOTP(
-                              _authController.emailAuth.value, otpvalue);
-                          // Get.to(HomePage());
-                        },
-                        child: Image.asset('assets/images/verify.png')),
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 18.w),
+                      child: Container(
+                        height: 72.h,
+                        width: 315.w,
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 5,
+                                spreadRadius: 2,
+                                offset: Offset(0, 3))
+                          ],
+                          borderRadius: BorderRadius.all(Radius.circular(28.r)),
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0XFF01AE4F).withOpacity(0.52),
+                              Color(0XFFF0D700).withOpacity(0.74)
+                            ],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(28.r)),
+                          child: RawMaterialButton(
+                            onPressed: () {
+                              print(_authController.emailAuth.value);
+                              print(otpvalue);
+                              _authController.verifyOTP(
+                                  _authController.emailAuth.value, otpvalue);
+                            },
+                            splashColor: Colors.green,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'Verify',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: -70.w,
+                                  bottom: -100.h,
+                                  height: 134.h,
+                                  width: 144.w,
+                                  child: Container(
+                                    decoration: ShapeDecoration(
+                                      color:
+                                          Color(0XFF3BC04B).withOpacity(0.73),
+                                      shape: CircleBorder(),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  left: -70.w,
+                                  top: -100.h,
+                                  height: 144.h,
+                                  width: 144.w,
+                                  child: Container(
+                                    decoration: ShapeDecoration(
+                                      color: Color(0XFFCA8A48).withOpacity(.72),
+                                      shape: const CircleBorder(),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   const Spacer()
                 ],

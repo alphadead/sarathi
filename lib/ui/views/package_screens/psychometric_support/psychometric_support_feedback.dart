@@ -3,15 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 
-class CareerAstrologyFeedback extends StatefulWidget {
-  const CareerAstrologyFeedback({super.key});
+class PsychometricSupportFeedback extends StatefulWidget {
+  const PsychometricSupportFeedback({super.key});
 
   @override
-  State<CareerAstrologyFeedback> createState() =>
-      _CareerAstrologyFeedbackState();
+  State<PsychometricSupportFeedback> createState() =>
+      _PsychometricSupportFeedbackState();
 }
 
-class _CareerAstrologyFeedbackState extends State<CareerAstrologyFeedback> {
+class _PsychometricSupportFeedbackState extends State<PsychometricSupportFeedback> {
   bool isResultReady = true;
   //
   @override

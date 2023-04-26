@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/views/package_screens/career_astrology/career_astrology.dart';
+import 'package:sarathi/ui/views/package_screens/astro_support/astro_support.dart';
+import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support.dart';
 import 'package:sarathi/ui/views/user_profile.dart';
 import 'package:sarathi/ui/widgets/category_box.dart';
 
@@ -17,14 +18,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final UserController _userController = Get.find<UserController>();
-  
+
   final List<String> categories = [
-    'CAREER ASTROLOGY',
-    'PSYCHOLOGY BASED ANALYSIS',
-    'EDUCATION GUIDANCE / CAREER COUNSELLING',
-    'CHOOSING CAREER / COURSE',
-    'CHOOSING COLLEGE / UNIVERSITY',
-    'GETTING A JOB'
+    'Astro Support',
+    'Psychometric Support',
+    'Choose A Career',
+    'Choose A course',
+    'Choose A College',
+    'Educational Guidance and Counseling'
   ];
   final List<String> categoryImages = [
     'assets/images/category1.png',
@@ -218,16 +219,21 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(CareerAstrologyPage());
+                            Get.to(AstroSupportPage());
                           },
                           child: CategoryBox(
                             text: categories[0],
                             img: categoryImages[0],
                           ),
                         ),
-                        CategoryBox(
-                          text: categories[1],
-                          img: categoryImages[1],
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(PsychometricSupportPage());
+                          },
+                          child: CategoryBox(
+                            text: categories[1],
+                            img: categoryImages[1],
+                          ),
                         )
                       ],
                     ),

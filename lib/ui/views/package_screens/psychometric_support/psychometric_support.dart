@@ -1,42 +1,31 @@
-import 'package:country_state_picker/country_state_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
-import 'package:intl/intl.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/views/package_screens/career_astrology/career_astrology_feedback.dart';
+import 'package:sarathi/ui/views/package_screens/astro_support/astro_support_feedback.dart';
+import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support_feedback.dart';
 
-class CareerAstrologyPage extends StatefulWidget {
-  const CareerAstrologyPage({super.key});
+class PsychometricSupportPage extends StatefulWidget {
+  const PsychometricSupportPage({super.key});
 
   @override
-  State<CareerAstrologyPage> createState() => _CareerAstrologyPageState();
+  State<PsychometricSupportPage> createState() =>
+      _PsychometricSupportPageState();
 }
 
-class _CareerAstrologyPageState extends State<CareerAstrologyPage> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController dobController = TextEditingController();
-  TextEditingController placeController = TextEditingController();
-  TextEditingController tobController = TextEditingController();
+class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
+  var interests = List<String>.empty(growable: true);
 
-  void _showTimePicker() {
-    showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    ).then((value) {
-      setState(() {
-        tobController.text = value!.format(context).toString();
-      });
-    });
-  }
+  TextEditingController nameController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController interestController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         bottomNavigationBar: SizedBox(
           height: 80.h,
           child: BottomNavigationBar(
@@ -113,25 +102,34 @@ class _CareerAstrologyPageState extends State<CareerAstrologyPage> {
                           height: 33.h,
                         ),
                         TextField(
-                            controller: dobController,
-                            readOnly: true,
-                            onTap: () async {
-                              DateTime? pickDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(1990),
-                                  lastDate: DateTime.now());
-                              if (pickDate != null) {
-                                setState(() {
-                                  dobController.text =
-                                      DateFormat('dd-MM-yyy').format(pickDate);
-                                });
-                              }
+                            controller: ageController,
+                            decoration: InputDecoration(
+                                filled: true,
+                                isDense: true,
+                                labelText: "Age",
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 13.w, vertical: 13.h),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15.r))),
+                            keyboardType: TextInputType.number,
+                            autofillHints: const [AutofillHints.email]),
+                        SizedBox(
+                          height: 33.h,
+                        ),
+                        TextField(
+                            controller: interestController,
+                            onEditingComplete: () {
+                              setState(() {
+                                if (interestController.text.length > 0) {
+                                  interests.add(interestController.text);
+                                  interestController.clear();
+                                }
+                              });
                             },
                             decoration: InputDecoration(
-                                labelText: "Date of Birth",
-                                isDense: true,
                                 filled: true,
+                                isDense: true,
+                                labelText: "Interest/Hobbies",
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 13.w, vertical: 13.h),
                                 border: OutlineInputBorder(
@@ -139,37 +137,43 @@ class _CareerAstrologyPageState extends State<CareerAstrologyPage> {
                             keyboardType: TextInputType.emailAddress,
                             autofillHints: const [AutofillHints.email]),
                         SizedBox(
-                          height: 33.h,
+                          height: 10.h,
                         ),
-                        TextField(
-                            controller: placeController,
-                            decoration: InputDecoration(
-                                labelText: "Place of Birth",
-                                isDense: true,
-                                filled: true,
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 13.w, vertical: 13.h),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15.r))),
-                            keyboardType: TextInputType.emailAddress,
-                            autofillHints: const [AutofillHints.email]),
                         SizedBox(
-                          height: 33.h,
-                        ),
-                        TextField(
-                          controller: tobController,
-                          readOnly: true,
-                          onTap: _showTimePicker,
-                          decoration: InputDecoration(
-                              labelText: "Time of Birth",
-                              isDense: true,
-                              filled: true,
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 13.w, vertical: 13.h),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.r))),
-                          keyboardType: TextInputType.emailAddress,
-                          autofillHints: const [AutofillHints.email],
+                          height: 50,
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: interests.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.all(8.h),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20.r),
+                                      color: Colors.grey,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(12, 10, 5, 10),
+                                          child: Text(interests[index], style: TextStyle(color: whiteColor),),
+                                        ),
+                                        GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                interests.removeAt(index);
+                                              });
+                                            },
+                                            child: const Padding(
+                                              padding: EdgeInsets.fromLTRB(5, 10, 10, 10),
+                                              child: Icon(Icons.close, size: 16,),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
                         ),
                         SizedBox(
                           height: 25.h,
@@ -180,12 +184,10 @@ class _CareerAstrologyPageState extends State<CareerAstrologyPage> {
                             GestureDetector(
                               onTap: () {
                                 if (nameController.text.isNotEmpty &&
-                                    dobController.text.isNotEmpty &&
-                                    placeController.text.isNotEmpty &&
-                                    tobController.text.isNotEmpty) {
-                                  Get.to(const CareerAstrologyFeedback());
+                                    ageController.text.isNotEmpty &&
+                                    interests.isNotEmpty) {
+                                  Get.to(const PsychometricSupportFeedback());
                                 }
-                                Get.to(const CareerAstrologyFeedback());
                               },
                               child: Container(
                                 height: 45.h,
@@ -194,9 +196,9 @@ class _CareerAstrologyPageState extends State<CareerAstrologyPage> {
                                     boxShadow: const [
                                       BoxShadow(
                                           color: Colors.black12,
-                                          spreadRadius: 4,
-                                          blurRadius: 2,
-                                          offset: Offset(-1, 4))
+                                          spreadRadius: 3,
+                                          blurRadius: 5,
+                                          offset: Offset(0, 3))
                                     ],
                                     borderRadius: BorderRadius.circular(25),
                                     gradient: LinearGradient(
@@ -207,10 +209,7 @@ class _CareerAstrologyPageState extends State<CareerAstrologyPage> {
                                         begin: Alignment.bottomCenter,
                                         end: Alignment.topCenter)),
                                 child: Center(
-                                  child: Text(
-                                    'SUBMIT',
-                                    style: heading5
-                                  ),
+                                  child: Text('SUBMIT', style: heading5),
                                 ),
                               ),
                             )
