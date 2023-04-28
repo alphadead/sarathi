@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chip_tags/flutter_chip_tags.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/views/package_screens/astro_support/astro_support_feedback.dart';
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support_feedback.dart';
 
 class PsychometricSupportPage extends StatefulWidget {
@@ -116,64 +116,24 @@ class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
                         SizedBox(
                           height: 33.h,
                         ),
-                        TextField(
-                            controller: interestController,
-                            onEditingComplete: () {
-                              setState(() {
-                                if (interestController.text.length > 0) {
-                                  interests.add(interestController.text);
-                                  interestController.clear();
-                                }
-                              });
-                            },
-                            decoration: InputDecoration(
-                                filled: true,
-                                isDense: true,
-                                labelText: "Interest/Hobbies",
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 13.w, vertical: 13.h),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15.r))),
-                            keyboardType: TextInputType.emailAddress,
-                            autofillHints: const [AutofillHints.email]),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        SizedBox(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width * 0.85,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: interests.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.all(8.h),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20.r),
-                                      color: Colors.grey,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(12, 10, 5, 10),
-                                          child: Text(interests[index], style: TextStyle(color: whiteColor),),
-                                        ),
-                                        GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                interests.removeAt(index);
-                                              });
-                                            },
-                                            child: const Padding(
-                                              padding: EdgeInsets.fromLTRB(5, 10, 10, 10),
-                                              child: Icon(Icons.close, size: 16,),
-                                            ))
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }),
+                        ChipTags(
+                          list: interests,
+                          chipColor: Colors.grey,
+                          iconColor: Colors.black,
+                          textColor: Colors.white,
+                          chipPosition: ChipPosition.below,
+                          createTagOnSubmit: true,
+                          decoration: InputDecoration(
+                            filled: true,
+                            isDense: true,
+                            labelText: "Interest/Hobbies",
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 13.w, vertical: 13.h),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.r),
+                            ),
+                          ),
+                          keyboardType: TextInputType.text,
                         ),
                         SizedBox(
                           height: 25.h,
