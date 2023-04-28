@@ -219,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(AstroSupportPage());
+                            Get.to(const AstroSupportPage());
                           },
                           child: CategoryBox(
                             text: categories[0],
@@ -228,7 +228,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.to(PsychometricSupportPage());
+                            Get.to(const PsychometricSupportPage());
                           },
                           child: CategoryBox(
                             text: categories[1],

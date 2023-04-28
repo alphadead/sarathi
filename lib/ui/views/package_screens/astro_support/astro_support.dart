@@ -204,10 +204,7 @@ class _AstroSupportPageState extends State<AstroSupportPage> {
                                         begin: Alignment.bottomCenter,
                                         end: Alignment.topCenter)),
                                 child: Center(
-                                  child: Text(
-                                    'SUBMIT',
-                                    style: heading5
-                                  ),
+                                  child: Text('SUBMIT', style: heading5),
                                 ),
                               ),
                             )

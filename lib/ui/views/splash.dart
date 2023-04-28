@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/controllers/storage_controller.dart';
-import 'package:sarathi/controllers/user_controller.dart';
-import 'package:sarathi/ui/views/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/routes.dart';
@@ -31,8 +29,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     await Future.delayed(const Duration(milliseconds: 1500), () async {
       var data = await _storageController.getDetails();
-      if (data['email'] != null && data['pass']!=null) {
-        await Get.find<AuthController>().login(data['email']!,data['pass']!);
+      if (data['email'] != null && data['pass'] != null) {
+        await Get.find<AuthController>().login(data['email']!, data['pass']!);
         // if (data['verified'] == 'true') {
         //   Get.find<UserController>().email.value = data['email']!;
         //   Get.offAllNamed(Routes.HOME);
@@ -40,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
         //   Get.offAllNamed(Routes.ONBOARDING);
         // }
       } else {
-        Get.offAllNamed(Routes.ONBOARDING);
+        Get.offAllNamed(Routes.LOGIN);
       }
     });
   }

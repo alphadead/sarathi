@@ -11,7 +11,8 @@ class PsychometricSupportFeedback extends StatefulWidget {
       _PsychometricSupportFeedbackState();
 }
 
-class _PsychometricSupportFeedbackState extends State<PsychometricSupportFeedback> {
+class _PsychometricSupportFeedbackState
+    extends State<PsychometricSupportFeedback> {
   bool isResultReady = true;
   //
   @override
@@ -19,6 +20,7 @@ class _PsychometricSupportFeedbackState extends State<PsychometricSupportFeedbac
     super.initState();
     checkResult();
   }
+
   checkResult() {
     //TODO
     // isResultReady = true;

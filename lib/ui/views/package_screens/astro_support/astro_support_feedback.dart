@@ -7,8 +7,7 @@ class AstroSupportFeedback extends StatefulWidget {
   const AstroSupportFeedback({super.key});
 
   @override
-  State<AstroSupportFeedback> createState() =>
-      _AstroSupportFeedbackState();
+  State<AstroSupportFeedback> createState() => _AstroSupportFeedbackState();
 }
 
 class _AstroSupportFeedbackState extends State<AstroSupportFeedback> {
@@ -19,6 +18,7 @@ class _AstroSupportFeedbackState extends State<AstroSupportFeedback> {
     super.initState();
     checkResult();
   }
+
   checkResult() {
     //TODO
     // isResultReady = true;
