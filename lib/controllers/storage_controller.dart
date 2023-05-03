@@ -3,11 +3,14 @@ import 'package:get/get.dart';
 
 class StorageController extends GetxController {
   final _storage = const FlutterSecureStorage();
-  addEmailPass(String email, String pass) async {
-    await _storage.write(key: 'email', value: email);
-    await _storage.write(key: 'pass', value: pass);
+  addUnverified() async {
+  //   await _storage.write(key: 'email', value: email);
+  //   await _storage.write(key: 'pass', value: pass);
     await _storage.write(key: 'verified', value: 'false');
     print("Added to sttorage");
+  }
+  addToken(String token)async{
+    await _storage.write(key: 'token', value: token);
   }
 
   addVerified() async {

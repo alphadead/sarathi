@@ -13,6 +13,7 @@ class UserController extends GetxController {
   RxBool isAstroComplete = false.obs;
   RxBool isAstroVerified = false.obs;
   RxBool isAstroPaid = false.obs;
+  RxString token= ''.obs;
   fetchUserDetails() async {
     try {
       var res = await Dio().getUri(Uri.parse(FETCH_PROFILE_DETAILS), data: {
