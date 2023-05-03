@@ -5,6 +5,7 @@ import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/views/package_screens/astro_support/astro_support.dart';
+import 'package:sarathi/ui/views/package_screens/career_counselling/career_counselling.dart';
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support.dart';
 import 'package:sarathi/ui/views/user_profile.dart';
 import 'package:sarathi/ui/widgets/category_box.dart';
@@ -175,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: Container(
                         height: 50.h,
-                        width: 50.w,
+                        width: 50.h,
                         decoration: BoxDecoration(
                             color: Colors.yellow,
                             borderRadius: BorderRadius.circular(18.r)),
@@ -240,9 +241,14 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CategoryBox(
-                          text: categories[2],
-                          img: categoryImages[2],
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(CareerCounsellingPage());
+                          },
+                          child: CategoryBox(
+                            text: categories[2],
+                            img: categoryImages[2],
+                          ),
                         ),
                         CategoryBox(
                           text: categories[3],
@@ -271,16 +277,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-/*
-GridView.builder(
-                itemCount: 6,
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                itemBuilder: (BuildContext context, index) {
-                  return CategoryBox(
-                    text: categories[index],
-                    img: categoryImages[index],
-                  );
-                }),
-*/

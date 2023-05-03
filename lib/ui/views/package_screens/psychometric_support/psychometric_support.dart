@@ -3,9 +3,11 @@ import 'package:flutter_chip_tags/flutter_chip_tags.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support_feedback.dart';
+import 'package:sarathi/ui/views/user_profile.dart';
 
 class PsychometricSupportPage extends StatefulWidget {
   const PsychometricSupportPage({super.key});
@@ -17,7 +19,7 @@ class PsychometricSupportPage extends StatefulWidget {
 
 class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
   var interests = List<String>.empty(growable: true);
-
+  final UserController _userController = Get.find<UserController>();
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController interestController = TextEditingController();
@@ -56,13 +58,47 @@ class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
         body: SingleChildScrollView(
           child: Stack(
             children: [
-              SizedBox(
-                  width: double.infinity,
-                  height: 350.h,
-                  child: SvgPicture.asset(
-                    'assets/images/careerastrology.svg',
-                    fit: BoxFit.cover,
-                  )),
+              Stack(
+                children: [
+                  SizedBox(
+                      width: double.infinity,
+                      height: 350.h,
+                      child: SvgPicture.asset(
+                        'assets/images/careerastrology.svg',
+                        fit: BoxFit.cover,
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 40.h),
+                        child: Icon(Icons.menu, color: whiteColor),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 40.h),
+                        child: GestureDetector(
+                        onTap: () {
+                          Get.to(ProfilePage(user: _userController.user.value));
+                        },
+                        child: Container(
+                          height: 50.h,
+                          width: 50.h,
+                          decoration: BoxDecoration(
+                              color: Colors.yellow,
+                              borderRadius: BorderRadius.circular(18.r)),
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(18),
+                              child: Image.network(
+                                _userController.user.value.image.toString(),
+                                fit: BoxFit.cover,
+                              )),
+                        ),
+                                          ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 27.w),
                 child: Stack(
@@ -70,13 +106,13 @@ class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
                     Column(
                       children: [
                         SizedBox(
-                          height: 320.h,
+                          height: 340.h,
                         ),
                         SizedBox(
-                            height: 360,
+                            height: 300,
                             width: double.infinity,
                             child: Image.asset(
-                              'assets/images/astrologywheel.png',
+                              'assets/images/brain.png',
                               fit: BoxFit.cover,
                             )),
                       ],
