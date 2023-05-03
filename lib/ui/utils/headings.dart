@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final heading1 = TextStyle(
-    fontSize: 24.sp,
+    fontSize: 28.sp,
     fontFamily: 'Montserrat-Bold',
     // fontWeight: FontWeight.bold,
     color: const Color(0xff3A3A3A));
@@ -17,7 +17,7 @@ final heading2 = TextStyle(
 final heading3 = TextStyle(
     fontSize: 16.sp,
     fontFamily: 'Montserrat-Regular',
-    // fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w400,
     color: const Color(0xff3A3A3A));
 
 final heading4 = TextStyle(
@@ -25,3 +25,9 @@ final heading4 = TextStyle(
     fontFamily: 'Montserrat-Regular',
     fontWeight: FontWeight.w300,
     color: const Color(0xffB9B9B9));
+
+final heading5 = TextStyle(
+    fontSize: 15.sp,
+    // fontFamily: 'Montserrat-Regular',
+    fontWeight: FontWeight.w200,
+    color: blackColor);

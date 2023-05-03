@@ -1,3 +1,4 @@
+import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/ui/auth/otp.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
@@ -16,6 +17,7 @@ class PhoneScreen extends StatefulWidget {
 
 class _PhoneScreenState extends State<PhoneScreen> {
   TextEditingController phoneController = TextEditingController();
+  final AuthController _authController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,9 +79,12 @@ class _PhoneScreenState extends State<PhoneScreen> {
                     ),
                   ),
                   const Spacer(),
-                  InkWell(
-                      onTap: () {
-                        Get.to(const OtpScreen());
+                  GestureDetector(
+                      onTap: () async {
+                        print('jeere');
+                        await _authController.login(
+                            "divyamgupta2001@gmail.com", "12345678");
+                        // Get.to(const OtpScreen());
                       },
                       child: SignUpButton('Sign Up')),
                   const Spacer()
