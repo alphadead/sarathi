@@ -47,6 +47,7 @@ class AuthController extends GetxController {
         "email": email,
         "password": password,
       });
+      print(res.data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'Login Successful') {
           await storageController.addUnverified();
@@ -54,7 +55,7 @@ class AuthController extends GetxController {
           if (res.data["profile_status"]) {
             print("Login Successful. Redirecting to home page");
             await storageController.addVerified();
-            await storageController.addToken(res.data['token']);
+            await storageController.addToken(res.data['tokens']);
             _userController.email.value = emailAuth.value;
             await _userController.fetchUserDetails();
             Get.offAllNamed(Routes.HOME);

@@ -13,12 +13,15 @@ class UserController extends GetxController {
   RxBool isAstroComplete = false.obs;
   RxBool isAstroVerified = false.obs;
   RxBool isAstroPaid = false.obs;
-  RxString token= ''.obs;
+  RxString token = ''.obs;
   fetchUserDetails() async {
     try {
+      print(token.value);
+      print(FETCH_PROFILE_DETAILS);
       var res = await Dio().getUri(Uri.parse(FETCH_PROFILE_DETAILS), data: {
-        "email": email.value,
+        "authorization": token.value,
       });
+      print(res.data);
       if (res.statusCode == 200) {
         user.value = User.fromJson(res.data);
         isLoggedin.value = true;
@@ -37,7 +40,7 @@ class UserController extends GetxController {
         "email": email.value,
       });
       if (res.statusCode == 200) {
-        user.value = User.fromJson(res.data as Map<String,dynamic>);
+        user.value = User.fromJson(res.data as Map<String, dynamic>);
         isLoggedin.value = true;
         isVerified.value = true;
         isAstroComplete.value = true;

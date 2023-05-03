@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/controllers/storage_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:sarathi/ui/auth/user_info.dart';
 
 import '../../controllers/user_controller.dart';
 import '../utils/routes.dart';
@@ -27,12 +28,13 @@ class _SplashScreenState extends State<SplashScreen> {
     //   Navigator.pushReplacement(context,
     //       MaterialPageRoute(builder: (context) => const OnBoardingScreen()));
     // });
-
     await Future.delayed(const Duration(milliseconds: 1500), () async {
+    // Get.offAll(UserInfoPage());
       var data = await _storageController.getDetails();
       if (data['token'] != null && data['verified'] != null) {
         if (data['verified'] == 'true') {
           Get.find<UserController>().token.value = data['token']!;
+          Get.find<UserController>().fetchUserDetails();
           Get.offAllNamed(Routes.HOME);
         } else {
           Get.offAllNamed(Routes.ONBOARDING);
@@ -57,6 +59,8 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
+
 
 
 // Things to do:(BACKEND)

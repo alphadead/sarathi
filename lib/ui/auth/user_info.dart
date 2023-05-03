@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:convert' as convert;
 import 'package:email_validator/email_validator.dart';
@@ -36,8 +37,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
   bool isEmailCorrect = false;
   bool isAddressCorrect = false;
   bool isEducationCorrect = false;
-  String url =
-      "https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bstates.json";
 
   var _countries = [];
   var _states = [];
@@ -48,15 +47,13 @@ class _UserInfoPageState extends State<UserInfoPage> {
   bool isCountrySelected = false;
   bool isStateSelected = false;
 
-  Future getWorldData() async {
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      var jsonResponse = convert.jsonDecode(response.body);
-
-      setState(() {
-        _countries = jsonResponse;
-      });
-    }
+  Future<void> getWorldData() async {
+    final String response =
+        await rootBundle.loadString('assets/data/countries_and_states.json');
+    print(response.toString());
+    setState(() async {
+      _countries = await json.decode(response);
+    });
   }
 
   Future _pickImage(ImageSource source) async {
@@ -365,12 +362,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                     isExpanded: true,
                                     items: _countries.map((cn) {
                                       return DropdownMenuItem<String>(
-                                        value: cn["name"],
+                                        value: cn["country"],
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 5, vertical: 3),
                                           child: Text(
-                                            cn["name"],
+                                            cn["country"],
                                             style: TextStyle(
                                                 fontSize: heading4.fontSize,
                                                 fontWeight: heading4.fontWeight,
@@ -388,7 +385,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                         for (int i = 0;
                                             i < _countries.length;
                                             i++) {
-                                          if (_countries[i]["name"] == value) {
+                                          if (_countries[i]["country"] ==
+                                              value) {
                                             _states = _countries[i]["states"];
                                           }
                                         }
@@ -426,12 +424,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                     isExpanded: true,
                                     items: _states.map((st) {
                                       return DropdownMenuItem<String>(
-                                        value: st["name"],
+                                        value: st,
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 5, vertical: 3),
                                           child: Text(
-                                            st["name"],
+                                            st,
                                             style: TextStyle(
                                                 fontSize: heading4.fontSize,
                                                 fontWeight: heading4.fontWeight,
