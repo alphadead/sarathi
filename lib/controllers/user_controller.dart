@@ -54,6 +54,17 @@ class UserController extends GetxController {
     }
   }
 
+  void reset() {
+    email.value = '';
+    user.value = User();
+    isLoggedin.value = false;
+    isVerified.value = false;
+    isAstroComplete.value = false;
+    isAstroVerified.value = false;
+    isAstroPaid.value = false;
+    token.value = '';
+  }
+
   postAstroDetails(Map<String, dynamic> data) async {
     try {
       var res = await Dio().postUri(Uri.parse("ADD_ASTRO_DETAILS"), data: data);

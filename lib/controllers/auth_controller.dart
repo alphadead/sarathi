@@ -51,11 +51,13 @@ class AuthController extends GetxController {
       if (res.statusCode == 200) {
         if (res.data['message'] == 'Login Successful') {
           await storageController.addUnverified();
+          _userController.token.value = res.data["tokens"];
+          await storageController.addToken(res.data['tokens']);
           isLoggedin.value = true;
           if (res.data["profile_status"]) {
             print("Login Successful. Redirecting to home page");
             await storageController.addVerified();
-            await storageController.addToken(res.data['tokens']);
+
             _userController.email.value = emailAuth.value;
             await _userController.fetchUserDetails();
             Get.offAllNamed(Routes.HOME);
@@ -114,6 +116,13 @@ class AuthController extends GetxController {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void logOut() {
+    storageController.deleteDetails();
+    _userController.reset();
+    isLoggedin.value = false;
+    emailAuth.value = '';
   }
 
   void verifyOTP(String email, String otp) async {

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:convert' as convert;
 import 'package:email_validator/email_validator.dart';
@@ -10,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:sarathi/models/user.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
+import 'package:sarathi/ui/utils/routes.dart';
 import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
 
@@ -44,8 +46,6 @@ class _ProfilePageState extends State<ProfilePage> {
   bool isEducationCorrect = false;
   String imgUrl =
       'https://images.pexels.com/photos/2820884/pexels-photo-2820884.jpeg';
-  String url =
-      "https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bstates.json";
 
   var _countries = [];
   var _states = [];
@@ -56,25 +56,27 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    getWorldData();
     _fetchUserData();
     print("--------User Name: ");
     print(widget.user.name);
+    print(widget.user.address!.state.toString());
+    print(newState);
     print("--------");
   }
 
-  bool isCountrySelected = false;
-  bool isStateSelected = false;
+  bool isCountrySelected = true;
+  bool isStateSelected = true;
 
-  Future getWorldData() async {
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      var jsonResponse = convert.jsonDecode(response.body);
-
-      setState(() {
-        _countries = jsonResponse;
-      });
-    }
+  Future<void> getWorldData() async {
+    final String response =
+        await rootBundle.loadString('assets/data/countries_and_states.json');
+    // print(response.toString());
+    final data = await json.decode(response) as Map<String, dynamic>;
+    setState(() {
+      _countries = data["countries"];
+      print(
+          ">>>>>>>>^^^^^^^^^^^<<<<<<^^^^^^^^^^......number of countries ${_countries.length} ^^^^^^^^^^^^^^^^>>>>>>>>>>>><<<<(((((((())))))))");
+    });
   }
 
   Future _pickImage(ImageSource source) async {
@@ -331,12 +333,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                   isExpanded: true,
                                   items: _countries.map((cn) {
                                     return DropdownMenuItem<String>(
-                                      value: cn["name"],
+                                      value: cn["country"],
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 5, vertical: 3),
                                         child: Text(
-                                          cn["name"],
+                                          cn["country"],
                                           style: TextStyle(
                                               fontSize: heading4.fontSize,
                                               fontWeight: heading4.fontWeight,
@@ -354,7 +356,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       for (int i = 0;
                                           i < _countries.length;
                                           i++) {
-                                        if (_countries[i]["name"] == value) {
+                                        if (_countries[i]["country"] == value) {
                                           _states = _countries[i]["states"];
                                         }
                                       }
@@ -380,42 +382,43 @@ class _ProfilePageState extends State<ProfilePage> {
                         const SizedBox(height: 8),
                         // -------------------------State Drop Down Menu ---------------------------------
                         if (isCountrySelected)
-                          Container(
-                              height: 30,
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                color: whiteColor,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                  isExpanded: true,
-                                  items: _states.map((st) {
-                                    return DropdownMenuItem<String>(
-                                      value: st["name"],
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 5, vertical: 3),
-                                        child: Text(
-                                          st["name"],
-                                          style: TextStyle(
-                                              fontSize: heading4.fontSize,
-                                              fontWeight: heading4.fontWeight,
-                                              fontFamily: heading4.fontFamily,
-                                              color: heading3.color),
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                                  value: newState,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      newState = value!;
-                                      isStateSelected = true;
-                                    });
-                                  },
+                          if (_states.isNotEmpty)
+                            Container(
+                                height: 30,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: whiteColor,
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                              ))
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    isExpanded: true,
+                                    items: _states.map((st) {
+                                      return DropdownMenuItem<String>(
+                                        value: st,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5, vertical: 3),
+                                          child: Text(
+                                            st,
+                                            style: TextStyle(
+                                                fontSize: heading4.fontSize,
+                                                fontWeight: heading4.fontWeight,
+                                                fontFamily: heading4.fontFamily,
+                                                color: heading3.color),
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    value: newState,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        newState = value!;
+                                        isStateSelected = true;
+                                      });
+                                    },
+                                  ),
+                                ))
                       ],
                     ),
                     SizedBox(height: 20.h),
@@ -517,7 +520,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(const HomePage());
+                  _authController.logOut();
+                  Get.offAllNamed(Routes.LOGIN);
                 },
                 child: Container(
                   height: 72.h,
@@ -533,7 +537,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       borderRadius: BorderRadius.circular(28),
                       color: whiteColor),
                   child: Center(
-                      child: Text('Done',
+                      child: Text('Log Out',
                           style: TextStyle(
                               fontSize: heading2.fontSize,
                               fontFamily: heading2.fontFamily,
@@ -550,7 +554,8 @@ class _ProfilePageState extends State<ProfilePage> {
     ));
   }
 
-  _fetchUserData() {
+  _fetchUserData() async {
+    await getWorldData();
     nameController.text = widget.user.name.toString();
     dobController.text = widget.user.dob.toString();
     addressController.text = widget.user.address!.line1.toString();
@@ -561,6 +566,13 @@ class _ProfilePageState extends State<ProfilePage> {
       newState = widget.user.address!.state.toString();
       isCountrySelected = true;
       isStateSelected = true;
+      for (int i = 0; i < _countries.length; i++) {
+        if (_countries[i]["country"] == newCountry) {
+          _states = _countries[i]["states"];
+        }
+      }
+      print(_countries.length);
+      print(_states.length);
       imgUrl = widget.user.image.toString();
     });
   }

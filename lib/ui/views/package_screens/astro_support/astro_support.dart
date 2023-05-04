@@ -75,7 +75,7 @@ class _AstroSupportPageState extends State<AstroSupportPage> {
                       height: 350.h,
                       child: SvgPicture.asset(
                         'assets/images/careerastrology.svg',
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                       )),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

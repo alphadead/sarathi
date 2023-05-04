@@ -29,16 +29,24 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) => GetMaterialApp(
         initialBinding: HomeBinding(),
         // routes: ,
-        getPages: getPages, 
+        getPages: getPages,
         theme: ThemeData(
+            brightness: Brightness.light,
+            primarySwatch: Colors.green,
+            accentColor: Colors.purple[300],
+            scaffoldBackgroundColor: Colors.grey[100],
+            colorScheme: ColorScheme.light(
+              primary: Colors.green,
+              secondary: Colors.green.shade100,
+            ),
             inputDecorationTheme: const InputDecorationTheme(
-          fillColor: Colors.black12,
-          labelStyle: TextStyle(color: Colors.black87),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            borderSide: BorderSide(color: Colors.black45, width: 2.0),
-          ),
-        )),
+              fillColor: Colors.black12,
+              labelStyle: TextStyle(color: Colors.black87),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                borderSide: BorderSide(color: Colors.black45, width: 2.0),
+              ),
+            )),
         debugShowCheckedModeBanner: false,
         home: SplashScreen(),
       ),

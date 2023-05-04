@@ -51,8 +51,10 @@ class _UserInfoPageState extends State<UserInfoPage> {
     final String response =
         await rootBundle.loadString('assets/data/countries_and_states.json');
     print(response.toString());
-    setState(() async {
-      _countries = await json.decode(response);
+    final data = await json.decode(response) as Map<String, dynamic>;
+    setState(() {
+      _countries = data["countries"];
+      print(">>>>>>>>^^^^^^^^^^^<<<<<<^^^^^^^^^^......number of countries ${_countries.length} ^^^^^^^^^^^^^^^^>>>>>>>>>>>><<<<(((((((())))))))");
     });
   }
 
@@ -99,8 +101,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
 
   @override
   void initState() {
-    getWorldData();
     super.initState();
+    getWorldData();
   }
 
   @override

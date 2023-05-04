@@ -49,65 +49,67 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Get.to(ProfilePage(user: _userController.user.value));
               },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Stack(
-                      children: [
-                        Container(
-                          height: 50.h,
-                          width: 50.w,
-                          decoration: BoxDecoration(
-                              color: Colors.yellow,
-                              borderRadius: BorderRadius.circular(18.r)),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(18),
-                              child: Image.network(
-                                _userController.user.value.image.toString(),
-                                fit: BoxFit.cover,
-                              )),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: -2.8,
-                          child: Container(
-                            height: 15.h,
-                            width: 15.w,
+              child: Obx(() {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 50.h,
+                            width: 50.w,
                             decoration: BoxDecoration(
-                                color: Colors.green,
-                                shape: BoxShape.circle,
-                                border:
-                                    Border.all(color: whiteColor, width: 2)),
+                                color: Colors.yellow,
+                                borderRadius: BorderRadius.circular(18.r)),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(18),
+                                child: Image.network(
+                                  _userController.user.value.image.toString(),
+                                  fit: BoxFit.cover,
+                                )),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        _userController.user.value.name.toString(),
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: heading1.fontFamily,
-                            color: blackColor),
+                          Positioned(
+                            bottom: 0,
+                            right: -2.8,
+                            child: Container(
+                              height: 15.h,
+                              width: 15.w,
+                              decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  shape: BoxShape.circle,
+                                  border:
+                                      Border.all(color: whiteColor, width: 2)),
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        _userController.user.value.phone.toString(),
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: heading3.fontFamily,
-                            color: heading3.color),
-                      )
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _userController.user.value.name.toString(),
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: heading1.fontFamily,
+                              color: blackColor),
+                        ),
+                        Text(
+                          _userController.user.value.phone.toString(),
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: heading3.fontFamily,
+                              color: heading3.color),
+                        )
+                      ],
+                    )
+                  ],
+                );
+              }),
             ),
           ),
           Padding(
