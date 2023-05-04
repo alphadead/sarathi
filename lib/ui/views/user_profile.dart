@@ -8,10 +8,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/models/user.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/utils/routes.dart';
+import 'package:sarathi/ui/views/edit_user_profile.dart';
 import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
 
@@ -26,20 +28,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String name = 'Ashu Garg';
-  String dob = '14-02-2002';
-  String address = 'University gate 2, Chandigarh University, Gharuan';
-  String country = 'India';
-  String state = 'Punjab';
-  String email = 'ashu@gmail.com';
-  String education = 'BE CSE';
   final AuthController _authController = Get.find<AuthController>();
+  final UserController _userController = Get.find<UserController>();
   File? _image;
   TextEditingController nameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController educationController = TextEditingController();
+  TextEditingController countryController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
   bool isImageUpdated = false;
   bool isEmailUpdated = false;
   bool isAddressCorrect = false;
@@ -47,36 +45,11 @@ class _ProfilePageState extends State<ProfilePage> {
   String imgUrl =
       'https://images.pexels.com/photos/2820884/pexels-photo-2820884.jpeg';
 
-  var _countries = [];
-  var _states = [];
-
-  String? newState;
-  String? newCountry;
 
   @override
   void initState() {
     super.initState();
     _fetchUserData();
-    print("--------User Name: ");
-    print(widget.user.name);
-    print(widget.user.address!.state.toString());
-    print(newState);
-    print("--------");
-  }
-
-  bool isCountrySelected = true;
-  bool isStateSelected = true;
-
-  Future<void> getWorldData() async {
-    final String response =
-        await rootBundle.loadString('assets/data/countries_and_states.json');
-    // print(response.toString());
-    final data = await json.decode(response) as Map<String, dynamic>;
-    setState(() {
-      _countries = data["countries"];
-      print(
-          ">>>>>>>>^^^^^^^^^^^<<<<<<^^^^^^^^^^......number of countries ${_countries.length} ^^^^^^^^^^^^^^^^>>>>>>>>>>>><<<<(((((((())))))))");
-    });
   }
 
   Future _pickImage(ImageSource source) async {
@@ -159,49 +132,43 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Row(
                         children: [
                           const Spacer(),
-                          GestureDetector(
-                            behavior: HitTestBehavior.translucent,
-                            onTap: () {
-                              _showSelectPhotoOptions(context);
-                            },
-                            child: _image == null
-                                ? Center(
-                                    child: Container(
-                                      width: 100,
-                                      height: 100,
-                                      decoration: BoxDecoration(
-                                          boxShadow: const [
-                                            BoxShadow(
-                                                color: Colors.black12,
-                                                blurRadius: 10,
-                                                spreadRadius: 5)
-                                          ],
-                                          image: DecorationImage(
-                                              image: NetworkImage(imgUrl),
-                                              fit: BoxFit.cover),
-                                          borderRadius:
-                                              BorderRadius.circular(36)),
-                                    ),
-                                  )
-                                : Center(
-                                    child: Container(
-                                      width: 100,
-                                      height: 100,
-                                      decoration: BoxDecoration(
-                                          boxShadow: const [
-                                            BoxShadow(
-                                                color: Colors.black12,
-                                                blurRadius: 10,
-                                                spreadRadius: 5)
-                                          ],
-                                          image: DecorationImage(
-                                              image: FileImage(_image!),
-                                              fit: BoxFit.cover),
-                                          borderRadius:
-                                              BorderRadius.circular(36)),
-                                    ),
+                          _image == null
+                              ? Center(
+                                  child: Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                        boxShadow: const [
+                                          BoxShadow(
+                                              color: Colors.black12,
+                                              blurRadius: 10,
+                                              spreadRadius: 5)
+                                        ],
+                                        image: DecorationImage(
+                                            image: NetworkImage(imgUrl),
+                                            fit: BoxFit.cover),
+                                        borderRadius:
+                                            BorderRadius.circular(36)),
                                   ),
-                          ),
+                                )
+                              : Center(
+                                  child: Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                        boxShadow: const [
+                                          BoxShadow(
+                                              color: Colors.black12,
+                                              blurRadius: 10,
+                                              spreadRadius: 5)
+                                        ],
+                                        image: DecorationImage(
+                                            image: FileImage(_image!),
+                                            fit: BoxFit.cover),
+                                        borderRadius:
+                                            BorderRadius.circular(36)),
+                                  ),
+                                ),
                           const Spacer()
                         ],
                       ),
@@ -270,156 +237,59 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     const SizedBox(height: 7),
                     TextFormField(
+                      readOnly: true,
                       controller: addressController,
-                      onChanged: (value) {
-                        setState(() {
-                          isAddressCorrect = addressController.text.isNotEmpty;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
+                      keyboardType: TextInputType.none,
+                      decoration: const InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black45),
                         ),
                         isDense: true,
-                        hintText: "Address",
-                        hintStyle: TextStyle(
-                            fontSize: heading4.fontSize,
-                            fontWeight: heading4.fontWeight,
-                            fontFamily: heading4.fontFamily,
-                            color: heading3.color),
-                        suffixIcon: isAddressCorrect
-                            ? Icon(
-                                Icons.check,
-                                color: pinkColor,
-                                size: 24,
-                              )
-                            : SizedBox(height: 18.h, width: 13.w),
-                        suffixIconConstraints:
-                            const BoxConstraints(maxHeight: 24),
                       ),
                     ),
                     SizedBox(height: 20.h),
-                    // -------------- STATE AND COUNTRY DROPDOWN ----------------
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Country',
-                          style: TextStyle(
-                              fontSize: heading4.fontSize,
-                              fontWeight: heading4.fontWeight,
-                              fontFamily: heading4.fontFamily,
-                              color: whiteColor),
+                    // -------------- Country TextField --------------
+                     Text(
+                      'Country',
+                      style: TextStyle(
+                          fontSize: heading4.fontSize,
+                          fontWeight: heading4.fontWeight,
+                          fontFamily: heading4.fontFamily,
+                          color: whiteColor),
+                    ),
+                    const SizedBox(height: 7),
+                    TextFormField(
+                      readOnly: true,
+                      controller: countryController,
+                      keyboardType: TextInputType.none,
+                      decoration: const InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black45),
                         ),
-                        const SizedBox(height: 8),
-                        // -------------------------Country Drop Down Menu ---------------------------------
-                        if (_countries.isEmpty)
-                          const Center(child: CircularProgressIndicator())
-                        else
-                          Container(
-                              height: 30,
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                color: whiteColor,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                  onTap: () {
-                                    newState = null;
-                                    _states = [];
-                                  },
-                                  isExpanded: true,
-                                  items: _countries.map((cn) {
-                                    return DropdownMenuItem<String>(
-                                      value: cn["country"],
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 5, vertical: 3),
-                                        child: Text(
-                                          cn["country"],
-                                          style: TextStyle(
-                                              fontSize: heading4.fontSize,
-                                              fontWeight: heading4.fontWeight,
-                                              fontFamily: heading4.fontFamily,
-                                              color: heading3.color),
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                                  value: newCountry,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _states = [];
-                                      newCountry = value!;
-                                      for (int i = 0;
-                                          i < _countries.length;
-                                          i++) {
-                                        if (_countries[i]["country"] == value) {
-                                          _states = _countries[i]["states"];
-                                        }
-                                      }
-                                      isCountrySelected = true;
-                                    });
-                                  },
-                                ),
-                              ))
-                      ],
+                        isDense: true,
+                      ),
                     ),
                     SizedBox(height: 20.h),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'State',
-                          style: TextStyle(
-                              fontSize: heading4.fontSize,
-                              fontWeight: heading4.fontWeight,
-                              fontFamily: heading4.fontFamily,
-                              color: whiteColor),
+                    // -------------- State TextField --------------
+                     Text(
+                      'State',
+                      style: TextStyle(
+                          fontSize: heading4.fontSize,
+                          fontWeight: heading4.fontWeight,
+                          fontFamily: heading4.fontFamily,
+                          color: whiteColor),
+                    ),
+                    const SizedBox(height: 7),
+                    TextFormField(
+                      readOnly: true,
+                      controller: stateController,
+                      keyboardType: TextInputType.none,
+                      decoration: const InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black45),
                         ),
-                        const SizedBox(height: 8),
-                        // -------------------------State Drop Down Menu ---------------------------------
-                        if (isCountrySelected)
-                          if (_states.isNotEmpty)
-                            Container(
-                                height: 30,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  color: whiteColor,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                    isExpanded: true,
-                                    items: _states.map((st) {
-                                      return DropdownMenuItem<String>(
-                                        value: st,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5, vertical: 3),
-                                          child: Text(
-                                            st,
-                                            style: TextStyle(
-                                                fontSize: heading4.fontSize,
-                                                fontWeight: heading4.fontWeight,
-                                                fontFamily: heading4.fontFamily,
-                                                color: heading3.color),
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                    value: newState,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        newState = value!;
-                                        isStateSelected = true;
-                                      });
-                                    },
-                                  ),
-                                ))
-                      ],
+                        isDense: true,
+                      ),
                     ),
                     SizedBox(height: 20.h),
                     // -------------- Email TextField ----------------
@@ -433,42 +303,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     const SizedBox(height: 7),
                     TextFormField(
+                      readOnly: true,
                       controller: emailController,
-                      onChanged: (value) {
-                        setState(() {
-                          EmailValidator.validate(value)
-                              ? isEmailUpdated = true
-                              : isEmailUpdated = false;
-                        });
-                      },
-                      // validator: (value) {
-                      //   setState(() {
-                      //     EmailValidator.validate(value!)
-                      //       ? isEmailCorrect = true
-                      //       : isEmailCorrect = false;
-                      //   });
-                      // },
-                      decoration: InputDecoration(
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
+                      keyboardType: TextInputType.none,
+                      decoration: const InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black45),
                         ),
                         isDense: true,
-                        hintText: "Your Email",
-                        hintStyle: TextStyle(
-                            fontSize: heading4.fontSize,
-                            fontWeight: heading4.fontWeight,
-                            fontFamily: heading4.fontFamily,
-                            color: heading3.color),
-                        suffixIcon: isEmailUpdated
-                            ? Icon(
-                                Icons.check,
-                                color: pinkColor,
-                                size: 24,
-                              )
-                            : SizedBox(height: 18.h, width: 13.w),
-                        suffixIconConstraints:
-                            const BoxConstraints(maxHeight: 24),
                       ),
                     ),
                     SizedBox(height: 20.h),
@@ -482,34 +324,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           color: whiteColor),
                     ),
                     TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          isEducationCorrect =
-                              educationController.text.isNotEmpty;
-                        });
-                      },
+                      readOnly: true,
                       controller: educationController,
-                      decoration: InputDecoration(
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
+                      keyboardType: TextInputType.none,
+                      decoration: const InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black45),
                         ),
                         isDense: true,
-                        hintText: "Your Education",
-                        hintStyle: TextStyle(
-                            fontSize: heading4.fontSize,
-                            fontWeight: heading4.fontWeight,
-                            fontFamily: heading4.fontFamily,
-                            color: heading3.color),
-                        suffixIcon: isEducationCorrect
-                            ? Icon(
-                                Icons.check,
-                                color: pinkColor,
-                                size: 24,
-                              )
-                            : SizedBox(height: 18.h, width: 13.w),
-                        suffixIconConstraints:
-                            const BoxConstraints(maxHeight: 24),
                       ),
                     ),
                   ],
@@ -520,8 +342,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               GestureDetector(
                 onTap: () {
-                  _authController.logOut();
-                  Get.offAllNamed(Routes.LOGIN);
+                  Get.to(EditProfilePage(user: _userController.user.value));
                 },
                 child: Container(
                   height: 72.h,
@@ -537,7 +358,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       borderRadius: BorderRadius.circular(28),
                       color: whiteColor),
                   child: Center(
-                      child: Text('Log Out',
+                      child: Text('Edit Profile',
                           style: TextStyle(
                               fontSize: heading2.fontSize,
                               fontFamily: heading2.fontFamily,
@@ -555,24 +376,14 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   _fetchUserData() async {
-    await getWorldData();
     nameController.text = widget.user.name.toString();
     dobController.text = widget.user.dob.toString();
     addressController.text = widget.user.address!.line1.toString();
     emailController.text = widget.user.email.toString();
     educationController.text = widget.user.education.toString();
+    countryController.text = widget.user.address!.country.toString();
+    stateController.text = widget.user.address!.state.toString();
     setState(() {
-      newCountry = widget.user.address!.country.toString();
-      newState = widget.user.address!.state.toString();
-      isCountrySelected = true;
-      isStateSelected = true;
-      for (int i = 0; i < _countries.length; i++) {
-        if (_countries[i]["country"] == newCountry) {
-          _states = _countries[i]["states"];
-        }
-      }
-      print(_countries.length);
-      print(_states.length);
       imgUrl = widget.user.image.toString();
     });
   }

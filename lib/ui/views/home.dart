@@ -1,9 +1,11 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
+import 'package:sarathi/ui/utils/routes.dart';
 import 'package:sarathi/ui/views/package_screens/astro_support/astro_support.dart';
 import 'package:sarathi/ui/views/package_screens/career_counselling/career_counselling.dart';
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support.dart';
@@ -19,7 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final UserController _userController = Get.find<UserController>();
-
+  final AuthController _authController = Get.find<AuthController>();
   final List<String> categories = [
     'Astro Support',
     'Psychometric Support',
@@ -116,6 +118,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.symmetric(horizontal: 48.w, vertical: 12.h),
             child: GestureDetector(
               onTap: () {
+                _authController.logOut();
                 Get.to(ProfilePage(user: _userController.user.value));
               },
               child: Text(
@@ -153,6 +156,21 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 48.w, vertical: 12.h),
+            child: GestureDetector(
+              onTap: () {
+                Get.offAllNamed(Routes.LOGIN);
+              },
+              child: Text(
+                'Log Out',
+                style: TextStyle(
+                    fontFamily: heading3.fontFamily,
+                    color: blueColor,
+                    fontSize: heading3.fontSize),
+              ),
+            ),
+          ),
         ]),
       ),
       body: Column(
@@ -176,19 +194,21 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {
                         Get.to(ProfilePage(user: _userController.user.value));
                       },
-                      child: Container(
-                        height: 50.h,
-                        width: 50.h,
-                        decoration: BoxDecoration(
-                            color: Colors.yellow,
-                            borderRadius: BorderRadius.circular(18.r)),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(18),
-                            child: Image.network(
-                              _userController.user.value.image.toString(),
-                              fit: BoxFit.cover,
-                            )),
-                      ),
+                      child: Obx(() {
+                        return Container(
+                          height: 50.h,
+                          width: 50.h,
+                          decoration: BoxDecoration(
+                              color: Colors.yellow,
+                              borderRadius: BorderRadius.circular(18.r)),
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(18),
+                              child: Image.network(
+                                _userController.user.value.image.toString(),
+                                fit: BoxFit.cover,
+                              )),
+                        );
+                      }),
                     ),
                     Positioned(
                       bottom: 0,
