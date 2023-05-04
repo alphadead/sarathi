@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sarathi/ui/utils/colors.dart';
@@ -12,7 +13,6 @@ class CareerCounsellingPage extends StatefulWidget {
 }
 
 class _CareerCounsellingPageState extends State<CareerCounsellingPage> {
-  //
   @override
   void initState() {
     super.initState();
@@ -26,6 +26,8 @@ class _CareerCounsellingPageState extends State<CareerCounsellingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final astroToggleController = ValueNotifier<bool>(false);
+    final psychoToggleController = ValueNotifier<bool>(false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       bottomNavigationBar: SizedBox(
@@ -110,7 +112,7 @@ class _CareerCounsellingPageState extends State<CareerCounsellingPage> {
                   height: 8.h,
                 ),
                 Container(
-                  height: 50.h,
+                  height: 60.h,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       gradient: LinearGradient(colors: [
@@ -126,22 +128,126 @@ class _CareerCounsellingPageState extends State<CareerCounsellingPage> {
                           padding: EdgeInsets.only(left: 18.w),
                           child: Text(
                             "Astrology Data",
-                            style: TextStyle(fontSize: heading5.fontSize, fontFamily: heading5.fontFamily, fontWeight: heading3.fontWeight, color: blackColor),
+                            style: TextStyle(
+                                fontSize: heading5.fontSize,
+                                fontFamily: heading5.fontFamily,
+                                fontWeight: heading3.fontWeight,
+                                color: blackColor),
                           ),
                         ),
-                        Switch(
-                          // This bool value toggles the switch.
-                          value: true,
-                          activeColor: Colors.white,
-                          onChanged: (bool value) {
-                            // This is called when the user toggles the switch.
-                            setState(() {});
-                          },
+                        AdvancedSwitch(
+                          width: 80.w,
+                          height: 40.h,
+                          borderRadius: BorderRadius.circular(40.r),
+                          controller: astroToggleController,
+                          inactiveChild: Padding(
+                            padding: EdgeInsets.only(right: 5.w),
+                            child: const Text(
+                              "No",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                          activeChild: Padding(
+                            padding: EdgeInsets.only(left: 5.w),
+                            child: const Text(
+                              "Sync",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                          enabled: true,
+                          disabledOpacity: 0.5,
+                          activeColor: whiteColor,
+                          inactiveColor: whiteColor,
+                          thumb: ValueListenableBuilder<bool>(
+                            valueListenable: astroToggleController,
+                            builder: (context, value, child) {
+                              return Container(
+                                height: 40.h,
+                                width: 40.w,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(colors: [
+                                      greenColor.withOpacity(0.52),
+                                      yellowColor.withOpacity(0.74)
+                                    ])),
+                              );
+                            },
+                          ),
                         )
                       ],
                     ),
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 33.h,
+                ),
+                Container(
+                  height: 60.h,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      gradient: LinearGradient(colors: [
+                        greenColor.withOpacity(0.52),
+                        yellowColor.withOpacity(0.74)
+                      ])),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 18.w),
+                          child: Text(
+                            "Psychological Data",
+                            style: TextStyle(
+                                fontSize: heading5.fontSize,
+                                fontFamily: heading5.fontFamily,
+                                fontWeight: heading3.fontWeight,
+                                color: blackColor),
+                          ),
+                        ),
+                        AdvancedSwitch(
+                          width: 80.w,
+                          height: 40.h,
+                          borderRadius: BorderRadius.circular(40.r),
+                          controller: psychoToggleController,
+                          inactiveChild: Padding(
+                            padding: EdgeInsets.only(right: 5.w),
+                            child: const Text(
+                              "No",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                          activeChild: Padding(
+                            padding: EdgeInsets.only(left: 5.w),
+                            child: const Text(
+                              "Sync",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                          enabled: true,
+                          disabledOpacity: 0.5,
+                          activeColor: whiteColor,
+                          inactiveColor: whiteColor,
+                          thumb: ValueListenableBuilder<bool>(
+                            valueListenable: psychoToggleController,
+                            builder: (context, value, child) {
+                              return Container(
+                                height: 40.h,
+                                width: 40.w,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(colors: [
+                                      greenColor.withOpacity(0.52),
+                                      yellowColor.withOpacity(0.74)
+                                    ])),
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           )

@@ -69,8 +69,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                         ),
                         Center(
                           child: Text(
-                            // _authController.emailAuth.value,
-                            "ashugarg0011@gmail.com",
+                            _authController.emailAuth.value,
                             style: TextStyle(
                                 fontSize: heading3.fontSize,
                                 color: heading3.color,
