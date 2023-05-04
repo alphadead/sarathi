@@ -1,22 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import '../models/psy.dart';
+import 'package:sarathi/models/astro.dart';
 import '../ui/utils/routes.dart';
 import '../utils/backend.dart';
 import 'user_controller.dart';
 
-class PsycologyController extends GetxController {
-  Rx<PsyDetails> psyDetails = PsyDetails().obs;
+class AstroController extends GetxController {
+  Rx<AstroDetails> astroDetails = AstroDetails().obs;
   final UserController _userController = Get.find<UserController>();
 
 
-  fetchPsyDetails() async {
+  fetchAstroDetails() async {
     try {
-      var res = await Dio().getUri(Uri.parse(FETCH_PSY_DETAILS), data: {
+      var res = await Dio().getUri(Uri.parse(FETCH_ASTRO_DETAILS), data: {
         "authorization": _userController.token.value,
       });
       if (res.statusCode == 200) {
-        psyDetails.value = PsyDetails.fromJson(res.data);
+        astroDetails.value = AstroDetails.fromJson(res.data);
         
       } else {
         print("Some error occured");
@@ -25,22 +25,23 @@ class PsycologyController extends GetxController {
       print(e.toString());
     }
   }
-  postPsyDetails(String name,String age,List<String> interests) async {
+  postAstroDetails(String name,String dob,String pob,String tob) async {
     Map<String,dynamic> data = {
       "name" : name,
-      "age" : age,
-      "interests" : interests,
+      "tob" : tob,
+      "pob" : pob,
+      "dob" : dob,
       "authorization" : _userController.token.value,
     };
     try {
-      var res = await Dio().postUri(Uri.parse(POST_PSY_DETAILS), data: data);
+      var res = await Dio().postUri(Uri.parse(POST_ASTRO_DETAILS), data: data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'Details not added') {
           print("Details not added");
           Get.snackbar("Details not added", "Redirecting to home page");
           Get.offAllNamed(Routes.HOME);
         } else {
-          print("Psy Details added");
+          print("Astro Details added");
           Get.offAllNamed(Routes.HOME);
         }
       } else {
