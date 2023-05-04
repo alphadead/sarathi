@@ -155,22 +155,6 @@ class _SignUpPageState extends State<SignUpPage> {
                               }
                             },
                           ),
-                          SizedBox(
-                            height: 24.h,
-                          ),
-                          Row(
-                            children: [
-                              const Spacer(),
-                              Text(
-                                'Forget Password?',
-                                style: TextStyle(
-                                    fontFamily: heading3.fontFamily,
-                                    color: blueColor,
-                                    fontSize: heading3.fontSize,
-                                    fontWeight: heading3.fontWeight),
-                              )
-                            ],
-                          ),
                           SizedBox(height: 33.h)
                         ],
                       ),

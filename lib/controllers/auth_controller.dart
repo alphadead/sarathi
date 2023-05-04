@@ -161,6 +161,8 @@ class AuthController extends GetxController {
 
   void verifyOTP(String email, String otp,
       {bool forgotPassword = false}) async {
+    print(email);
+    print(otp);
     var res = await Dio().post(VERIFY_OTP_URL, data: {
       "email": email,
       "otp": otp,
@@ -189,7 +191,7 @@ class AuthController extends GetxController {
     }
   }
 
-  void forgotPassword(String email) async {
+  forgotPassword(String email) async {
     try {
       print(FORGOT_PASSWORD);
       var res = await Dio().post(FORGOT_PASSWORD, data: {
@@ -201,6 +203,7 @@ class AuthController extends GetxController {
           print("Verification Otp Sent");
           Get.snackbar("Verification Otp Sent", "Please check your email");
           // Get.offAllNamed(Routes.OTPEMAIL);
+          emailAuth.value = email;
           Get.offAll(() => EmailVerify(
                 forgotPassword: true,
               ));

@@ -30,5 +30,5 @@ final getPages = <GetPage>[
     page: () => const UserInfoPage(),
   ),
   GetPage(name: Routes.OTPEMAIL, page: () =>  EmailVerify()),
-  GetPage(name: Routes.RESET_PASSWORD, page: () =>  ResetPassword()),
+  GetPage(name: Routes.RESET_PASSWORD, page: () =>  ResetPasswordPage()),
 ];

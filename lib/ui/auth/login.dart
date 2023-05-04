@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:sarathi/ui/auth/email_verify.dart';
+import 'package:sarathi/ui/auth/forgot_password.dart';
 import 'package:sarathi/ui/auth/sign_up.dart';
 import 'package:sarathi/ui/auth/user_info.dart';
 import 'package:sarathi/ui/utils/colors.dart';
@@ -127,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                               const Spacer(),
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(HomePage());
+                                  Get.to(ForgotPasswordPage());
                                 },
                                 child: Text(
                                   'Forget Password?',

@@ -118,7 +118,6 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.symmetric(horizontal: 48.w, vertical: 12.h),
             child: GestureDetector(
               onTap: () {
-                _authController.logOut();
                 Get.to(ProfilePage(user: _userController.user.value));
               },
               child: Text(
@@ -160,6 +159,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.symmetric(horizontal: 48.w, vertical: 12.h),
             child: GestureDetector(
               onTap: () {
+                _authController.logOut();
                 Get.offAllNamed(Routes.LOGIN);
               },
               child: Text(
