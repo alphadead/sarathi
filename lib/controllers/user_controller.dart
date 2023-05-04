@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
+import 'package:sarathi/ui/auth/email_verify.dart';
 
 import '../models/user.dart';
 import '../ui/utils/routes.dart';
@@ -34,26 +38,7 @@ class UserController extends GetxController {
     }
   }
 
-  fetchAstroDetails() async {
-    try {
-      var res = await Dio().getUri(Uri.parse(FETCH_ASTRO_DETAILS), data: {
-        "email": email.value,
-      });
-      if (res.statusCode == 200) {
-        user.value = User.fromJson(res.data as Map<String, dynamic>);
-        isLoggedin.value = true;
-        isVerified.value = true;
-        isAstroComplete.value = true;
-        isAstroVerified.value = true;
-        isAstroPaid.value = true;
-      } else {
-        print("Some error occured");
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
+  
   void reset() {
     email.value = '';
     user.value = User();
@@ -63,30 +48,5 @@ class UserController extends GetxController {
     isAstroVerified.value = false;
     isAstroPaid.value = false;
     token.value = '';
-  }
-
-  postAstroDetails(Map<String, dynamic> data) async {
-    try {
-      var res = await Dio().postUri(Uri.parse("ADD_ASTRO_DETAILS"), data: data);
-      if (res.statusCode == 200) {
-        if (res.data['message'] == 'Not Verified or User not registered') {
-          print("User not verified");
-          Get.snackbar("User not verified", "Redirecting to home page");
-          Get.offAllNamed(Routes.ONBOARDING);
-        } else {
-          print("Extra details added");
-          isLoggedin.value = true;
-          isVerified.value = true;
-          isAstroComplete.value = true;
-          isAstroVerified.value = true;
-          isAstroPaid.value = true;
-          Get.offAllNamed(Routes.HOME);
-        }
-      } else {
-        print("Some error occured");
-      }
-    } catch (e) {
-      print(e.toString());
-    }
   }
 }

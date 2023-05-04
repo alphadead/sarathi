@@ -12,8 +12,8 @@ import 'package:sarathi/ui/views/home.dart';
 import '../../controllers/auth_controller.dart';
 
 class EmailVerify extends StatefulWidget {
-  const EmailVerify({super.key});
-
+  EmailVerify({this.forgotPassword = false, super.key});
+  bool forgotPassword;
   @override
   State<EmailVerify> createState() => _EmailVerifyState();
 }
@@ -169,7 +169,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                               print(_authController.emailAuth.value);
                               print(otpvalue);
                               _authController.verifyOTP(
-                                  _authController.emailAuth.value, otpvalue);
+                                  _authController.emailAuth.value, otpvalue,forgotPassword: widget.forgotPassword);
                             },
                             splashColor: Colors.green,
                             child: Stack(
