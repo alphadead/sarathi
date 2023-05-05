@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(milliseconds: 1500), () async {
     // Get.offAll(UserInfoPage());
       var data = await _storageController.getDetails();
-      if (data['token'] != null && data['verified'] != null) {
+      if (data['token'] != null && data['verified'] != null && data['token'].toString().isNotEmpty) {
         if (data['verified'] == 'true') {
           Get.find<UserController>().token.value = data['token']!;
           Get.find<UserController>().fetchUserDetails();

@@ -64,8 +64,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final data = await json.decode(response) as Map<String, dynamic>;
     setState(() {
       _countries = data["countries"];
-      print(
-          ">>>>>>>>^^^^^^^^^^^<<<<<<^^^^^^^^^^......number of countries ${_countries.length} ^^^^^^^^^^^^^^^^>>>>>>>>>>>><<<<(((((((())))))))");
     });
   }
 

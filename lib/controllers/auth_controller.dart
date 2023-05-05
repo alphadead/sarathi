@@ -194,6 +194,7 @@ class AuthController extends GetxController {
       "otp": otp,
     });
     print(res.data);
+    print("user data: ");
     if (res != null) {
       if (res.data['status'] == 'Verified') {
         if (forgotPassword) {
@@ -202,7 +203,10 @@ class AuthController extends GetxController {
           return;
         }
         storageController.addVerified();
-       await  storageController.addToken(res.data['tokens']);
+        print("TTTTTOKKKKENNNNNN");
+        print(res.data['tokens']);
+        _userController.token.value = res.data['tokens'];
+        await storageController.addToken(res.data['tokens']);
         Get.snackbar("OTP Verified", "Redirecting to add details page");
         Get.offAllNamed(Routes.PROFILE);
         //TODO: show snackbar of user verified and go to login page

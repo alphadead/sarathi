@@ -34,10 +34,12 @@ class AstroController extends GetxController {
 
   fetchAstroDetails() async {
     onLoading.value = true;
+    print("fetchinggggg astro details: " + FETCH_ASTRO_DETAILS);
     try {
       var res = await Dio().getUri(Uri.parse(FETCH_ASTRO_DETAILS), data: {
         "authorization": _userController.token.value,
       });
+      print(res.data);
       if (res.statusCode == 200) {
         if (res.data['message'] != null) {
           if (res.data['message'] == "Astro details not filled") {
@@ -60,6 +62,10 @@ class AstroController extends GetxController {
       someErrorOccured.value = true;
     } finally {
       onLoading.value = false;
+      print(fillAstroDetails.value);
+      print(someOtherPackageSubscribe.value);
+      print(someErrorOccured.value);
+      print(astroDetailsUpdated.value);
       update();
     }
   }
@@ -72,8 +78,10 @@ class AstroController extends GetxController {
       "dob": dob,
       "authorization": _userController.token.value,
     };
+    print("postinggggg astro detailssss: " + POST_ASTRO_DETAILS);
     try {
       var res = await Dio().postUri(Uri.parse(POST_ASTRO_DETAILS), data: data);
+      print(res.data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'Already applied to psycometric pack') {
           print("Already subscribed to psycometric pack");
