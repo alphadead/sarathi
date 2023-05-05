@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:sarathi/ui/auth/user_info.dart';
@@ -22,6 +24,28 @@ class _EmailVerifyState extends State<EmailVerify> {
   OtpFieldController otpController = OtpFieldController();
   final AuthController _authController = Get.find<AuthController>();
   String otpvalue = '';
+  bool _isResendAgain = false;
+  late Timer _timer;
+  int _start = 30;
+
+  void resend() {
+    setState(() {
+      _isResendAgain = true;
+    });
+
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(oneSec, (timer) {
+      setState(() {
+        if (_start == 0) {
+          _start = 30;
+          _isResendAgain = false;
+          timer.cancel();
+        } else {
+          _start--;
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,15 +129,6 @@ class _EmailVerifyState extends State<EmailVerify> {
                         print("Completed: " + pin);
                       },
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     _otpFieldBox(true, false),
-                    //     _otpFieldBox(false, false),
-                    //     _otpFieldBox(false, false),
-                    //     _otpFieldBox(false, true)
-                    //   ],
-                    // ),
                   ),
                   SizedBox(
                     height: 24.h,
@@ -121,18 +136,24 @@ class _EmailVerifyState extends State<EmailVerify> {
                   Row(
                     children: [
                       const Spacer(),
-                      Text('Didn’t you recieve the OTP? ',
+                      Text('Didn’t recieve the OTP? ',
                           style: TextStyle(
                               fontSize: heading4.fontSize,
                               color: greyColor.withOpacity(0.5),
-                              fontWeight: heading4.fontWeight)),
+                              fontWeight: heading3.fontWeight)),
                       GestureDetector(
-                        onTap: () {},
-                        child: Text('Resend OTP',
+                        onTap: () {
+                          if (_isResendAgain) return;
+                          resend();
+                        },
+                        child: Text(
+                            _isResendAgain
+                                ? "Try again in " + _start.toString() + " sec"
+                                : "Resend OTP",
                             style: TextStyle(
                                 fontSize: heading4.fontSize,
                                 color: blue2Color,
-                                fontWeight: heading4.fontWeight)),
+                                fontWeight: heading3.fontWeight)),
                       ),
                       const Spacer(),
                     ],
@@ -169,7 +190,8 @@ class _EmailVerifyState extends State<EmailVerify> {
                               print(_authController.emailAuth.value);
                               print(otpvalue);
                               _authController.verifyOTP(
-                                  _authController.emailAuth.value, otpvalue,forgotPassword: widget.forgotPassword);
+                                  _authController.emailAuth.value, otpvalue,
+                                  forgotPassword: widget.forgotPassword);
                             },
                             splashColor: Colors.green,
                             child: Stack(
@@ -223,33 +245,4 @@ class _EmailVerifyState extends State<EmailVerify> {
       ),
     );
   }
-
-  // _otpFieldBox(bool first, last) {
-  //   return SizedBox(
-  //     width: 50,
-  //     child: TextFormField(
-  //       controller: otpController,
-  //       onChanged: (value) {
-  //         if (value.length == 1 && last == false) {
-  //           FocusScope.of(context).nextFocus();
-  //         }
-  //         if (value.isEmpty && first == false) {
-  //           FocusScope.of(context).previousFocus();
-  //         }
-  //       },
-  //       decoration: InputDecoration(
-  //         focusedBorder: UnderlineInputBorder(
-  //           borderSide: BorderSide(color: blueColor),
-  //         ),
-  //       ),
-  //       style: heading2,
-  //       textAlign: TextAlign.center,
-  //       keyboardType: TextInputType.number,
-  //       inputFormatters: [
-  //         LengthLimitingTextInputFormatter(1),
-  //         FilteringTextInputFormatter.digitsOnly
-  //       ],
-  //     ),
-  //   );
-  // }
 }
