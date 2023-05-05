@@ -472,7 +472,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 onTap: () {
                   //TODO - add validation
                   if (true) {
-                    _authController.updateProfile({
+                    _authController.updateUserProfile({
                         "name": nameController.text,
                         "dob": dobController.text,
                         "address": {

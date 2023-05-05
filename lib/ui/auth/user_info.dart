@@ -559,7 +559,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                         isStateSelected &&
                         isEmailCorrect &&
                         isEducationCorrect) {
-                      _authController.updateProfile({
+                      _authController.addProfile({
                         "name": nameController.text,
                         "dob": dobController.text,
                         "address": {

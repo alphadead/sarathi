@@ -16,10 +16,12 @@ class AuthController extends GetxController {
   StorageController storageController = StorageController();
   final UserController _userController = Get.find<UserController>();
 
-  updateProfile(Map<String, dynamic> data) async {
+  addProfile(Map<String, dynamic> data) async {
+    data["authorization"] = _userController.token.value;
     print(data);
+
     try {
-      var res = await Dio().postUri(Uri.parse(ADD_EXTRA_DETAILS), data: data);
+      var res = await Dio().postUri(Uri.parse(ADD_PROFILE_DETAILS), data: data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'Not Verified or User not registered') {
           print("User not verified");
@@ -31,6 +33,30 @@ class AuthController extends GetxController {
           storageController.addVerified();
           _userController.email.value = emailAuth.value;
           _userController.fetchUserDetails();
+          Get.offAllNamed(Routes.HOME);
+        }
+      } else {
+        print("Some error occured");
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  updateUserProfile(Map<String, dynamic> data) async {
+    data["authorization"] = _userController.token.value;
+    print(data);
+    try {
+      var res = await Dio().postUri(Uri.parse(ADD_PROFILE_DETAILS), data: data);
+      if (res.statusCode == 200) {
+        if (res.data['message'] == 'User details not filled') {
+          print("User not verified");
+          Get.snackbar("User details not filled", "Redirecting to login page");
+          logOut();
+          Get.offAllNamed(Routes.LOGIN);
+        } else {
+          print("User Details Updated");
+          Get.snackbar("User Details Updated", "Redirecting to home page");
           Get.offAllNamed(Routes.HOME);
         }
       } else {
@@ -175,8 +201,10 @@ class AuthController extends GetxController {
           Get.offAllNamed(Routes.RESET_PASSWORD, parameters: {"email": email});
           return;
         }
-        Get.snackbar("OTP Verified", "Redirecting to login page");
-        Get.offAllNamed(Routes.LOGIN);
+        storageController.addVerified();
+       await  storageController.addToken(res.data['tokens']);
+        Get.snackbar("OTP Verified", "Redirecting to add details page");
+        Get.offAllNamed(Routes.PROFILE);
         //TODO: show snackbar of user verified and go to login page
       } else if (res.data['status'] == 'Failed') {
         {
