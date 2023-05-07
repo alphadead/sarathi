@@ -34,7 +34,7 @@ class AstroController extends GetxController {
 
   fetchAstroDetails() async {
     onLoading.value = true;
-    print("fetchinggggg astro details: " + FETCH_ASTRO_DETAILS);
+    print("fetchinggggg astro details: $FETCH_ASTRO_DETAILS");
     try {
       var res = await Dio().getUri(Uri.parse(FETCH_ASTRO_DETAILS), data: {
         "authorization": _userController.token.value,
@@ -50,6 +50,7 @@ class AstroController extends GetxController {
         } else {
           astroDetailsUpdated.value = true;
           astroDetails.value = AstroDetails.fromJson(res.data);
+          Get.off(AstroSupportFeedback());
         }
       } else {
         print("Some error occured");
@@ -78,7 +79,7 @@ class AstroController extends GetxController {
       "dob": dob,
       "authorization": _userController.token.value,
     };
-    print("postinggggg astro detailssss: " + POST_ASTRO_DETAILS);
+    print("postinggggg astro detailssss: $POST_ASTRO_DETAILS");
     try {
       var res = await Dio().postUri(Uri.parse(POST_ASTRO_DETAILS), data: data);
       print(res.data);
@@ -92,7 +93,7 @@ class AstroController extends GetxController {
           print("Astro Details added");
           Get.snackbar("Astro Details added", "");
           astroDetails.value = AstroDetails.fromJson(res.data);
-          Get.off(const AstroSupportFeedback());
+          Get.off(AstroSupportFeedback());
         }
       } else {
         print("Some error occured");

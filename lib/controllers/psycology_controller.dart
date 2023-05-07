@@ -49,6 +49,7 @@ class PsyController extends GetxController {
         } else {
           psyDetailsUpdated.value = true;
           psyDetails.value = PsyDetails.fromJson(res.data);
+          Get.off(const PsychometricSupportFeedback());
         }
       } else {
         print("Some error occured");
@@ -69,7 +70,7 @@ class PsyController extends GetxController {
     Map<String, dynamic> data = {
       "name": name,
       "age": age,
-      "interests": interests,
+      "hobbies": interests,
       "authorization": _userController.token.value,
     };
     try {

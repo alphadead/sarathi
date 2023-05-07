@@ -137,9 +137,10 @@ class _AstroSupportPageState extends State<AstroSupportPage> {
                         init: AstroController(),
                         builder: (controller) {
                           if (controller.onLoading.value) {
-                            return Center(child: CustomProgressIndicator());
+                            return const Center(
+                                child: CustomProgressIndicator());
                           } else if (controller.someErrorOccured.value) {
-                            return Text("Some error occured");
+                            return const Text("Some error occured");
                           } else if (controller.fillAstroDetails.value) {
                             return Column(
                               children: [
@@ -275,7 +276,7 @@ class _AstroSupportPageState extends State<AstroSupportPage> {
                               ],
                             );
                           } else {
-                            Get.off(AstroSupportFeedback());
+                            // Get.off(AstroSupportFeedback());
                             return Container();
                           }
                         })

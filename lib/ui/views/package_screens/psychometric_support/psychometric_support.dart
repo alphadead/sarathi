@@ -126,9 +126,10 @@ class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
                         init: PsyController(),
                         builder: (controller) {
                           if (controller.onLoading.value) {
-                            return Center(child: CustomProgressIndicator());
+                            return const Center(
+                                child: CustomProgressIndicator());
                           } else if (controller.someErrorOccured.value) {
-                            return Text("Some error occured");
+                            return const Text("Some error occured");
                           } else if (controller.fillPsyDetails.value) {
                             return Column(
                               children: [
@@ -201,7 +202,6 @@ class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
                                               nameController.text,
                                               ageController.text,
                                               interests);
-
                                         }
                                       },
                                       child: Container(
@@ -235,7 +235,7 @@ class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
                               ],
                             );
                           } else {
-                            Get.offAll(const PsychometricSupportFeedback());
+                            //Get.offAll(const PsychometricSupportFeedback());
                             return Container();
                           }
                         })
