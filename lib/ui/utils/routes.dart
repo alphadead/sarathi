@@ -5,6 +5,7 @@ import 'package:sarathi/ui/views/home.dart';
 
 import '../auth/email_verify.dart';
 import '../auth/reset_password.dart';
+import '../views/no_internet.dart';
 
 class Routes {
   static String HOME = '/home';
@@ -14,6 +15,7 @@ class Routes {
   static String PROFILE = '/profile';
   static String ONBOARDING = '/onboarding';
   static String RESET_PASSWORD = '/resetpassword';
+  static String NO_INTERNET = '/nointernet';
 }
 
 final getPages = <GetPage>[
@@ -31,4 +33,5 @@ final getPages = <GetPage>[
   ),
   GetPage(name: Routes.OTPEMAIL, page: () =>  EmailVerify()),
   GetPage(name: Routes.RESET_PASSWORD, page: () =>  ResetPasswordPage()),
+  GetPage(name: Routes.NO_INTERNET, page: () => const NoInternet()),
 ];

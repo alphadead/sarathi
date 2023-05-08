@@ -53,6 +53,7 @@ dependencies:
   flutter_chip_tags: ^2.0.2
   flutter_advanced_switch: ^3.0.1
   lottie: ^2.3.2
+  connectivity_plus: ^3.0.6
 
 dev_dependencies:
   flutter_test:

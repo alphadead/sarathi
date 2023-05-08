@@ -18,6 +18,7 @@ import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
 
 import '../../controllers/auth_controller.dart';
+import '../widgets/logout_dialog.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key, required this.user});
@@ -359,6 +360,34 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: whiteColor),
                   child: Center(
                       child: Text('Edit Profile',
+                          style: TextStyle(
+                              fontSize: heading2.fontSize,
+                              fontFamily: heading2.fontFamily,
+                              color: const Color(0XFF2B47FC)))),
+                ),
+              ),const SizedBox(
+                height: 30,
+              ),
+              GestureDetector(
+                onTap: () {
+                  //TODO: Add Logout Functionality
+                   Get.dialog(LogoutDialog());
+                },
+                child: Container(
+                  height: 72.h,
+                  width: 315.w,
+                  decoration: BoxDecoration(
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(0, 5),
+                            blurRadius: 6,
+                            spreadRadius: 3)
+                      ],
+                      borderRadius: BorderRadius.circular(28),
+                      color: whiteColor),
+                  child: Center(
+                    child: Text('LOGOUT',
                           style: TextStyle(
                               fontSize: heading2.fontSize,
                               fontFamily: heading2.fontFamily,

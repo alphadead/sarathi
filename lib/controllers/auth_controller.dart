@@ -11,6 +11,7 @@ import 'package:sarathi/utils/backend.dart';
 import '../ui/auth/email_verify.dart';
 
 class AuthController extends GetxController {
+  RxBool isoffline  = false.obs;
   RxBool isLoggedin = false.obs;
   RxString emailAuth = ''.obs;
   StorageController storageController = StorageController();
@@ -183,6 +184,7 @@ class AuthController extends GetxController {
     _userController.reset();
     isLoggedin.value = false;
     emailAuth.value = '';
+    Get.offAllNamed(Routes.LOGIN);
   }
 
   void verifyOTP(String email, String otp,

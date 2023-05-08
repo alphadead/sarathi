@@ -3,9 +3,12 @@ import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/controllers/storage_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:sarathi/ui/auth/user_info.dart';
-
+import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../controllers/user_controller.dart';
 import '../utils/routes.dart';
+
+
+import 'dart:async';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,10 +20,30 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   final AuthController _authController = Get.find<AuthController>();
   final StorageController _storageController = StorageController();
+  StreamSubscription? internetconnection;
+  final AuthController authController = Get.put(AuthController());
   @override
   void initState() {
-    super.initState();
+    // authController.onInit();
+    internetconnection = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        _authController.isoffline.value = true;
+      } else if (result == ConnectivityResult.mobile) {
+        _authController.isoffline.value = false;
+      } else if (result == ConnectivityResult.wifi) {
+        _authController.isoffline.value = false;
+      }
+    });
+      super.initState();
     _changeScreen();
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    internetconnection!.cancel();
   }
 
   _changeScreen() async {
@@ -29,7 +52,12 @@ class _SplashScreenState extends State<SplashScreen> {
     //       MaterialPageRoute(builder: (context) => const OnBoardingScreen()));
     // });
     await Future.delayed(const Duration(milliseconds: 1500), () async {
+
+      if(_authController.isoffline.value){
+        Get.offAllNamed(Routes.NO_INTERNET);
+      }
     // Get.offAll(UserInfoPage());
+    else{
       var data = await _storageController.getDetails();
       if (data['token'] != null && data['verified'] != null && data['token'].toString().isNotEmpty) {
         if (data['verified'] == 'true') {
@@ -43,6 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
       } else {
         Get.offAllNamed(Routes.LOGIN);
       }
+    }
     });
   }
 
