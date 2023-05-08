@@ -12,3 +12,4 @@ final greyColor = Color(0XFF3A3A3A);
 final greenColor = Color(0XFF3BC04B);
 final pinkColor = Color(0XFFCB3EF9);
 final yellowColor = Color(0XFFF0D700);
+final lightGreyColor = Color(0XFFD9D9D9);

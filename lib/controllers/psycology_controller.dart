@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:sarathi/models/psy.dart';
+import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_questions.dart';
 
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support_feedback.dart';
 import '../ui/utils/routes.dart';
@@ -85,6 +87,7 @@ class PsyController extends GetxController {
           Get.snackbar("Psy Details added", "");
           psyDetails.value = PsyDetails.fromJson(res.data);
           Get.off(const PsychometricSupportFeedback());
+          
         }
       } else {
         print("Some error occured");

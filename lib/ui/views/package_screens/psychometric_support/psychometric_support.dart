@@ -7,6 +7,7 @@ import 'package:sarathi/controllers/psycology_controller.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
+import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_questions.dart';
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support_feedback.dart';
 import 'package:sarathi/ui/views/user_profile.dart';
 import 'package:sarathi/ui/widgets/custom_progress_indicator.dart';
@@ -206,6 +207,7 @@ class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
                                               ageController.text,
                                               interests);
                                         }
+                                        Get.to(const PsychometricQuestionsPage());
                                       },
                                       child: Container(
                                         height: 45.h,

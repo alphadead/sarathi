@@ -8,6 +8,7 @@ import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/utils/routes.dart';
 import 'package:sarathi/ui/views/package_screens/astro_support/astro_support.dart';
 import 'package:sarathi/ui/views/package_screens/career_counselling/career_counselling.dart';
+import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_questions.dart';
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support.dart';
 import 'package:sarathi/ui/views/user_profile.dart';
 import 'package:sarathi/ui/widgets/category_box.dart';
