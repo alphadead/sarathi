@@ -5,7 +5,7 @@ import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 
 class AstroSupportFeedback extends StatelessWidget {
-  AstroSupportFeedback({super.key});
+ AstroSupportFeedback({super.key});
 
   bool isResultReady = false;
 

@@ -4,6 +4,7 @@ const String BACKEND_URL =   'https://backend-production-2ba4.up.railway.app';
 const String LOGIN_URL = '$BACKEND_URL/user/login';
 const String REGISTER_URL = '$BACKEND_URL/user/register';
 const String VERIFY_OTP_URL = '$BACKEND_URL/user/verifyOTP';
+const String RESEND_OTP_URL = '$BACKEND_URL/user/resendOTP';
 const String FORGOT_PASSWORD = '$BACKEND_URL/user/forgetpassword';
 const String UPDATE_PASSWORD = '$BACKEND_URL/user/updatepassword';
 const String ADD_PROFILE_DETAILS = '$BACKEND_URL/userDetails/details';
