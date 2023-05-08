@@ -32,8 +32,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController educationController = TextEditingController();
+  bool isPhoneCorrect = true;
+  bool isAddressCorrect = true;
+  bool isEducationCorrect = true;
   String imgUrl =
       'https://images.pexels.com/photos/2820884/pexels-photo-2820884.jpeg';
 
@@ -258,7 +261,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                     const SizedBox(height: 7),
                     TextFormField(
-                      controller: addressController,            
+                      controller: addressController,
+                      onChanged: (value) {
+                        setState(() {
+                          isAddressCorrect = addressController.text.isNotEmpty;
+                        });
+                      },
                       decoration: InputDecoration(
                         focusedBorder: const UnderlineInputBorder(
                           borderSide:
@@ -271,7 +279,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             fontWeight: heading4.fontWeight,
                             fontFamily: heading4.fontFamily,
                             color: heading3.color),
-                        
+                        suffixIcon: isAddressCorrect
+                            ? Icon(
+                                Icons.check,
+                                color: pinkColor,
+                                size: 24,
+                              )
+                            : SizedBox(height: 18.h, width: 13.w),
+                        suffixIconConstraints:
+                            const BoxConstraints(maxHeight: 24),
                       ),
                     ),
                     SizedBox(height: 20.h),
@@ -399,7 +415,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     SizedBox(height: 20.h),
                     // -------------- Email TextField ----------------
                     Text(
-                      'Email ID',
+                      'Phone Number',
                       style: TextStyle(
                           fontSize: heading4.fontSize,
                           fontWeight: heading4.fontWeight,
@@ -408,30 +424,40 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                     const SizedBox(height: 7),
                     TextFormField(
-                      controller: emailController,
-                      
-                      // validator: (value) {
-                      //   setState(() {
-                      //     EmailValidator.validate(value!)
-                      //       ? isEmailCorrect = true
-                      //       : isEmailCorrect = false;
-                      //   });
-                      // },
-                      decoration: InputDecoration(
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
+                        controller: phoneController,
+                        keyboardType: TextInputType.phone,
+                        onChanged: (value) {
+                          setState(() {
+                            if (phoneController.text.length == 10) {
+                              isPhoneCorrect = true;
+                            } else {
+                              isPhoneCorrect = false;
+                            }
+                          });
+                        },
+                        decoration: InputDecoration(
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 2.0),
+                          ),
+                          isDense: true,
+                          hintText: "Your Phone",
+                          hintStyle: TextStyle(
+                              fontSize: heading4.fontSize,
+                              fontWeight: heading4.fontWeight,
+                              fontFamily: heading4.fontFamily,
+                              color: heading3.color),
+                          suffixIcon: isPhoneCorrect
+                              ? Icon(
+                                  Icons.check,
+                                  color: pinkColor,
+                                  size: 24,
+                                )
+                              : SizedBox(height: 18.h, width: 13.w),
+                          suffixIconConstraints:
+                              const BoxConstraints(maxHeight: 24),
                         ),
-                        isDense: true,
-                        hintText: "Your Email",
-                        hintStyle: TextStyle(
-                            fontSize: heading4.fontSize,
-                            fontWeight: heading4.fontWeight,
-                            fontFamily: heading4.fontFamily,
-                            color: heading3.color),
-                        
                       ),
-                    ),
                     SizedBox(height: 20.h),
                     // -------------- Education TextField ----------------
                     Text(
@@ -443,7 +469,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           color: whiteColor),
                     ),
                     TextFormField(
-                      
+                      onChanged: (value) {
+                        setState(() {
+                          isEducationCorrect =
+                              educationController.text.isNotEmpty;
+                        });
+                      },
                       controller: educationController,
                       decoration: InputDecoration(
                         focusedBorder: const UnderlineInputBorder(
@@ -457,7 +488,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             fontWeight: heading4.fontWeight,
                             fontFamily: heading4.fontFamily,
                             color: heading3.color),
-                        
+                        suffixIcon: isEducationCorrect
+                            ? Icon(
+                                Icons.check,
+                                color: pinkColor,
+                                size: 24,
+                              )
+                            : SizedBox(height: 18.h, width: 13.w),
+                        suffixIconConstraints:
+                            const BoxConstraints(maxHeight: 24),
                       ),
                     ),
                   ],
@@ -469,19 +508,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
               GestureDetector(
                 onTap: () {
                   //TODO - add validation
-                  if (true) {
+                  if (isPhoneCorrect &&
+                      isAddressCorrect &&
+                      isEducationCorrect) {
                     _authController.updateUserProfile({
-                        "name": nameController.text,
-                        "dob": dobController.text,
-                        "address": {
-                          "line1": addressController.text,
-                          "state": newState,
-                          "country": newCountry
-                        },
-                        "email": emailController.text,
-                        "education": educationController.text,
-                        "phone": "9988776655" //TODO
-                      });
+                      "name": nameController.text,
+                      "dob": dobController.text,
+                      "address": {
+                        "line1": addressController.text,
+                        "state": newState,
+                        "country": newCountry
+                      },
+                      "phone": phoneController.text,
+                      "email": _authController.emailAuth.value,
+                      "education": educationController.text,
+                    });
                   }
                 },
                 child: Container(
@@ -499,10 +540,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       color: whiteColor),
                   child: Center(
                       child: Text('Update',
-                          style: TextStyle(
-                              fontSize: heading2.fontSize,
-                              fontFamily: heading2.fontFamily,
-                              color: const Color(0XFF2B47FC)))),
+                          style: (isAddressCorrect &&
+                                  isPhoneCorrect &&
+                                  isEducationCorrect)
+                              ? TextStyle(
+                                  fontSize: heading2.fontSize,
+                                  fontFamily: heading2.fontFamily,
+                                  color: const Color(0XFF2B47FC))
+                              : TextStyle(
+                                  fontSize: heading2.fontSize,
+                                  fontFamily: heading2.fontFamily,
+                                  color: const Color(0XFFC8C8C8)))),
                 ),
               ),
               SizedBox(
@@ -520,7 +568,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     nameController.text = widget.user.name.toString();
     dobController.text = widget.user.dob.toString();
     addressController.text = widget.user.address!.line1.toString();
-    emailController.text = widget.user.email.toString();
+    phoneController.text = widget.user.phone.toString();
     educationController.text = widget.user.education.toString();
     setState(() {
       newCountry = widget.user.address!.country.toString();

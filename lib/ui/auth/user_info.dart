@@ -29,12 +29,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController educationController = TextEditingController();
   bool isImageSelected = false;
   bool isNameCorrect = false;
   bool isDOBCorrect = false;
-  bool isEmailCorrect = false;
+  bool isPhoneCorrect = false;
   bool isAddressCorrect = false;
   bool isEducationCorrect = false;
 
@@ -452,9 +452,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
                         ],
                       ),
                       SizedBox(height: 20.h),
-                      // -------------- Email TextField ----------------
+                      // -------------- Phone TextField ----------------
                       Text(
-                        'Email ID',
+                        'Phone Number',
                         style: TextStyle(
                             fontSize: heading4.fontSize,
                             fontWeight: heading4.fontWeight,
@@ -463,34 +463,30 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       ),
                       const SizedBox(height: 7),
                       TextFormField(
-                        controller: emailController,
+                        controller: phoneController,
+                        keyboardType: TextInputType.phone,
                         onChanged: (value) {
                           setState(() {
-                            EmailValidator.validate(value)
-                                ? isEmailCorrect = true
-                                : isEmailCorrect = false;
+                            if (phoneController.text.length == 10) {
+                              isPhoneCorrect = true;
+                            } else {
+                              isPhoneCorrect = false;
+                            }
                           });
                         },
-                        // validator: (value) {
-                        //   setState(() {
-                        //     EmailValidator.validate(value!)
-                        //       ? isEmailCorrect = true
-                        //       : isEmailCorrect = false;
-                        //   });
-                        // },
                         decoration: InputDecoration(
                           focusedBorder: const UnderlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.white, width: 2.0),
                           ),
                           isDense: true,
-                          hintText: "Your Email",
+                          hintText: "Your Phone",
                           hintStyle: TextStyle(
                               fontSize: heading4.fontSize,
                               fontWeight: heading4.fontWeight,
                               fontFamily: heading4.fontFamily,
                               color: heading3.color),
-                          suffixIcon: isEmailCorrect
+                          suffixIcon: isPhoneCorrect
                               ? Icon(
                                   Icons.check,
                                   color: pinkColor,
@@ -556,7 +552,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                         isAddressCorrect &&
                         isCountrySelected &&
                         isStateSelected &&
-                        isEmailCorrect &&
+                        isPhoneCorrect &&
                         isEducationCorrect) {
                       _authController.addProfile({
                         "name": nameController.text,
@@ -566,9 +562,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
                           "state": state,
                           "country": country
                         },
-                        "email": emailController.text,
                         "education": educationController.text,
-                        "phone": "9988776655" //TODO
+                        "email": _authController.emailAuth.value,
+                        "phone": phoneController.text 
                       });
                     }
                   },
@@ -593,7 +589,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                     isAddressCorrect &&
                                     isCountrySelected &&
                                     isStateSelected &&
-                                    isEmailCorrect &&
+                                    isPhoneCorrect &&
                                     isEducationCorrect)
                                 ? TextStyle(
                                     fontSize: heading2.fontSize,

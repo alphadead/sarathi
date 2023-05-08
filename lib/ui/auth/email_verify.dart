@@ -144,6 +144,8 @@ class _EmailVerifyState extends State<EmailVerify> {
                       GestureDetector(
                         onTap: () {
                           if (_isResendAgain) return;
+                          _authController
+                              .resendOTP(_authController.emailAuth.value);
                           resend();
                         },
                         child: Text(

@@ -10,6 +10,7 @@ import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support_feedback.dart';
 import 'package:sarathi/ui/views/user_profile.dart';
 import 'package:sarathi/ui/widgets/custom_progress_indicator.dart';
+import 'package:sarathi/ui/widgets/other_package_subscribed.dart';
 
 class PsychometricSupportPage extends StatefulWidget {
   const PsychometricSupportPage({super.key});
@@ -126,10 +127,12 @@ class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
                         init: PsyController(),
                         builder: (controller) {
                           if (controller.onLoading.value) {
-                            return const Center(
-                                child: CustomProgressIndicator());
+                            return CustomProgressIndicator(context);
                           } else if (controller.someErrorOccured.value) {
                             return const Text("Some error occured");
+                          } else if (controller
+                              .someOtherPackageSubscribe.value) {
+                            return someOtherPackageSubscribed(context);
                           } else if (controller.fillPsyDetails.value) {
                             return Column(
                               children: [

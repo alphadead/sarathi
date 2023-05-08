@@ -43,136 +43,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-      drawer: Drawer(
-        child: ListView(children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(ProfilePage(user: _userController.user.value));
-              },
-              child: Obx(() {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Stack(
-                        children: [
-                          Container(
-                            height: 50.h,
-                            width: 50.w,
-                            decoration: BoxDecoration(
-                                color: Colors.yellow,
-                                borderRadius: BorderRadius.circular(18.r)),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(18),
-                                child: Image.network(
-                                  _userController.user.value.image.toString(),
-                                  fit: BoxFit.cover,
-                                )),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: -2.8,
-                            child: Container(
-                              height: 15.h,
-                              width: 15.w,
-                              decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  shape: BoxShape.circle,
-                                  border:
-                                      Border.all(color: whiteColor, width: 2)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _userController.user.value.name.toString(),
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: heading1.fontFamily,
-                              color: blackColor),
-                        ),
-                        Text(
-                          _userController.user.value.phone.toString(),
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: heading3.fontFamily,
-                              color: heading3.color),
-                        )
-                      ],
-                    )
-                  ],
-                );
-              }),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 48.w, vertical: 12.h),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(ProfilePage(user: _userController.user.value));
-              },
-              child: Text(
-                'PROFILE',
-                style: TextStyle(
-                    fontFamily: heading3.fontFamily,
-                    color: blueColor,
-                    fontSize: heading3.fontSize),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 48.w, vertical: 12.h),
-            child: GestureDetector(
-              onTap: () {},
-              child: Text(
-                'PURCHASE',
-                style: TextStyle(
-                    fontFamily: heading3.fontFamily,
-                    color: blueColor,
-                    fontSize: heading3.fontSize),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 48.w, vertical: 12.h),
-            child: GestureDetector(
-              onTap: () {},
-              child: Text(
-                'SETTINGS',
-                style: TextStyle(
-                    fontFamily: heading3.fontFamily,
-                    color: blueColor,
-                    fontSize: heading3.fontSize),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 48.w, vertical: 12.h),
-            child: GestureDetector(
-              onTap: () {
-                _authController.logOut();
-                Get.offAllNamed(Routes.LOGIN);
-              },
-              child: Text(
-                'Log Out',
-                style: TextStyle(
-                    fontFamily: heading3.fontFamily,
-                    color: blueColor,
-                    fontSize: heading3.fontSize),
-              ),
-            ),
-          ),
-        ]),
-      ),
       body: Column(
         children: [
           SizedBox(height: 50.h),
@@ -184,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                 Builder(builder: (context) {
                   return GestureDetector(
                       onTap: () {
-                        Scaffold.of(context).openDrawer();
+                        // Scaffold.of(context).openDrawer();
                       },
                       child: Image.asset('assets/icons/menu.png'));
                 }),

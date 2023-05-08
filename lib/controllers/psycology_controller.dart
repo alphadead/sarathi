@@ -36,7 +36,7 @@ class PsyController extends GetxController {
   fetchPsyDetails() async {
     onLoading.value = true;
     try {
-      var res = await Dio().getUri(Uri.parse(FETCH_ASTRO_DETAILS), data: {
+      var res = await Dio().getUri(Uri.parse(FETCH_PSY_DETAILS), data: {
         "authorization": _userController.token.value,
       });
       if (res.statusCode == 200) {
@@ -74,7 +74,7 @@ class PsyController extends GetxController {
       "authorization": _userController.token.value,
     };
     try {
-      var res = await Dio().postUri(Uri.parse(POST_ASTRO_DETAILS), data: data);
+      var res = await Dio().postUri(Uri.parse(POST_PSY_DETAILS), data: data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'Already applied to astro package') {
           print("Already applied to astro package");

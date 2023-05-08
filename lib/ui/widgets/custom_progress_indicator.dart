@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:sarathi/ui/utils/headings.dart';
 
-class CustomProgressIndicator extends StatelessWidget {
-  const CustomProgressIndicator({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const CircularProgressIndicator();
-  }
+Widget CustomProgressIndicator(BuildContext context) {
+  return SizedBox(
+    height: MediaQuery.of(context).size.height,
+    child: Column(
+      children: const [
+        Spacer(),
+        Center(
+          child: CircularProgressIndicator()
+        ),
+        Spacer()
+      ],
+    ),
+  );
 }

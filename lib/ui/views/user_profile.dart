@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:convert' as convert;
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,14 +34,10 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController educationController = TextEditingController();
   TextEditingController countryController = TextEditingController();
   TextEditingController stateController = TextEditingController();
-  bool isImageUpdated = false;
-  bool isEmailUpdated = false;
-  bool isAddressCorrect = false;
-  bool isEducationCorrect = false;
   String imgUrl =
       'https://images.pexels.com/photos/2820884/pexels-photo-2820884.jpeg';
 
@@ -293,9 +288,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     SizedBox(height: 20.h),
-                    // -------------- Email TextField ----------------
+                    // -------------- Phone TextField ----------------
                     Text(
-                      'Email ID',
+                      'Phone Number',
                       style: TextStyle(
                           fontSize: heading4.fontSize,
                           fontWeight: heading4.fontWeight,
@@ -305,7 +300,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 7),
                     TextFormField(
                       readOnly: true,
-                      controller: emailController,
+                      controller: phoneController,
                       keyboardType: TextInputType.none,
                       decoration: const InputDecoration(
                         focusedBorder: UnderlineInputBorder(
@@ -408,7 +403,7 @@ class _ProfilePageState extends State<ProfilePage> {
     nameController.text = widget.user.name.toString();
     dobController.text = widget.user.dob.toString();
     addressController.text = widget.user.address!.line1.toString();
-    emailController.text = widget.user.email.toString();
+    phoneController.text = widget.user.phone.toString();
     educationController.text = widget.user.education.toString();
     countryController.text = widget.user.address!.country.toString();
     stateController.text = widget.user.address!.state.toString();

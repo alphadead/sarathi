@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/views/home.dart';
+import 'package:sarathi/ui/views/user_profile.dart';
 
 class PsychometricSupportFeedback extends StatefulWidget {
   const PsychometricSupportFeedback({super.key});
@@ -16,6 +18,7 @@ class PsychometricSupportFeedback extends StatefulWidget {
 
 class _PsychometricSupportFeedbackState
     extends State<PsychometricSupportFeedback> {
+  final UserController _userController = Get.find<UserController>();
   bool isResultReady = false;
   List<String> stories = [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
@@ -67,13 +70,50 @@ class _PsychometricSupportFeedbackState
       ),
       body: Stack(
         children: [
-          SizedBox(
-              width: double.infinity,
-              height: 350.h,
-              child: SvgPicture.asset(
-                'assets/images/careerastrology.svg',
-                fit: BoxFit.contain,
-              )),
+          Stack(
+            children: [
+              SizedBox(
+                  width: double.infinity,
+                  height: 350.h,
+                  child: SvgPicture.asset(
+                    'assets/images/careerastrology.svg',
+                    fit: BoxFit.cover,
+                  )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 24.w, vertical: 40.h),
+                        child: Icon(Icons.menu, color: whiteColor),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 24.w, vertical: 40.h),
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.to(
+                                ProfilePage(user: _userController.user.value));
+                          },
+                          child: Container(
+                            height: 50.h,
+                            width: 50.h,
+                            decoration: BoxDecoration(
+                                color: Colors.yellow,
+                                borderRadius: BorderRadius.circular(18.r)),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(18),
+                                child: Image.network(
+                                  _userController.user.value.image.toString(),
+                                  fit: BoxFit.cover,
+                                )),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+            ],
+          ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: Column(
