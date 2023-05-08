@@ -33,5 +33,5 @@ final getPages = <GetPage>[
   ),
   GetPage(name: Routes.OTPEMAIL, page: () =>  EmailVerify()),
   GetPage(name: Routes.RESET_PASSWORD, page: () =>  ResetPasswordPage()),
-  GetPage(name: Routes.NO_INTERNET, page: () => const NoInternet()),
+  GetPage(name: Routes.NO_INTERNET, page: () => NoInternet()),
 ];

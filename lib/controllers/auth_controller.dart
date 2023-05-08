@@ -8,7 +8,7 @@ import 'dart:developer' as developer;
 import '../ui/auth/email_verify.dart';
 
 class AuthController extends GetxController {
-  RxBool isoffline = false.obs;
+  RxBool isoffline = true.obs;
   RxBool isLoggedin = false.obs;
   RxString emailAuth = ''.obs;
   StorageController storageController = StorageController();

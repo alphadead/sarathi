@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 final heading1 = TextStyle(
     fontSize: 28.sp,
     fontFamily: 'Montserrat-Bold',
-    // fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.bold,
     color: const Color(0xff3A3A3A));
 
 final heading2 = TextStyle(
