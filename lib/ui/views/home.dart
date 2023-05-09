@@ -67,24 +67,24 @@ class _HomePageState extends State<HomePage> {
                         return Container(
                           height: 50.h,
                           width: 50.h,
+                          
                           decoration: BoxDecoration(
                               color: Colors.yellow,
                               borderRadius: BorderRadius.circular(18.r)),
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(18),
-                              child: Image(
-                                image: CachedNetworkImage(
+                              child: CachedNetworkImage(
                                                 imageUrl: _userController.user.value.image.toString(),
                                                 placeholder: (context, url) =>
-                                                    AssetImage(
+                                                    Image.asset(
                                                         'assets/images/default_image.png'),
                                                 errorWidget: (context, url,
                                                         error) =>
                                                     Image.asset(
                                                         'assets/images/error.png')),
                                 // _userController.user.value.image.toString(),
-                                fit: BoxFit.cover,
-                              )),
+                                // fit: BoxFit.cover,
+                              ),
                         );
                       }),
                     ),
