@@ -100,7 +100,7 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                   setState(() {
                                     gender = question[0][0];
                                     _controller.nextPage(
-                                        duration: Duration(milliseconds: 200),
+                                        duration: const Duration(milliseconds: 200),
                                         curve: Curves.linear);
                                   });
                                 },
@@ -125,7 +125,7 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                   setState(() {
                                     gender = question[0][1];
                                     _controller.nextPage(
-                                        duration: Duration(milliseconds: 200),
+                                        duration: const Duration(milliseconds: 200),
                                         curve: Curves.linear);
                                   });
                                 },
@@ -185,7 +185,7 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                     padding: const EdgeInsets.only(
                                         left: 20, right: 10),
                                     child: DropdownButton<int>(
-                                      hint: Text("Select your age"),
+                                      hint: const Text("Select your age"),
                                       isExpanded: true,
                                       items: Iterable<int>.generate(100)
                                           .toList()
@@ -201,7 +201,7 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                           age = value;
                                           _controller.nextPage(
                                               duration:
-                                                  Duration(milliseconds: 200),
+                                                  const Duration(milliseconds: 200),
                                               curve: Curves.linear);
                                         });
                                       },
@@ -242,7 +242,7 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                     relationship = questionOptions[2][0];
                                     _controller.nextPage(
                                               duration:
-                                                  Duration(milliseconds: 200),
+                                                  const Duration(milliseconds: 200),
                                               curve: Curves.linear);
                                   });
                                 },
@@ -268,7 +268,7 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                     relationship = questionOptions[2][1];
                                     _controller.nextPage(
                                               duration:
-                                                  Duration(milliseconds: 200),
+                                                  const Duration(milliseconds: 200),
                                               curve: Curves.linear);
                                   });
                                 },
@@ -294,7 +294,7 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                     relationship = questionOptions[2][2];
                                     _controller.nextPage(
                                               duration:
-                                                  Duration(milliseconds: 200),
+                                                  const Duration(milliseconds: 200),
                                               curve: Curves.linear);
                                   });
                                 },
@@ -320,7 +320,7 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                     relationship = questionOptions[2][3];
                                     _controller.nextPage(
                                               duration:
-                                                  Duration(milliseconds: 200),
+                                                  const Duration(milliseconds: 200),
                                               curve: Curves.linear);
                                   });
                                 },
@@ -346,7 +346,7 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                     relationship = questionOptions[2][4];
                                     _controller.nextPage(
                                               duration:
-                                                  Duration(milliseconds: 200),
+                                                  const Duration(milliseconds: 200),
                                               curve: Curves.linear);
                                   });
                                 },
@@ -372,7 +372,7 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                     relationship = questionOptions[2][5];
                                     _controller.nextPage(
                                               duration:
-                                                  Duration(milliseconds: 200),
+                                                  const Duration(milliseconds: 200),
                                               curve: Curves.linear);
                                   });
                                 },

@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/views/user_profile.dart';
 
 class PsychometricSupportFeedback extends StatefulWidget {

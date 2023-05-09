@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:async';
 
 import 'package:otp_text_field/otp_text_field.dart';
@@ -14,8 +16,8 @@ import 'package:sarathi/ui/views/home.dart';
 import '../../controllers/auth_controller.dart';
 
 class EmailVerify extends StatefulWidget {
-  EmailVerify({this.forgotPassword = false, super.key});
-  bool forgotPassword;
+  const EmailVerify({this.forgotPassword = false, super.key});
+  final bool forgotPassword;
   @override
   State<EmailVerify> createState() => _EmailVerifyState();
 }
@@ -119,14 +121,14 @@ class _EmailVerifyState extends State<EmailVerify> {
                       length: 4,
                       width: MediaQuery.of(context).size.width,
                       // fieldWidth: 80,
-                      style: TextStyle(fontSize: 17),
+                      style: const TextStyle(fontSize: 17),
                       textFieldAlignment: MainAxisAlignment.spaceAround,
                       fieldStyle: FieldStyle.underline,
                       onCompleted: (pin) {
                         setState(() {
                           otpvalue = pin;
                         });
-                        print("Completed: " + pin);
+                        print("Completed: $pin");
                       },
                     ),
                   ),
@@ -150,7 +152,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                         },
                         child: Text(
                             _isResendAgain
-                                ? "Try again in " + _start.toString() + " sec"
+                                ? "Try again in $_start sec"
                                 : "Resend OTP",
                             style: TextStyle(
                                 fontSize: heading4.fontSize,
@@ -178,8 +180,8 @@ class _EmailVerifyState extends State<EmailVerify> {
                           borderRadius: BorderRadius.all(Radius.circular(28.r)),
                           gradient: LinearGradient(
                             colors: [
-                              Color(0XFF01AE4F).withOpacity(0.52),
-                              Color(0XFFF0D700).withOpacity(0.74)
+                              const Color(0XFF01AE4F).withOpacity(0.52),
+                              const Color(0XFFF0D700).withOpacity(0.74)
                             ],
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
@@ -214,8 +216,8 @@ class _EmailVerifyState extends State<EmailVerify> {
                                   child: Container(
                                     decoration: ShapeDecoration(
                                       color:
-                                          Color(0XFF3BC04B).withOpacity(0.73),
-                                      shape: CircleBorder(),
+                                          const Color(0XFF3BC04B).withOpacity(0.73),
+                                      shape: const CircleBorder(),
                                     ),
                                   ),
                                 ),
@@ -226,7 +228,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                                   width: 144.w,
                                   child: Container(
                                     decoration: ShapeDecoration(
-                                      color: Color(0XFFCA8A48).withOpacity(.72),
+                                      color: const Color(0XFFCA8A48).withOpacity(.72),
                                       shape: const CircleBorder(),
                                     ),
                                   ),

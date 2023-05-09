@@ -45,7 +45,6 @@ dependencies:
   image_picker: ^0.8.7
   country_state_picker: ^0.0.4
   intl:
-  http:
   dio: ^5.1.1
   flutter_secure_storage: ^8.0.0
   email_validator: ^2.1.17
@@ -54,6 +53,7 @@ dependencies:
   flutter_advanced_switch: ^3.0.1
   lottie: ^2.3.2
   connectivity_plus: ^3.0.6
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

@@ -31,7 +31,7 @@ final getPages = <GetPage>[
     name: Routes.PROFILE,
     page: () => const UserInfoPage(),
   ),
-  GetPage(name: Routes.OTPEMAIL, page: () =>  EmailVerify()),
-  GetPage(name: Routes.RESET_PASSWORD, page: () =>  ResetPasswordPage()),
-  GetPage(name: Routes.NO_INTERNET, page: () => NoInternet()),
+  GetPage(name: Routes.OTPEMAIL, page: () => const EmailVerify()),
+  GetPage(name: Routes.RESET_PASSWORD, page: () => const ResetPasswordPage()),
+  GetPage(name: Routes.NO_INTERNET, page: () => const NoInternet()),
 ];

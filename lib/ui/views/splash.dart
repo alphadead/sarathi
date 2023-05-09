@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/controllers/storage_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:sarathi/ui/auth/user_info.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../controllers/user_controller.dart';
 import '../utils/routes.dart';

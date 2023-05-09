@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
             brightness: Brightness.light,
             primarySwatch: Colors.green,
-            accentColor: Colors.purple[300],
+            // accentColor: Colors.purple[300],
             scaffoldBackgroundColor: Colors.grey[100],
             colorScheme: ColorScheme.light(
               primary: Colors.green,
@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
               ),
             )),
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        home: const SplashScreen(),
       ),
       designSize: const Size(375, 812),
     );

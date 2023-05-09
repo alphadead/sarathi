@@ -8,17 +8,17 @@ class LogoutDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Logout'),
-      content: Text('Are you sure you want to logout?'),
+      title: const Text('Logout'),
+      content: const Text('Are you sure you want to logout?'),
       actions: [
         ElevatedButton(
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
           onPressed: () {
             Get.back();
           },
         ),
         ElevatedButton(
-          child: Text('Logout'),
+          child: const Text('Logout'),
           onPressed: () {
             _authController.logOut();
           },

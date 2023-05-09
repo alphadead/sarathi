@@ -1,19 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:convert' as convert;
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:sarathi/models/user.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/utils/routes.dart';
-import 'package:sarathi/ui/views/edit_user_profile.dart';
-import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
 
 import '../../controllers/auth_controller.dart';
@@ -522,7 +516,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       "phone": phoneController.text,
                       "email": _authController.emailAuth.value,
                       "education": educationController.text,
-                    });
+                    },_image!);
                   }
                 },
                 child: Container(

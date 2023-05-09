@@ -1,5 +1,6 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart'  hide Response, FormData, MultipartFile;
 import 'package:sarathi/controllers/storage_controller.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/routes.dart';
@@ -14,12 +15,20 @@ class AuthController extends GetxController {
   StorageController storageController = StorageController();
   final UserController _userController = Get.find<UserController>();
 
-  addProfile(Map<String, dynamic> data) async {
-    data["authorization"] = _userController.token.value;
+  addProfile(Map<String, dynamic> userData, File file) async {
+    String fileName = file.path.split('/').last;
+    userData["authorization"] = _userController.token.value;
+    userData["image"] = await MultipartFile.fromFile(
+      file.path,
+      filename: fileName,
+    );
+    FormData data = FormData.fromMap(userData);
+
+    Dio dio = Dio();
     print(data.toString());
 
     try {
-      var res = await Dio().postUri(Uri.parse(ADD_PROFILE_DETAILS), data: data);
+      var res = await dio.postUri(Uri.parse(ADD_PROFILE_DETAILS), data: data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'Not Verified or User not registered') {
           print("User not verified");
@@ -41,12 +50,20 @@ class AuthController extends GetxController {
     }
   }
 
-  updateUserProfile(Map<String, dynamic> data) async {
-    data["authorization"] = _userController.token.value;
+  updateUserProfile(Map<String, dynamic> userData, File file) async {
+    String fileName = file.path.split('/').last;
+    userData["authorization"] = _userController.token.value;
+    userData["image"] = await MultipartFile.fromFile(
+      file.path,
+      filename: fileName,
+    );
+    FormData data = FormData.fromMap(userData);
+
+    Dio dio = Dio();
     print(data.toString());
     try {
       var res =
-          await Dio().postUri(Uri.parse(UPDATE_PROFILE_DETAILS), data: data);
+          await dio.postUri(Uri.parse(UPDATE_PROFILE_DETAILS), data: data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'User details not filled') {
           print("User not verified");

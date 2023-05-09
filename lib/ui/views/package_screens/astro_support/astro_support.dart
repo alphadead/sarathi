@@ -7,7 +7,6 @@ import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/controllers/astro_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/views/package_screens/astro_support/astro_support_feedback.dart';
 import 'package:sarathi/ui/views/user_profile.dart';
 import 'package:sarathi/ui/widgets/custom_progress_indicator.dart';
 import 'package:sarathi/ui/widgets/other_package_subscribed.dart';

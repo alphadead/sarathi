@@ -5,7 +5,7 @@ import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 
 class AstroSupportFeedback extends StatelessWidget {
- AstroSupportFeedback({super.key});
+  AstroSupportFeedback({super.key});
 
   bool isResultReady = false;
 
@@ -187,9 +187,28 @@ class AstroSupportFeedback extends StatelessWidget {
                                                         child: SizedBox(
                                                           height: 142.w,
                                                           width: 142.w,
-                                                          child: Image.network(
-                                                            "https://images.pexels.com/photos/12548884/pexels-photo-12548884.jpeg",
+                                                          child:
+                                                              // Image.network(
+                                                              //   "https://images.pexels.com/photos/12548884/pexels-photo-12548884.jpeg",
+                                                              //   fit: BoxFit.cover,
+                                                              // ),
+                                                              FadeInImage(
+                                                            placeholder: AssetImage(
+                                                                'assets/images/default_image.png'),
+                                                            image: NetworkImage(
+                                                              "https://images.pexels.com/photos/12548884/pexels-photo-12548884.jpeg",
+                                                            ),
                                                             fit: BoxFit.cover,
+                                                            imageErrorBuilder:
+                                                                (BuildContext
+                                                                        context,
+                                                                    Object
+                                                                        exception,
+                                                                    StackTrace?
+                                                                        stackTrace) {
+                                                              return Image.asset(
+                                                                  'assets/images/error.png');
+                                                            },
                                                           ),
                                                         ),
                                                       ),

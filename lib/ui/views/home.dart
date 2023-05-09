@@ -4,14 +4,12 @@ import 'package:get/get.dart';
 import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
-import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/utils/routes.dart';
 import 'package:sarathi/ui/views/package_screens/astro_support/astro_support.dart';
 import 'package:sarathi/ui/views/package_screens/career_counselling/career_counselling.dart';
-import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_questions.dart';
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support.dart';
 import 'package:sarathi/ui/views/user_profile.dart';
 import 'package:sarathi/ui/widgets/category_box.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -74,8 +72,17 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(18.r)),
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(18),
-                              child: Image.network(
-                                _userController.user.value.image.toString(),
+                              child: Image(
+                                image: CachedNetworkImage(
+                                                imageUrl: _userController.user.value.image.toString(),
+                                                placeholder: (context, url) =>
+                                                    AssetImage(
+                                                        'assets/images/default_image.png'),
+                                                errorWidget: (context, url,
+                                                        error) =>
+                                                    Image.asset(
+                                                        'assets/images/error.png')),
+                                // _userController.user.value.image.toString(),
                                 fit: BoxFit.cover,
                               )),
                         );

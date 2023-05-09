@@ -1,21 +1,15 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/models/user.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/utils/routes.dart';
 import 'package:sarathi/ui/views/edit_user_profile.dart';
-import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
-
 import '../../controllers/auth_controller.dart';
 import '../widgets/logout_dialog.dart';
 
@@ -40,7 +34,6 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController stateController = TextEditingController();
   String imgUrl =
       'https://images.pexels.com/photos/2820884/pexels-photo-2820884.jpeg';
-
 
   @override
   void initState() {
@@ -141,7 +134,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                               spreadRadius: 5)
                                         ],
                                         image: DecorationImage(
-                                            image: NetworkImage(imgUrl),
+                                            // image: NetworkImage(imgUrl,),
+                                            image: CachedNetworkImage(
+                                                imageUrl: imgUrl,
+                                                placeholder: (context, url) =>
+                                                    AssetImage(
+                                                        'assets/images/default_image.png'),
+                                                errorWidget: (context, url,
+                                                        error) =>
+                                                    Image.asset(
+                                                        'assets/images/error.png')),
                                             fit: BoxFit.cover),
                                         borderRadius:
                                             BorderRadius.circular(36)),
@@ -245,7 +247,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(height: 20.h),
                     // -------------- Country TextField --------------
-                     Text(
+                    Text(
                       'Country',
                       style: TextStyle(
                           fontSize: heading4.fontSize,
@@ -267,7 +269,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(height: 20.h),
                     // -------------- State TextField --------------
-                     Text(
+                    Text(
                       'State',
                       style: TextStyle(
                           fontSize: heading4.fontSize,
@@ -360,13 +362,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontFamily: heading2.fontFamily,
                               color: const Color(0XFF2B47FC)))),
                 ),
-              ),const SizedBox(
+              ),
+              const SizedBox(
                 height: 30,
               ),
               GestureDetector(
                 onTap: () {
                   //TODO: Add Logout Functionality
-                   Get.dialog(LogoutDialog());
+                  Get.dialog(LogoutDialog());
                 },
                 child: Container(
                   height: 72.h,
@@ -382,7 +385,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       borderRadius: BorderRadius.circular(28),
                       color: whiteColor),
                   child: Center(
-                    child: Text('LOGOUT',
+                      child: Text('LOGOUT',
                           style: TextStyle(
                               fontSize: heading2.fontSize,
                               fontFamily: heading2.fontFamily,
