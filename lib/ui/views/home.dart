@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
+import 'package:sarathi/ui/views/lock_page.dart';
 import 'package:sarathi/ui/views/package_screens/astro_support/astro_support.dart';
 import 'package:sarathi/ui/views/package_screens/career_counselling/career_counselling.dart';
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support.dart';
@@ -67,24 +68,21 @@ class _HomePageState extends State<HomePage> {
                         return Container(
                           height: 50.h,
                           width: 50.h,
-                          
                           decoration: BoxDecoration(
                               color: Colors.yellow,
                               borderRadius: BorderRadius.circular(18.r)),
                           child: ClipRRect(
-                              borderRadius: BorderRadius.circular(18),
-                              child: CachedNetworkImage(
-                                                imageUrl: _userController.user.value.image.toString(),
-                                                placeholder: (context, url) =>
-                                                    Image.asset(
-                                                        'assets/images/default_image.png'),
-                                                errorWidget: (context, url,
-                                                        error) =>
-                                                    Image.asset(
-                                                        'assets/images/error.png')),
-                                // _userController.user.value.image.toString(),
-                                // fit: BoxFit.cover,
-                              ),
+                            borderRadius: BorderRadius.circular(18),
+                            child: CachedNetworkImage(
+                                imageUrl:
+                                    _userController.user.value.image.toString(),
+                                placeholder: (context, url) => Image.asset(
+                                    'assets/images/default_image.png'),
+                                errorWidget: (context, url, error) =>
+                                    Image.asset('assets/images/error.png')),
+                            // _userController.user.value.image.toString(),
+                            // fit: BoxFit.cover,
+                          ),
                         );
                       }),
                     ),
@@ -120,6 +118,9 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         GestureDetector(
                           onTap: () {
+                            if (!_userController.isAstroShow.value) {
+                              Get.to(const LockPage());
+                            }
                             Get.to(const AstroSupportPage());
                           },
                           child: CategoryBox(
@@ -129,6 +130,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: () {
+                            if (!_userController.isPsyShow.value) {
+                              Get.to(const LockPage());
+                            }
                             Get.to(const PsychometricSupportPage());
                           },
                           child: CategoryBox(
@@ -143,6 +147,9 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         GestureDetector(
                           onTap: () {
+                            if (!_userController.isCareerShow.value) {
+                              Get.to(const LockPage());
+                            }
                             Get.to(CareerCounsellingPage());
                           },
                           child: CategoryBox(
@@ -150,22 +157,37 @@ class _HomePageState extends State<HomePage> {
                             img: categoryImages[2],
                           ),
                         ),
-                        CategoryBox(
-                          text: categories[3],
-                          img: categoryImages[3],
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(LockPage());
+                          },
+                          child: CategoryBox(
+                            text: categories[3],
+                            img: categoryImages[3],
+                          ),
                         )
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CategoryBox(
-                          text: categories[4],
-                          img: categoryImages[4],
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(LockPage());
+                          },
+                          child: CategoryBox(
+                            text: categories[4],
+                            img: categoryImages[4],
+                          ),
                         ),
-                        CategoryBox(
-                          text: categories[5],
-                          img: categoryImages[5],
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(LockPage());
+                          },
+                          child: CategoryBox(
+                            text: categories[5],
+                            img: categoryImages[5],
+                          ),
                         )
                       ],
                     ),

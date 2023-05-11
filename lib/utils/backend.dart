@@ -14,3 +14,4 @@ const String FETCH_ASTRO_DETAILS = '$BACKEND_URL/astro/fetchAstroDetails';
 const String POST_ASTRO_DETAILS = '$BACKEND_URL/astro/details';
 const String FETCH_PSY_DETAILS = '$BACKEND_URL/psy/fetchpsyDetails';
 const String POST_PSY_DETAILS = '$BACKEND_URL/psy/details';
+const String FETCH_USER_SHOW = '$BACKEND_URL/user/show';

@@ -418,40 +418,40 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                     const SizedBox(height: 7),
                     TextFormField(
-                        controller: phoneController,
-                        keyboardType: TextInputType.phone,
-                        onChanged: (value) {
-                          setState(() {
-                            if (phoneController.text.length == 10) {
-                              isPhoneCorrect = true;
-                            } else {
-                              isPhoneCorrect = false;
-                            }
-                          });
-                        },
-                        decoration: InputDecoration(
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 2.0),
-                          ),
-                          isDense: true,
-                          hintText: "Your Phone",
-                          hintStyle: TextStyle(
-                              fontSize: heading4.fontSize,
-                              fontWeight: heading4.fontWeight,
-                              fontFamily: heading4.fontFamily,
-                              color: heading3.color),
-                          suffixIcon: isPhoneCorrect
-                              ? Icon(
-                                  Icons.check,
-                                  color: pinkColor,
-                                  size: 24,
-                                )
-                              : SizedBox(height: 18.h, width: 13.w),
-                          suffixIconConstraints:
-                              const BoxConstraints(maxHeight: 24),
+                      controller: phoneController,
+                      keyboardType: TextInputType.phone,
+                      onChanged: (value) {
+                        setState(() {
+                          if (phoneController.text.length == 10) {
+                            isPhoneCorrect = true;
+                          } else {
+                            isPhoneCorrect = false;
+                          }
+                        });
+                      },
+                      decoration: InputDecoration(
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 2.0),
                         ),
+                        isDense: true,
+                        hintText: "Your Phone",
+                        hintStyle: TextStyle(
+                            fontSize: heading4.fontSize,
+                            fontWeight: heading4.fontWeight,
+                            fontFamily: heading4.fontFamily,
+                            color: heading3.color),
+                        suffixIcon: isPhoneCorrect
+                            ? Icon(
+                                Icons.check,
+                                color: pinkColor,
+                                size: 24,
+                              )
+                            : SizedBox(height: 18.h, width: 13.w),
+                        suffixIconConstraints:
+                            const BoxConstraints(maxHeight: 24),
                       ),
+                    ),
                     SizedBox(height: 20.h),
                     // -------------- Education TextField ----------------
                     Text(
@@ -516,7 +516,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       "phone": phoneController.text,
                       "email": _authController.emailAuth.value,
                       "education": educationController.text,
-                    },_image!);
+                    },_image);
                   }
                 },
                 child: Container(

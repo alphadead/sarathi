@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:get/get.dart'  hide Response, FormData, MultipartFile;
+import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'package:sarathi/controllers/storage_controller.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/routes.dart';
@@ -50,13 +50,15 @@ class AuthController extends GetxController {
     }
   }
 
-  updateUserProfile(Map<String, dynamic> userData, File file) async {
-    String fileName = file.path.split('/').last;
+  updateUserProfile(Map<String, dynamic> userData, File? file) async {
     userData["authorization"] = _userController.token.value;
-    userData["image"] = await MultipartFile.fromFile(
-      file.path,
-      filename: fileName,
-    );
+    if (file != null) {
+      String fileName = file.path.split('/').last;
+      userData["image"] = await MultipartFile.fromFile(
+        file.path,
+        filename: fileName,
+      );
+    }
     FormData data = FormData.fromMap(userData);
 
     Dio dio = Dio();

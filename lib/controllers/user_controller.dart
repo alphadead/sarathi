@@ -18,6 +18,14 @@ class UserController extends GetxController {
   RxBool isAstroVerified = false.obs;
   RxBool isAstroPaid = false.obs;
   RxString token = ''.obs;
+
+  RxBool isPsyShow = false.obs;
+  RxBool isAstroShow = false.obs;
+  RxBool isCareerShow = false.obs;
+  RxBool isCourseShow = false.obs;
+  RxBool isCollegeShow = false.obs;
+  RxBool isCounselingShow = false.obs;
+
   fetchUserDetails() async {
     try {
       print(token.value);
@@ -30,15 +38,19 @@ class UserController extends GetxController {
         user.value = User.fromJson(res.data);
         isLoggedin.value = true;
         isVerified.value = true;
+        Get.offAllNamed(Routes.HOME);
       } else {
         print("Some error occured");
+        reset();
+        Get.offAllNamed(Routes.LOGIN);
       }
     } catch (e) {
       print(e.toString());
+        reset();
+      Get.offAllNamed(Routes.LOGIN);
     }
   }
 
-  
   void reset() {
     email.value = '';
     user.value = User();
@@ -48,5 +60,28 @@ class UserController extends GetxController {
     isAstroVerified.value = false;
     isAstroPaid.value = false;
     token.value = '';
+  }
+
+  void showFeatures() async {
+    try {
+      print(token.value);
+      print(FETCH_USER_SHOW);
+      var res = await Dio().getUri(Uri.parse(FETCH_USER_SHOW));
+      print(res.data);
+      if (res.statusCode == 200) {
+        isPsyShow.value = res.data['Psychometric'];
+        isAstroShow.value = res.data['astro'];
+        isCareerShow.value = res.data['Career'];
+        isCourseShow.value = res.data['Course'];
+        isCollegeShow.value = res.data['College'];
+        isCounselingShow.value = res.data['Counseling'];
+      } else {
+        print("Some error occured");
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      update();
+    }
   }
 }

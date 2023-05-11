@@ -62,7 +62,6 @@ class _SplashScreenState extends State<SplashScreen> {
         if (data['verified'] == 'true') {
           Get.find<UserController>().token.value = data['token']!;
           Get.find<UserController>().fetchUserDetails();
-          Get.offAllNamed(Routes.HOME);
         } else {
           Get.offAllNamed(Routes.ONBOARDING);
         }
