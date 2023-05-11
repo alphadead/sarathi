@@ -1,12 +1,9 @@
-import 'dart:math';
 
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
-import 'package:sarathi/ui/auth/email_verify.dart';
 import 'package:sarathi/ui/auth/login.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
@@ -175,8 +172,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           borderRadius: BorderRadius.all(Radius.circular(28.r)),
                           gradient: LinearGradient(
                             colors: [
-                              Color(0XFF01AE4F).withOpacity(0.52),
-                              Color(0XFFF0D700).withOpacity(0.74)
+                              const Color(0XFF01AE4F).withOpacity(0.52),
+                              const Color(0XFFF0D700).withOpacity(0.74)
                             ],
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
@@ -215,8 +212,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   child: Container(
                                     decoration: ShapeDecoration(
                                       color:
-                                          Color(0XFF3BC04B).withOpacity(0.73),
-                                      shape: CircleBorder(),
+                                          const Color(0XFF3BC04B).withOpacity(0.73),
+                                      shape: const CircleBorder(),
                                     ),
                                   ),
                                 ),
@@ -227,7 +224,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   width: 144.w,
                                   child: Container(
                                     decoration: ShapeDecoration(
-                                      color: Color(0XFFCA8A48).withOpacity(.72),
+                                      color: const Color(0XFFCA8A48).withOpacity(.72),
                                       shape: const CircleBorder(),
                                     ),
                                   ),

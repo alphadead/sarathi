@@ -1,19 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:convert' as convert;
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:sarathi/models/user.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/utils/routes.dart';
-import 'package:sarathi/ui/views/edit_user_profile.dart';
-import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
 
 import '../../controllers/auth_controller.dart';
@@ -47,11 +41,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void initState() {
     super.initState();
     _fetchUserData();
-    print("--------User Name: ");
-    print(widget.user.name);
-    print(widget.user.address!.state.toString());
-    print(newState);
-    print("--------");
   }
 
   bool isCountrySelected = true;
@@ -60,7 +49,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Future<void> getWorldData() async {
     final String response =
         await rootBundle.loadString('assets/data/countries_and_states.json');
-    // print(response.toString());
     final data = await json.decode(response) as Map<String, dynamic>;
     setState(() {
       _countries = data["countries"];
@@ -78,7 +66,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
         Navigator.of(context).pop();
       });
     } on PlatformException catch (e) {
-      print(e);
+                Get.snackbar("Some error occured","");
+
       Navigator.of(context).pop();
     }
   }
@@ -532,8 +521,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
           _states = _countries[i]["states"];
         }
       }
-      print(_countries.length);
-      print(_states.length);
       imgUrl = widget.user.image.toString();
     });
   }

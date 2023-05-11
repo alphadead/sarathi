@@ -1,12 +1,8 @@
-import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
-import 'package:sarathi/ui/auth/email_verify.dart';
 
 import '../models/user.dart';
-import '../ui/utils/routes.dart';
 import '../utils/backend.dart';
 
 class UserController extends GetxController {
@@ -20,21 +16,20 @@ class UserController extends GetxController {
   RxString token = ''.obs;
   fetchUserDetails() async {
     try {
-      print(token.value);
-      print(FETCH_PROFILE_DETAILS);
       var res = await Dio().getUri(Uri.parse(FETCH_PROFILE_DETAILS), data: {
         "authorization": token.value,
       });
-      print(res.data);
       if (res.statusCode == 200) {
         user.value = User.fromJson(res.data);
         isLoggedin.value = true;
         isVerified.value = true;
       } else {
-        print("Some error occured");
+                  Get.snackbar("Some error occured","");
+
       }
     } catch (e) {
-      print(e.toString());
+                  Get.snackbar("Some error occured",e.toString());
+    
     }
   }
 

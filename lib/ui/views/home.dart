@@ -31,12 +31,12 @@ class _HomePageState extends State<HomePage> {
     'Educational Guidance and Counseling'
   ];
   final List<String> categoryImages = [
-    'assets/images/category1.png',
-    'assets/images/category2.png',
-    'assets/images/category3.png',
-    'assets/images/category4.png',
-    'assets/images/category5.png',
-    'assets/images/category6.png',
+    'assets/images/category1.svg',
+    'assets/images/category2.svg',
+    'assets/images/category3.svg',
+    'assets/images/category4.svg',
+    'assets/images/category5.svg',
+    'assets/images/category6.svg',
   ];
 
   @override
@@ -265,7 +265,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(CareerCounsellingPage());
+                            Get.to(const CareerCounsellingPage());
                           },
                           child: CategoryBox(
                             text: categories[2],

@@ -1,23 +1,15 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:convert' as convert;
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/models/user.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/utils/routes.dart';
 import 'package:sarathi/ui/views/edit_user_profile.dart';
-import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
-
-import '../../controllers/auth_controller.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key, required this.user});
@@ -28,7 +20,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final AuthController _authController = Get.find<AuthController>();
   final UserController _userController = Get.find<UserController>();
   File? _image;
   TextEditingController nameController = TextEditingController();
@@ -44,7 +35,6 @@ class _ProfilePageState extends State<ProfilePage> {
   bool isEducationCorrect = false;
   String imgUrl =
       'https://images.pexels.com/photos/2820884/pexels-photo-2820884.jpeg';
-
 
   @override
   void initState() {
@@ -62,8 +52,9 @@ class _ProfilePageState extends State<ProfilePage> {
         // isImageSelected = true;
         Navigator.of(context).pop();
       });
-    } on PlatformException catch (e) {
-      print(e);
+    } on PlatformException {
+      Get.snackbar("Some error occured", "");
+
       Navigator.of(context).pop();
     }
   }
@@ -249,7 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(height: 20.h),
                     // -------------- Country TextField --------------
-                     Text(
+                    Text(
                       'Country',
                       style: TextStyle(
                           fontSize: heading4.fontSize,
@@ -271,7 +262,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(height: 20.h),
                     // -------------- State TextField --------------
-                     Text(
+                    Text(
                       'State',
                       style: TextStyle(
                           fontSize: heading4.fontSize,

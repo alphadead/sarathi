@@ -15,7 +15,7 @@ class CategoryBox extends StatelessWidget {
       width: 146.w,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        //TODO
+
         gradient: LinearGradient(colors: [
           yellowColor.withOpacity(0.3),
           greenColor.withOpacity(0.3)

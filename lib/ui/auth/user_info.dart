@@ -1,19 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:convert' as convert;
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/views/home.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
 
 class UserInfoPage extends StatefulWidget {
@@ -68,7 +64,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
         Navigator.of(context).pop();
       });
     } on PlatformException catch (e) {
-      print(e);
+      Get.snackbar("Some error occured", "");
+
       Navigator.of(context).pop();
     }
   }

@@ -7,7 +7,6 @@ import 'package:sarathi/controllers/psycology_controller.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support_feedback.dart';
 import 'package:sarathi/ui/views/user_profile.dart';
 import 'package:sarathi/ui/widgets/custom_progress_indicator.dart';
 
@@ -117,7 +116,7 @@ class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
                             height: 300,
                             width: double.infinity,
                             child: Image.asset(
-                              'assets/images/brain.png',
+                              'assets/images/brain.svg',
                               fit: BoxFit.cover,
                             )),
                       ],

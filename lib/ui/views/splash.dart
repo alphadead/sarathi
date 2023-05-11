@@ -1,9 +1,6 @@
 import 'package:get/get.dart';
-import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/controllers/storage_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:sarathi/ui/auth/user_info.dart';
-
 import '../../controllers/user_controller.dart';
 import '../utils/routes.dart';
 
@@ -15,7 +12,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final AuthController _authController = Get.find<AuthController>();
   final StorageController _storageController = StorageController();
   @override
   void initState() {
@@ -29,9 +25,11 @@ class _SplashScreenState extends State<SplashScreen> {
     //       MaterialPageRoute(builder: (context) => const OnBoardingScreen()));
     // });
     await Future.delayed(const Duration(milliseconds: 1500), () async {
-    // Get.offAll(UserInfoPage());
+      // Get.offAll(UserInfoPage());
       var data = await _storageController.getDetails();
-      if (data['token'] != null && data['verified'] != null && data['token'].toString().isNotEmpty) {
+      if (data['token'] != null &&
+          data['verified'] != null &&
+          data['token'].toString().isNotEmpty) {
         if (data['verified'] == 'true') {
           Get.find<UserController>().token.value = data['token']!;
           Get.find<UserController>().fetchUserDetails();

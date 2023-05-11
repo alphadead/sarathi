@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/views/home.dart';
 
 class PsychometricSupportFeedback extends StatefulWidget {
   const PsychometricSupportFeedback({super.key});
@@ -26,12 +24,6 @@ class _PsychometricSupportFeedbackState
   @override
   void initState() {
     super.initState();
-    checkResult();
-  }
-
-  checkResult() {
-    //TODO
-    // isResultReady = true;
   }
 
   @override
