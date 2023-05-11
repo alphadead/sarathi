@@ -4,14 +4,11 @@ import 'dart:async';
 
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
-import 'package:sarathi/ui/auth/user_info.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:sarathi/ui/views/home.dart';
 
 import '../../controllers/auth_controller.dart';
 
@@ -62,7 +59,7 @@ class _EmailVerifyState extends State<EmailVerify> {
               height: 155.h,
               width: 160.w,
               child: Image.asset(
-                'assets/images/biometric.png',
+                'assets/images/biometric.svg',
                 fit: BoxFit.contain,
               ),
             ),
@@ -215,8 +212,8 @@ class _EmailVerifyState extends State<EmailVerify> {
                                   width: 144.w,
                                   child: Container(
                                     decoration: ShapeDecoration(
-                                      color:
-                                          const Color(0XFF3BC04B).withOpacity(0.73),
+                                      color: const Color(0XFF3BC04B)
+                                          .withOpacity(0.73),
                                       shape: const CircleBorder(),
                                     ),
                                   ),
@@ -228,7 +225,8 @@ class _EmailVerifyState extends State<EmailVerify> {
                                   width: 144.w,
                                   child: Container(
                                     decoration: ShapeDecoration(
-                                      color: const Color(0XFFCA8A48).withOpacity(.72),
+                                      color: const Color(0XFFCA8A48)
+                                          .withOpacity(.72),
                                       shape: const CircleBorder(),
                                     ),
                                   ),

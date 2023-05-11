@@ -62,8 +62,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
         isImageSelected = true;
         Navigator.of(context).pop();
       });
-    } on PlatformException catch (e) {
-      print(e);
+    } on PlatformException {
+      Get.snackbar("Some error occured", "");
+
       Navigator.of(context).pop();
     }
   }
@@ -559,8 +560,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
                         },
                         "education": educationController.text,
                         "email": _authController.emailAuth.value,
-                        "phone": phoneController.text 
-                      },_image!);
+                        "phone": phoneController.text
+                      }, _image!);
                     }
                   },
                   child: Container(

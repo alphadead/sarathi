@@ -33,16 +33,16 @@ class AstroDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['dob'] = this.dob;
-    data['pob'] = this.pob;
-    data['tob'] = this.tob;
-    data['userId'] = this.userId;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['name'] = name;
+    data['dob'] = dob;
+    data['pob'] = pob;
+    data['tob'] = tob;
+    data['userId'] = userId;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = iV;
     return data;
   }
 }

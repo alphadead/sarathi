@@ -19,10 +19,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final AuthController _authController = Get.find<AuthController>();
   final StorageController _storageController = StorageController();
   StreamSubscription? internetconnection;
-  final AuthController authController = Get.put(AuthController());
+  final AuthController _authController = Get.put(AuthController());
   @override
   void initState() {
     // authController.onInit();

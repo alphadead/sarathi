@@ -20,7 +20,6 @@ class AstroSupportPage extends StatefulWidget {
 
 class _AstroSupportPageState extends State<AstroSupportPage> {
   final UserController _userController = Get.find<UserController>();
-  final AstroController _astroController = AstroController();
   TextEditingController nameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   TextEditingController placeController = TextEditingController();
@@ -127,8 +126,8 @@ class _AstroSupportPageState extends State<AstroSupportPage> {
                         SizedBox(
                             height: 360,
                             width: double.infinity,
-                            child: Image.asset(
-                              'assets/images/astrologywheel.png',
+                            child: SvgPicture.asset(
+                              'assets/images/astrologywheel.svg',
                               fit: BoxFit.cover,
                             )),
                       ],
@@ -140,7 +139,8 @@ class _AstroSupportPageState extends State<AstroSupportPage> {
                             return CustomProgressIndicator(context);
                           } else if (controller.someErrorOccured.value) {
                             return const Text("Some error occured");
-                          } else if (controller.someOtherPackageSubscribe.value) {
+                          } else if (controller
+                              .someOtherPackageSubscribe.value) {
                             return someOtherPackageSubscribed(context);
                           } else if (controller.fillAstroDetails.value) {
                             return Column(

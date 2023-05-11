@@ -100,7 +100,8 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                   setState(() {
                                     gender = question[0][0];
                                     _controller.nextPage(
-                                        duration: const Duration(milliseconds: 200),
+                                        duration:
+                                            const Duration(milliseconds: 200),
                                         curve: Curves.linear);
                                   });
                                 },
@@ -125,7 +126,8 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                   setState(() {
                                     gender = question[0][1];
                                     _controller.nextPage(
-                                        duration: const Duration(milliseconds: 200),
+                                        duration:
+                                            const Duration(milliseconds: 200),
                                         curve: Curves.linear);
                                   });
                                 },
@@ -200,8 +202,8 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                         setState(() {
                                           age = value;
                                           _controller.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 200),
+                                              duration: const Duration(
+                                                  milliseconds: 200),
                                               curve: Curves.linear);
                                         });
                                       },
@@ -241,9 +243,9 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                   setState(() {
                                     relationship = questionOptions[2][0];
                                     _controller.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 200),
-                                              curve: Curves.linear);
+                                        duration:
+                                            const Duration(milliseconds: 200),
+                                        curve: Curves.linear);
                                   });
                                 },
                                 child: Container(
@@ -267,9 +269,9 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                   setState(() {
                                     relationship = questionOptions[2][1];
                                     _controller.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 200),
-                                              curve: Curves.linear);
+                                        duration:
+                                            const Duration(milliseconds: 200),
+                                        curve: Curves.linear);
                                   });
                                 },
                                 child: Container(
@@ -293,9 +295,9 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                   setState(() {
                                     relationship = questionOptions[2][2];
                                     _controller.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 200),
-                                              curve: Curves.linear);
+                                        duration:
+                                            const Duration(milliseconds: 200),
+                                        curve: Curves.linear);
                                   });
                                 },
                                 child: Container(
@@ -319,9 +321,9 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                   setState(() {
                                     relationship = questionOptions[2][3];
                                     _controller.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 200),
-                                              curve: Curves.linear);
+                                        duration:
+                                            const Duration(milliseconds: 200),
+                                        curve: Curves.linear);
                                   });
                                 },
                                 child: Container(
@@ -345,9 +347,9 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                   setState(() {
                                     relationship = questionOptions[2][4];
                                     _controller.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 200),
-                                              curve: Curves.linear);
+                                        duration:
+                                            const Duration(milliseconds: 200),
+                                        curve: Curves.linear);
                                   });
                                 },
                                 child: Container(
@@ -371,9 +373,9 @@ class _PsychometricQuestionsPageState extends State<PsychometricQuestionsPage> {
                                   setState(() {
                                     relationship = questionOptions[2][5];
                                     _controller.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 200),
-                                              curve: Curves.linear);
+                                        duration:
+                                            const Duration(milliseconds: 200),
+                                        curve: Curves.linear);
                                   });
                                 },
                                 child: Container(

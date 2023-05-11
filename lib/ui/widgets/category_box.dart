@@ -14,21 +14,18 @@ class CategoryBox extends StatelessWidget {
       height: 190.h,
       width: 146.w,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        //TODO
-        gradient: LinearGradient(colors: [
-          yellowColor.withOpacity(0.3),
-          greenColor.withOpacity(0.3)
-        ], begin: Alignment.topRight, end: Alignment.bottomLeft),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            spreadRadius: 3,
-            blurRadius: 5,
-            offset: Offset(2,3)
-          )
-        ]
-      ),
+          borderRadius: BorderRadius.circular(25),
+          gradient: LinearGradient(colors: [
+            yellowColor.withOpacity(0.3),
+            greenColor.withOpacity(0.3)
+          ], begin: Alignment.topRight, end: Alignment.bottomLeft),
+          boxShadow: const [
+            BoxShadow(
+                color: Colors.black12,
+                spreadRadius: 3,
+                blurRadius: 5,
+                offset: Offset(2, 3))
+          ]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

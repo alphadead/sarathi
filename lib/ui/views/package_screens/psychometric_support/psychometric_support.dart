@@ -117,8 +117,8 @@ class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
                         SizedBox(
                             height: 300,
                             width: double.infinity,
-                            child: Image.asset(
-                              'assets/images/brain.png',
+                            child: SvgPicture.asset(
+                              'assets/images/brain.svg',
                               fit: BoxFit.cover,
                             )),
                       ],
@@ -206,7 +206,8 @@ class _PsychometricSupportPageState extends State<PsychometricSupportPage> {
                                               ageController.text,
                                               interests);
                                         }
-                                        Get.to(const PsychometricQuestionsPage());
+                                        Get.to(
+                                            const PsychometricQuestionsPage());
                                       },
                                       child: Container(
                                         height: 45.h,

@@ -5,6 +5,8 @@ import '../../controllers/auth_controller.dart';
 class LogoutDialog extends StatelessWidget {
   final AuthController _authController = Get.find<AuthController>();
 
+  LogoutDialog({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

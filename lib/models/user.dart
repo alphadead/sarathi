@@ -35,7 +35,8 @@ class User {
     phone = json['phone'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    image = json['image'] ??  'https://images.pexels.com/photos/4153800/pexels-photo-4153800.jpeg';
+    image = json['image'] ??
+        'https://images.pexels.com/photos/4153800/pexels-photo-4153800.jpeg';
     //TODO
     // image = 'https://images.pexels.com/photos/4153800/pexels-photo-4153800.jpeg';
     iV = json['__v'];

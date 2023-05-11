@@ -5,7 +5,6 @@ import 'package:sarathi/controllers/storage_controller.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/routes.dart';
 import 'package:sarathi/utils/backend.dart';
-import 'dart:developer' as developer;
 import '../ui/auth/email_verify.dart';
 
 class AuthController extends GetxController {
@@ -31,11 +30,9 @@ class AuthController extends GetxController {
       var res = await dio.postUri(Uri.parse(ADD_PROFILE_DETAILS), data: data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'Not Verified or User not registered') {
-          print("User not verified");
           Get.snackbar("User not verified", "Redirecting to home page");
           Get.offAllNamed(Routes.ONBOARDING);
         } else {
-          print("Extra details added");
           isLoggedin.value = true;
           storageController.addVerified();
           _userController.email.value = emailAuth.value;
@@ -43,10 +40,10 @@ class AuthController extends GetxController {
           Get.offAllNamed(Routes.HOME);
         }
       } else {
-        print("Some error occured");
+        Get.snackbar("Some error occured", "");
       }
     } catch (e) {
-      print(e.toString());
+      Get.snackbar("Some error occured", e.toString());
     }
   }
 
@@ -68,7 +65,6 @@ class AuthController extends GetxController {
           await dio.postUri(Uri.parse(UPDATE_PROFILE_DETAILS), data: data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'User details not filled') {
-          print("User not verified");
           Get.snackbar("User details not filled", "Redirecting to login page");
           logOut();
           Get.offAllNamed(Routes.LOGIN);
@@ -79,22 +75,19 @@ class AuthController extends GetxController {
           Get.offAllNamed(Routes.HOME);
         }
       } else {
-        print("Some error occured");
+        Get.snackbar("Some error occured", "");
       }
     } catch (e) {
-      print(e.toString());
+      Get.snackbar("Some error occured", e.toString());
     }
   }
 
   login(String email, String password) async {
-    print(password);
     try {
-      print(LOGIN_URL);
       var res = await Dio().post(LOGIN_URL, data: {
         "email": email,
         "password": password,
       });
-      print(res.data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'Login Successful') {
           await storageController.addUnverified();
@@ -102,7 +95,6 @@ class AuthController extends GetxController {
           await storageController.addToken(res.data['tokens']);
           isLoggedin.value = true;
           if (res.data["profile_status"]) {
-            print("Login Successful. Redirecting to home page");
             await storageController.addVerified();
 
             _userController.email.value = emailAuth.value;
@@ -110,7 +102,6 @@ class AuthController extends GetxController {
             Get.offAllNamed(Routes.HOME);
           } else {
             emailAuth.value = email;
-            print("Login Successful. Add additional page");
             Get.offAllNamed(Routes.PROFILE);
           }
         } else {
@@ -139,15 +130,12 @@ class AuthController extends GetxController {
 
   updatePassword(String email, String password) async {
     try {
-      print(UPDATE_PASSWORD);
       var res = await Dio().post(UPDATE_PASSWORD, data: {
         "email": email,
         "password": password,
       });
-      print(res.data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'password updated') {
-          print("Password updated");
           Get.snackbar("Password updated", "Redirecting to login page");
           Get.offAllNamed(Routes.LOGIN);
         } else if ((res.data['message'] == 'email not registered')) {
@@ -165,12 +153,10 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       Get.snackbar("Some error occured", "Please try again");
-      print(e.toString());
     }
   }
 
   register(String email, String password) async {
-    print(password);
     try {
       var res = await Dio().postUri(Uri.parse(REGISTER_URL), data: {
         "email": email,
@@ -180,31 +166,22 @@ class AuthController extends GetxController {
       print(res.data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'email or password already available') {
-          print("Email already registered");
           Get.snackbar("Email already registed", "Redirecting to home page");
-
-          //TODO: show snackbar of already registered and go to login page
           Get.offAllNamed(Routes.LOGIN);
         } else if (res.data['message'] == 'Verification Otp Sent') {
           {
-            print("OTP sent");
             emailAuth.value = email;
             Get.snackbar("OTP Sent Successfully", "");
             Get.offAllNamed(Routes.OTPEMAIL, parameters: {"email": email});
-            // Get.to(OtpScreenEmail(
-            //   email: email,
-            // ));
-            // TODO: show snackbar of OTP sent and go to OTP page
           }
         } else {
-          print("SOme error occured");
+          Get.snackbar("Some error occured", "");
         }
       } else {
-        print(res.statusCode.toString());
-        print("Wrong password");
+        Get.snackbar("Some error occured", "");
       }
     } catch (e) {
-      print(e.toString());
+      Get.snackbar("Some error occured", "");
     }
   }
 
@@ -218,14 +195,10 @@ class AuthController extends GetxController {
 
   void verifyOTP(String email, String otp,
       {bool forgotPassword = false}) async {
-    print(email);
-    print(otp);
     var res = await Dio().post(VERIFY_OTP_URL, data: {
       "email": email,
       "otp": otp,
     });
-    print(res.data);
-    print("user data: ");
     if (res.data['status'] == 'Verified') {
       if (forgotPassword) {
         Get.snackbar("OTP Verified", "Redirecting to reset password page");
@@ -233,37 +206,26 @@ class AuthController extends GetxController {
         return;
       }
       storageController.addVerified();
-      print("TTTTTOKKKKENNNNNN");
-      print(res.data['tokens']);
       _userController.token.value = res.data['tokens'];
       await storageController.addToken(res.data['tokens']);
       Get.snackbar("OTP Verified", "Redirecting to add details page");
       Get.offAllNamed(Routes.PROFILE);
-      //TODO: show snackbar of user verified and go to login page
     } else if (res.data['status'] == 'Failed') {
       {
-        print("otp verification Failed");
         Get.snackbar('Otp Verification Failed', res.data['message']);
-        // print("OTP sent");
-        // TODO: show snackbar of failed
       }
     } else {
-      Get.snackbar("Some error occured", "Please try again");
-
-      print("SOme error occured");
+      Get.snackbar("Some error occured", "");
     }
   }
 
   forgotPassword(String email) async {
     try {
-      print(FORGOT_PASSWORD);
       var res = await Dio().post(FORGOT_PASSWORD, data: {
         "email": email,
       });
-      print(res.data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'Verification Otp Sent') {
-          print("Verification Otp Sent");
           Get.snackbar("Verification Otp Sent", "Please check your email");
           // Get.offAllNamed(Routes.OTPEMAIL);
           emailAuth.value = email;
@@ -271,12 +233,10 @@ class AuthController extends GetxController {
                 forgotPassword: true,
               ));
         } else if (res.data['message'] == 'User Not Register') {
-          print("User Not Register");
           Get.snackbar("User Not Register", "Please register first");
           Get.offAllNamed(Routes.REGISTER);
         } else {
-          print("Some error occured");
-          Get.snackbar("Some error occured", "Please try again");
+          Get.snackbar("Some error occured", "");
         }
       } else {
         print(res.statusCode.toString());

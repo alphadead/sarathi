@@ -1,12 +1,8 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
-import 'package:sarathi/ui/auth/email_verify.dart';
+import 'package:sarathi/ui/utils/routes.dart';
 
 import '../models/user.dart';
-import '../ui/utils/routes.dart';
 import '../utils/backend.dart';
 
 class UserController extends GetxController {
@@ -28,12 +24,9 @@ class UserController extends GetxController {
 
   fetchUserDetails() async {
     try {
-      print(token.value);
-      print(FETCH_PROFILE_DETAILS);
       var res = await Dio().getUri(Uri.parse(FETCH_PROFILE_DETAILS), data: {
         "authorization": token.value,
       });
-      print(res.data);
       if (res.statusCode == 200) {
         user.value = User.fromJson(res.data);
         isLoggedin.value = true;
@@ -46,7 +39,7 @@ class UserController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-        reset();
+      reset();
       Get.offAllNamed(Routes.LOGIN);
     }
   }

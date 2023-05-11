@@ -3,14 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
-import 'package:sarathi/ui/auth/email_verify.dart';
 import 'package:sarathi/ui/auth/forgot_password.dart';
 import 'package:sarathi/ui/auth/sign_up.dart';
-import 'package:sarathi/ui/auth/user_info.dart';
 import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
-import 'package:sarathi/ui/views/home.dart';
 
 import '../../controllers/auth_controller.dart';
 
@@ -128,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                               const Spacer(),
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(ForgotPasswordPage());
+                                  Get.to(const ForgotPasswordPage());
                                 },
                                 child: Text(
                                   'Forget Password?',
@@ -163,8 +159,8 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.all(Radius.circular(28.r)),
                           gradient: LinearGradient(
                             colors: [
-                              Color(0XFF01AE4F).withOpacity(0.52),
-                              Color(0XFFF0D700).withOpacity(0.74)
+                              const Color(0XFF01AE4F).withOpacity(0.52),
+                              const Color(0XFFF0D700).withOpacity(0.74)
                             ],
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
@@ -200,9 +196,9 @@ class _LoginPageState extends State<LoginPage> {
                                   width: 134.w,
                                   child: Container(
                                     decoration: ShapeDecoration(
-                                      color:
-                                          Color(0XFF3BC04B).withOpacity(0.73),
-                                      shape: CircleBorder(),
+                                      color: const Color(0XFF3BC04B)
+                                          .withOpacity(0.73),
+                                      shape: const CircleBorder(),
                                     ),
                                   ),
                                 ),
@@ -213,7 +209,8 @@ class _LoginPageState extends State<LoginPage> {
                                   width: 144.w,
                                   child: Container(
                                     decoration: ShapeDecoration(
-                                      color: Color(0XFFCA8A48).withOpacity(.72),
+                                      color: const Color(0XFFCA8A48)
+                                          .withOpacity(.72),
                                       shape: const CircleBorder(),
                                     ),
                                   ),
@@ -232,7 +229,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Center(
                         child: GestureDetector(
                           onTap: () {
-                            Get.to(SignUpPage());
+                            Get.to(const SignUpPage());
                           },
                           child: Text(
                             'Create an account',

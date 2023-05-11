@@ -10,7 +10,6 @@ import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/views/edit_user_profile.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
-import '../../controllers/auth_controller.dart';
 import '../widgets/logout_dialog.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -22,7 +21,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final AuthController _authController = Get.find<AuthController>();
   final UserController _userController = Get.find<UserController>();
   File? _image;
   TextEditingController nameController = TextEditingController();
@@ -51,8 +49,9 @@ class _ProfilePageState extends State<ProfilePage> {
         // isImageSelected = true;
         Navigator.of(context).pop();
       });
-    } on PlatformException catch (e) {
-      print(e);
+    } on PlatformException {
+      Get.snackbar("Some error occured", "");
+
       Navigator.of(context).pop();
     }
   }

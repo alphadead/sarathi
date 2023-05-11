@@ -7,11 +7,9 @@ class StorageController extends GetxController {
     //   await _storage.write(key: 'email', value: email);
     //   await _storage.write(key: 'pass', value: pass);
     await _storage.write(key: 'verified', value: 'false');
-    print("Added to sttorage");
   }
 
   addToken(String token) async {
-    print(token);
     await _storage.write(key: 'token', value: token);
   }
 
@@ -20,12 +18,10 @@ class StorageController extends GetxController {
   }
 
   Future<Map<String, String>> getDetails() async {
-    print("Getting details");
     return await _storage.readAll();
   }
 
   deleteDetails() async {
     await _storage.deleteAll();
-    print("Deleted from storage");
   }
 }

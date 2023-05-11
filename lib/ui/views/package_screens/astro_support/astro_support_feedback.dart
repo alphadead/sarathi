@@ -193,9 +193,11 @@ class AstroSupportFeedback extends StatelessWidget {
                                                               //   fit: BoxFit.cover,
                                                               // ),
                                                               FadeInImage(
-                                                            placeholder: AssetImage(
-                                                                'assets/images/default_image.png'),
-                                                            image: NetworkImage(
+                                                            placeholder:
+                                                                const AssetImage(
+                                                                    'assets/images/default_image.png'),
+                                                            image:
+                                                                const NetworkImage(
                                                               "https://images.pexels.com/photos/12548884/pexels-photo-12548884.jpeg",
                                                             ),
                                                             fit: BoxFit.cover,

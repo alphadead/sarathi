@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:sarathi/models/psy.dart';
-import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_questions.dart';
 
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support_feedback.dart';
 import '../ui/utils/routes.dart';
@@ -31,7 +29,6 @@ class PsyController extends GetxController {
     someOtherPackageSubscribe.value = false;
     someErrorOccured.value = false;
     psyDetailsUpdated.value = false;
-    // TODO: implement onClose
     super.onClose();
   }
 
@@ -54,13 +51,11 @@ class PsyController extends GetxController {
           Get.off(const PsychometricSupportFeedback());
         }
       } else {
-        print("Some error occured");
         Get.snackbar("error occured", "");
         someErrorOccured.value = true;
       }
     } catch (e) {
       Get.snackbar("Some error occured", e.toString());
-      print(e.toString());
       someErrorOccured.value = true;
     } finally {
       onLoading.value = false;
@@ -79,24 +74,19 @@ class PsyController extends GetxController {
       var res = await Dio().postUri(Uri.parse(POST_PSY_DETAILS), data: data);
       if (res.statusCode == 200) {
         if (res.data['message'] == 'Already applied to astro package') {
-          print("Already applied to astro package");
           Get.snackbar("Details not added", "Already applied to astro package");
           Get.offAllNamed(Routes.HOME);
         } else {
-          print("Psy Details added");
           Get.snackbar("Psy Details added", "");
           psyDetails.value = PsyDetails.fromJson(res.data);
           Get.off(const PsychometricSupportFeedback());
-          
         }
       } else {
-        print("Some error occured");
         Get.snackbar("Some error occured", "");
         Get.offAllNamed(Routes.HOME);
       }
     } catch (e) {
       Get.snackbar("Some error occured", e.toString());
-      print(e.toString());
       Get.offAllNamed(Routes.HOME);
     } finally {
       update();

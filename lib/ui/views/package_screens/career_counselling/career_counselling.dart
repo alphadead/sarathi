@@ -16,12 +16,6 @@ class _CareerCounsellingPageState extends State<CareerCounsellingPage> {
   @override
   void initState() {
     super.initState();
-    checkResult();
-  }
-
-  checkResult() {
-    //TODO
-    // isResultReady = true;
   }
 
   @override
@@ -99,7 +93,7 @@ class _CareerCounsellingPageState extends State<CareerCounsellingPage> {
                     Center(
                         child: Padding(
                       padding: EdgeInsets.fromLTRB(12.w, 24.h, 12.w, 12.h),
-                      child: Container(
+                      child: SizedBox(
                           height: 170.h,
                           child: SvgPicture.asset(
                             "assets/images/reminder.svg",

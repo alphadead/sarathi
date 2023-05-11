@@ -44,11 +44,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void initState() {
     super.initState();
     _fetchUserData();
-    print("--------User Name: ");
-    print(widget.user.name);
-    print(widget.user.address!.state.toString());
-    print(newState);
-    print("--------");
   }
 
   bool isCountrySelected = true;
@@ -57,7 +52,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Future<void> getWorldData() async {
     final String response =
         await rootBundle.loadString('assets/data/countries_and_states.json');
-    // print(response.toString());
     final data = await json.decode(response) as Map<String, dynamic>;
     setState(() {
       _countries = data["countries"];
@@ -74,8 +68,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         // isImageSelected = true;
         Navigator.of(context).pop();
       });
-    } on PlatformException catch (e) {
-      print(e);
+    } on PlatformException {
+      Get.snackbar("Some error occured", "");
+
       Navigator.of(context).pop();
     }
   }
@@ -575,8 +570,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
           _states = _countries[i]["states"];
         }
       }
-      print(_countries.length);
-      print(_states.length);
       imgUrl = widget.user.image.toString();
     });
   }

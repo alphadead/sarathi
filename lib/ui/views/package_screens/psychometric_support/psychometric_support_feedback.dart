@@ -28,12 +28,6 @@ class _PsychometricSupportFeedbackState
   @override
   void initState() {
     super.initState();
-    checkResult();
-  }
-
-  checkResult() {
-    //TODO
-    // isResultReady = true;
   }
 
   @override
@@ -78,39 +72,38 @@ class _PsychometricSupportFeedbackState
                     'assets/images/careerastrology.svg',
                     fit: BoxFit.cover,
                   )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 24.w, vertical: 40.h),
-                        child: Icon(Icons.menu, color: whiteColor),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 24.w, vertical: 40.h),
+                    child: Icon(Icons.menu, color: whiteColor),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 24.w, vertical: 40.h),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(ProfilePage(user: _userController.user.value));
+                      },
+                      child: Container(
+                        height: 50.h,
+                        width: 50.h,
+                        decoration: BoxDecoration(
+                            color: Colors.yellow,
+                            borderRadius: BorderRadius.circular(18.r)),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(18),
+                            child: Image.network(
+                              _userController.user.value.image.toString(),
+                              fit: BoxFit.cover,
+                            )),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 24.w, vertical: 40.h),
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.to(
-                                ProfilePage(user: _userController.user.value));
-                          },
-                          child: Container(
-                            height: 50.h,
-                            width: 50.h,
-                            decoration: BoxDecoration(
-                                color: Colors.yellow,
-                                borderRadius: BorderRadius.circular(18.r)),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(18),
-                                child: Image.network(
-                                  _userController.user.value.image.toString(),
-                                  fit: BoxFit.cover,
-                                )),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
           Padding(

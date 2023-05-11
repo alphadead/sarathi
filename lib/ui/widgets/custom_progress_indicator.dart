@@ -6,9 +6,7 @@ Widget CustomProgressIndicator(BuildContext context) {
     child: Column(
       children: const [
         Spacer(),
-        Center(
-          child: CircularProgressIndicator()
-        ),
+        Center(child: CircularProgressIndicator()),
         Spacer()
       ],
     ),
