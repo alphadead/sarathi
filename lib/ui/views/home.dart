@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/controllers/user_controller.dart';
 import 'package:sarathi/ui/utils/colors.dart';
-import 'package:sarathi/ui/views/lock_page.dart';
 import 'package:sarathi/ui/views/package_screens/astro_support/astro_support.dart';
 import 'package:sarathi/ui/views/package_screens/career_counselling/career_counselling.dart';
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support.dart';
 import 'package:sarathi/ui/views/user_profile.dart';
+import 'package:sarathi/ui/views/lock_page.dart';
 import 'package:sarathi/ui/widgets/category_box.dart';
 
 class HomePage extends StatefulWidget {
