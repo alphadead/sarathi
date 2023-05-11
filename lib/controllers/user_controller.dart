@@ -66,7 +66,7 @@ class UserController extends GetxController {
     try {
       print(token.value);
       print(FETCH_USER_SHOW);
-      var res = await Dio().getUri(Uri.parse(FETCH_USER_SHOW));
+      var res = await Dio().postUri(Uri.parse(FETCH_USER_SHOW));
       print(res.data);
       if (res.statusCode == 200) {
         isPsyShow.value = res.data['Psychometric'];
