@@ -226,33 +226,31 @@ class AuthController extends GetxController {
     });
     print(res.data);
     print("user data: ");
-    if (res != null) {
-      if (res.data['status'] == 'Verified') {
-        if (forgotPassword) {
-          Get.snackbar("OTP Verified", "Redirecting to reset password page");
-          Get.offAllNamed(Routes.RESET_PASSWORD, parameters: {"email": email});
-          return;
-        }
-        storageController.addVerified();
-        print("TTTTTOKKKKENNNNNN");
-        print(res.data['tokens']);
-        _userController.token.value = res.data['tokens'];
-        await storageController.addToken(res.data['tokens']);
-        Get.snackbar("OTP Verified", "Redirecting to add details page");
-        Get.offAllNamed(Routes.PROFILE);
-        //TODO: show snackbar of user verified and go to login page
-      } else if (res.data['status'] == 'Failed') {
-        {
-          print("otp verification Failed");
-          Get.snackbar('Otp Verification Failed', res.data['message']);
-          // print("OTP sent");
-          // TODO: show snackbar of failed
-        }
-      } else {
-        Get.snackbar("Some error occured", "Please try again");
-
-        print("SOme error occured");
+    if (res.data['status'] == 'Verified') {
+      if (forgotPassword) {
+        Get.snackbar("OTP Verified", "Redirecting to reset password page");
+        Get.offAllNamed(Routes.RESET_PASSWORD, parameters: {"email": email});
+        return;
       }
+      storageController.addVerified();
+      print("TTTTTOKKKKENNNNNN");
+      print(res.data['tokens']);
+      _userController.token.value = res.data['tokens'];
+      await storageController.addToken(res.data['tokens']);
+      Get.snackbar("OTP Verified", "Redirecting to add details page");
+      Get.offAllNamed(Routes.PROFILE);
+      //TODO: show snackbar of user verified and go to login page
+    } else if (res.data['status'] == 'Failed') {
+      {
+        print("otp verification Failed");
+        Get.snackbar('Otp Verification Failed', res.data['message']);
+        // print("OTP sent");
+        // TODO: show snackbar of failed
+      }
+    } else {
+      Get.snackbar("Some error occured", "Please try again");
+
+      print("SOme error occured");
     }
   }
 
@@ -269,7 +267,7 @@ class AuthController extends GetxController {
           Get.snackbar("Verification Otp Sent", "Please check your email");
           // Get.offAllNamed(Routes.OTPEMAIL);
           emailAuth.value = email;
-          Get.offAll(() => EmailVerify(
+          Get.offAll(() => const EmailVerify(
                 forgotPassword: true,
               ));
         } else if (res.data['message'] == 'User Not Register') {

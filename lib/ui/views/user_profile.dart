@@ -10,7 +10,6 @@ import 'package:sarathi/ui/utils/colors.dart';
 import 'package:sarathi/ui/utils/headings.dart';
 import 'package:sarathi/ui/views/edit_user_profile.dart';
 import 'package:sarathi/ui/widgets/select_image_options.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import '../../controllers/auth_controller.dart';
 import '../widgets/logout_dialog.dart';
 
@@ -127,13 +126,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Container(
                                     width: 100,
                                     height: 100,
-                                    child: CachedNetworkImage(
-                                        imageUrl: imgUrl,
-                                        placeholder: (context, url) => Image.asset(
-                                            'assets/images/default_image.png'),
-                                        errorWidget: (context, url, error) =>
-                                            Image.asset(
-                                                'assets/images/error.png')),
                                     decoration: BoxDecoration(
                                         boxShadow: const [
                                           BoxShadow(
@@ -143,8 +135,39 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ],
                                         image: DecorationImage(
                                             // image: NetworkImage(imgUrl,),
-                                            image: CachedNetworkImageProvider(
-                                                imgUrl),
+                                            image: Image.network(
+                                              _userController.user.value.image
+                                                  .toString(),
+                                              loadingBuilder:
+                                                  (BuildContext context,
+                                                      Widget child,
+                                                      ImageChunkEvent?
+                                                          loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                }
+                                                return Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    value: loadingProgress
+                                                                .expectedTotalBytes !=
+                                                            null
+                                                        ? loadingProgress
+                                                                .cumulativeBytesLoaded /
+                                                            loadingProgress
+                                                                .expectedTotalBytes!
+                                                        : null,
+                                                  ),
+                                                );
+                                              },
+                                              errorBuilder:
+                                                  (BuildContext context,
+                                                      Object exception,
+                                                      StackTrace? stackTrace) {
+                                                return Image.asset(
+                                                    'assets/images/error.png');
+                                              },
+                                            ).image,
                                             fit: BoxFit.cover),
                                         borderRadius:
                                             BorderRadius.circular(36)),

@@ -10,7 +10,6 @@ import 'package:sarathi/ui/views/package_screens/career_counselling/career_couns
 import 'package:sarathi/ui/views/package_screens/psychometric_support/psychometric_support.dart';
 import 'package:sarathi/ui/views/user_profile.dart';
 import 'package:sarathi/ui/widgets/category_box.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -51,13 +50,13 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Builder(builder: (context) {
-                  return GestureDetector(
-                      onTap: () {
-                        // Scaffold.of(context).openDrawer();
-                      },
-                      child: Image.asset('assets/icons/menu.png'));
-                }),
+                // Builder(builder: (context) {
+                //   return GestureDetector(
+                //       onTap: () {
+                //         // Scaffold.of(context).openDrawer();
+                //       },
+                //       child: Image.asset('assets/icons/menu.png'));
+                // }),
                 Stack(
                   children: [
                     GestureDetector(
@@ -73,13 +72,31 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(18.r)),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(18),
-                            child: CachedNetworkImage(
-                                imageUrl:
-                                    _userController.user.value.image.toString(),
-                                placeholder: (context, url) => Image.asset(
-                                    'assets/images/default_image.png'),
-                                errorWidget: (context, url, error) =>
-                                    Image.asset('assets/images/error.png')),
+                            child: Image.network(
+                              _userController.user.value.image.toString(),
+                              fit: BoxFit.cover,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                );
+                              },
+                              errorBuilder: (BuildContext context,
+                                  Object exception, StackTrace? stackTrace) {
+                                return Image.asset('assets/images/error.png');
+                              },
+                            ),
                             // _userController.user.value.image.toString(),
                             // fit: BoxFit.cover,
                           ),
@@ -120,6 +137,7 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             if (!_userController.isAstroShow.value) {
                               Get.to(const LockPage());
+                              return;
                             }
                             Get.to(const AstroSupportPage());
                           },
@@ -132,6 +150,7 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             if (!_userController.isPsyShow.value) {
                               Get.to(const LockPage());
+                              return;
                             }
                             Get.to(const PsychometricSupportPage());
                           },
@@ -149,8 +168,9 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             if (!_userController.isCareerShow.value) {
                               Get.to(const LockPage());
+                              return;
                             }
-                            Get.to(CareerCounsellingPage());
+                            Get.to(const CareerCounsellingPage());
                           },
                           child: CategoryBox(
                             text: categories[2],
@@ -159,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.to(LockPage());
+                            Get.to(const LockPage());
                           },
                           child: CategoryBox(
                             text: categories[3],
@@ -173,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(LockPage());
+                            Get.to(const LockPage());
                           },
                           child: CategoryBox(
                             text: categories[4],
@@ -182,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.to(LockPage());
+                            Get.to(const LockPage());
                           },
                           child: CategoryBox(
                             text: categories[5],

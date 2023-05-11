@@ -516,7 +516,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       "phone": phoneController.text,
                       "email": _authController.emailAuth.value,
                       "education": educationController.text,
-                    },_image);
+                      "image": imgUrl,
+                    }, _image);
                   }
                 },
                 child: Container(
