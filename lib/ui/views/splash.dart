@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/controllers/storage_controller.dart';
@@ -5,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../controllers/user_controller.dart';
 import '../utils/routes.dart';
-
 
 import 'dart:async';
 
@@ -35,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
         _authController.isoffline.value = false;
       }
     });
-      super.initState();
+    super.initState();
     _changeScreen();
   }
 
@@ -51,37 +53,76 @@ class _SplashScreenState extends State<SplashScreen> {
     //       MaterialPageRoute(builder: (context) => const OnBoardingScreen()));
     // });
     await Future.delayed(const Duration(milliseconds: 1500), () async {
-
-      if(_authController.isoffline.value){
+      if (_authController.isoffline.value) {
         Get.offAllNamed(Routes.NO_INTERNET);
       }
-    // Get.offAll(UserInfoPage());
-    else{
-      var data = await _storageController.getDetails();
-      if (data['token'] != null && data['verified'] != null && data['token'].toString().isNotEmpty) {
-        if (data['verified'] == 'true') {
-          Get.find<UserController>().token.value = data['token']!;
-          Get.find<UserController>().fetchUserDetails();
+      // Get.offAll(UserInfoPage());
+      else {
+        var data = await _storageController.getDetails();
+        if (data['token'] != null &&
+            data['verified'] != null &&
+            data['token'].toString().isNotEmpty) {
+          if (data['verified'] == 'true') {
+            Get.find<UserController>().token.value = data['token']!;
+            Get.find<UserController>().fetchUserDetails();
+          } else {
+            Get.offAllNamed(Routes.ONBOARDING);
+          }
+          // await Get.find<AuthController>().login(data['email']!, data['pass']!);
         } else {
-          Get.offAllNamed(Routes.ONBOARDING);
+          Get.offAllNamed(Routes.LOGIN);
         }
-        // await Get.find<AuthController>().login(data['email']!, data['pass']!);
-      } else {
-        Get.offAllNamed(Routes.LOGIN);
       }
-    }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Image.asset(
-        'assets/images/splashScreen.png',
-        fit: BoxFit.cover,
-        height: double.infinity,
-        width: double.infinity,
-        alignment: Alignment.center,
+      body: Stack(
+        children: [
+          Image.asset(
+            'assets/images/splashScreen.png',
+            fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
+            alignment: Alignment.center,
+          ),
+          Positioned(
+            left: MediaQuery.of(context).size.width / 2 - 100,
+            top: MediaQuery.of(context).size.height / 3,
+            child: ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.grey.shade200.withOpacity(0.5)),
+                  child: Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          child: Image.asset(
+                            'assets/logo/icon.png',
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        SizedBox(
+                          child: SvgPicture.asset(
+                            'assets/logo/namedIcon.svg',
+                            fit: BoxFit.fill,
+                            height: 50,
+                            width: 150,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

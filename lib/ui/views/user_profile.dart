@@ -164,8 +164,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                   (BuildContext context,
                                                       Object exception,
                                                       StackTrace? stackTrace) {
-                                                return Image.asset(
-                                                    'assets/images/error.png');
+                                                return const Icon(Icons.person);
                                               },
                                             ).image,
                                             fit: BoxFit.cover),

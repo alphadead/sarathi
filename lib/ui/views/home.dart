@@ -1,5 +1,6 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sarathi/controllers/auth_controller.dart';
 import 'package:sarathi/controllers/user_controller.dart';
@@ -50,13 +51,12 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Builder(builder: (context) {
-                //   return GestureDetector(
-                //       onTap: () {
-                //         // Scaffold.of(context).openDrawer();
-                //       },
-                //       child: Image.asset('assets/icons/menu.png'));
-                // }),
+                SvgPicture.asset(
+                  'assets/logo/namedIcon.svg',
+                  fit: BoxFit.fill,
+                  height: 50,
+                  width: 150,
+                ),
                 Stack(
                   children: [
                     GestureDetector(
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                               },
                               errorBuilder: (BuildContext context,
                                   Object exception, StackTrace? stackTrace) {
-                                return Image.asset('assets/images/error.png');
+                                return const Icon(Icons.person);
                               },
                             ),
                             // _userController.user.value.image.toString(),
