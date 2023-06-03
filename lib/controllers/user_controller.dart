@@ -22,6 +22,12 @@ class UserController extends GetxController {
   RxBool isCollegeShow = false.obs;
   RxBool isCounselingShow = false.obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    showFeatures();
+  }
+
   fetchUserDetails() async {
     try {
       var res = await Dio().getUri(Uri.parse(FETCH_PROFILE_DETAILS), data: {
@@ -72,7 +78,7 @@ class UserController extends GetxController {
         print("Some error occured");
       }
     } catch (e) {
-      print(e.toString());
+      print("$e+++++++++++++++++++++++++++++++++++++++++++++");
     } finally {
       update();
     }
